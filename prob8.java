@@ -6,6 +6,7 @@ class Solution {
         int idx=0;
         while(idx<n && ch==' '){
             idx++;
+            if(idx<n)
             ch=str.charAt(idx);
         }
         if(idx <n && (ch=='+' || ch=='-' || ((ch-'0')>=0 && (ch-'0')<=9))){
