@@ -14,7 +14,7 @@
  * }
  */
 class Solution {
-    public int[] findMode(TreeNode root) {
+    public int[] findMode(Trex  eNode root) {
         ArrayList<Integer>arr=new ArrayList<>();
         solve(root,arr);
 
