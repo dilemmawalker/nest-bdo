@@ -8,13 +8,13 @@
  *     TreeNode(int val) { this.val = val; }
  *     TreeNode(int val, TreeNode left, TreeNode right) {
  *         this.val = val;
- *         this.left = left;
+ *         this.left = left;zz
  *         this.right = right;
  *     }
  * }
  */
 class Solution {
-    public int[] findMode(Trex  eNode root) {
+    public int[] findMode(TreeNode root) {
         ArrayList<Integer>arr=new ArrayList<>();
         solve(root,arr);
 
@@ -47,7 +47,7 @@ class Solution {
         }
         return anss;
     }
-    public void solve(root,arr){
+    public void solve(root,arr){    //return inorder
         if(root==null)
         return;
 
