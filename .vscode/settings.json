@@ -1,0 +1,11 @@
+{
+    "cSpell.words": [
+        "nestjs",
+        "ormconfig",
+        "prebuild",
+        "typeorm"
+    ],
+    "cSpell.ignoreWords": [
+        "saurav"
+    ]
+}
