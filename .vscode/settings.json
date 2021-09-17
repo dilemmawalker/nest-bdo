@@ -3,7 +3,9 @@
         "nestjs",
         "ormconfig",
         "prebuild",
-        "typeorm"
+        "serilization",
+        "typeorm",
+        "uuidv4"
     ],
     "cSpell.ignoreWords": [
         "saurav"
