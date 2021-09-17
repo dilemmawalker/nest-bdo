@@ -1,8 +1,10 @@
 import { Body, Controller, Get, Param, Patch, Post, UseInterceptors } from '@nestjs/common';
 import { TransformInterceptor } from 'src/app/interceptors/transform.interceptor';
 import { User } from 'src/app/schemas/users/user.schema';
+import responseUtils from 'src/app/utils/response.utils';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import { UserEntity } from './entities/user-response.entity';
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -18,8 +20,7 @@ export class UsersController {
   @UseInterceptors(TransformInterceptor)
   async getUsers(): Promise<any> {
     const result = await this.usersService.getUsers();
-    const meta = { version: 1.1 }
-    return { message: "test", result, meta };
+    return responseUtils.success(result);
   }
 
   @Post()

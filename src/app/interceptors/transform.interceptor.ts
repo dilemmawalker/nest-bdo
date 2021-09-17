@@ -24,11 +24,11 @@ export class TransformInterceptor<T>
             .handle()
             .pipe(
                 map((data) => ({
-                    statusCode: context.switchToHttp().getResponse().statusCode,
-                    message: data.message || "",
+                    statusCode: data.statusCode || context.switchToHttp().getResponse().statusCode,
+                    message: data.message || context.switchToHttp().getResponse().message || "",
                     data: {
                         result: data.result || null,
-                        meta: data.meta || {}
+                        meta: data.meta || {},
                     }
                 })),
             );
