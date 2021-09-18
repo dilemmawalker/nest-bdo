@@ -10,7 +10,10 @@ import { map } from 'rxjs/operators';
 export interface Response<T> {
     statusCode: number;
     message: string;
-    data: T;
+    data: {
+        result: T;
+        meta: object;
+    };
 }
 
 @Injectable()
@@ -19,7 +22,7 @@ export class TransformInterceptor<T>
     intercept(
         context: ExecutionContext,
         next: CallHandler,
-    ): Observable<Response<any>> {
+    ): Observable<Response<T>> {
         return next
             .handle()
             .pipe(
