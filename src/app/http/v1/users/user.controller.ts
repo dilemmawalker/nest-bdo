@@ -7,8 +7,10 @@ import { UserResponse } from './responses/user.response';
 import { UserService } from './user.service';
 import { Logger } from 'winston';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
+import { ApiTags } from '@nestjs/swagger';
 
 
+@ApiTags('Users')
 @Controller('users')
 export class UserController {
 
@@ -25,7 +27,7 @@ export class UserController {
   @Get()
   @UseInterceptors(TransformInterceptor)
   async getUsers(): Promise<any> {
-    this.logger.warn("test");
+    this.logger.error("test error ok");
     const user = await this.UserService.getUsers();
     return responseUtils.success(UserResponse.fromUserArray(user));
   }
