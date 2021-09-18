@@ -2,14 +2,14 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { User } from "src/app/schemas/users/user.schema";
 import { v4 as uuidv4 } from 'uuid';
 import { UpdateUserDto } from "./dtos/update-user.dto";
-import { UsersRepository } from "./users.repository";
+import { UserRepository } from "./user.repository";
 
 @Injectable()
-export class UsersService {
-    constructor(private readonly usersRepository: UsersRepository) {}
+export class UserService {
+    constructor(private readonly UserRepository: UserRepository) {}
 
     async getUserById(userId: string): Promise<User> {
-        let user = await this.usersRepository.findOne({ userId });
+        let user = await this.UserRepository.findOne({ userId });
         if(user){
             console.log(user);
             return user;
@@ -18,11 +18,11 @@ export class UsersService {
     }
 
     async getUsers(): Promise<User[]> {
-        return this.usersRepository.find({});
+        return await this.UserRepository.find({});
     }
 
     async createUser(email: string, age: number): Promise<User> {
-        return this.usersRepository.create({
+        return await this.UserRepository.create({
             userId: uuidv4(),
             email,
             age,
@@ -31,6 +31,6 @@ export class UsersService {
     }
 
     async updateUser(userId: string, userUpdates: UpdateUserDto): Promise<User> {
-        return this.usersRepository.findOneAndUpdate({ userId }, userUpdates);
+        return await this.UserRepository.findOneAndUpdate({ userId }, userUpdates);
     }
 }
