@@ -1,6 +1,4 @@
 import { Body, Controller, Get, Inject, Param, Patch, Post, UseInterceptors } from '@nestjs/common';
-import { TransformInterceptor } from 'src/app/interceptors/transform.interceptor';
-import responseUtils from 'src/app/utils/response.utils';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UserResponse } from './responses/user.response';
@@ -8,6 +6,8 @@ import { UserService } from './user.service';
 import { Logger } from 'winston';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { ApiTags } from '@nestjs/swagger';
+import { TransformInterceptor } from '../../../interceptors/transform.interceptor';
+import responseUtils from '../../../utils/response.utils';
 
 
 @ApiTags('Users')

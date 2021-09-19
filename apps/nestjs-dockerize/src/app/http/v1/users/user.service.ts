@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { User } from "src/app/schemas/users/user.schema";
 import { v4 as uuidv4 } from 'uuid';
+import { User } from "../../../schemas/users/user.schema";
 import { UpdateUserDto } from "./dtos/update-user.dto";
 import { UserRepository } from "./user.repository";
 

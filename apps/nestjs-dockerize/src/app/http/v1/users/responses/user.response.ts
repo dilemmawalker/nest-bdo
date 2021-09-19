@@ -1,4 +1,5 @@
-import { User } from "src/app/schemas/users/user.schema";
+import { User } from "apps/nestjs-dockerize/src/app/schemas/users/user.schema";
+
 
 export class UserResponse {
   userId: string;

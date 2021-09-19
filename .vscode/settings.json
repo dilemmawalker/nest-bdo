@@ -1,11 +1,13 @@
 {
     "cSpell.words": [
+        "dockerize",
         "nestjs",
         "ormconfig",
         "prebuild",
         "serilization",
         "typeorm",
-        "uuidv4"
+        "uuidv4",
+        "wiston"
     ],
     "cSpell.ignoreWords": [
         "saurav"
