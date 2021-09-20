@@ -18,30 +18,24 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@app/shared": [
-        "libs/core/shared/src"
-      ],
-      "@app/shared/*": [
-        "libs/core/shared/src/*"
-      ],
-      "@app/core/auth": [
+      "@core/auth": [
         "libs/core/auth/src"
       ],
-      "@app/core/auth/*": [
+      "@core/auth/*": [
         "libs/core/auth/src/*"
       ],
-      "@app/core/users": [
+      "@core/users": [
         "libs/core/users/src"
       ],
-      "@app/core/users/*": [
+      "@core/users/*": [
         "libs/core/users/src/*"
       ],
-      "@app/auth": [
-        "libs/auth/src"
+      "@shared": [
+        "libs/shared"
       ],
-      "@app/auth/*": [
-        "libs/auth/src/*"
-      ],
+      "@shared/*": [
+        "libs/shared/*"
+      ]
     }
   },
   "exclude": [

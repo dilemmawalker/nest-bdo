@@ -85,12 +85,9 @@
       "<rootDir>/libs/"
     ],
     "moduleNameMapper": {
-      "^@app/shared(|/.*)$": "<rootDir>/libs/shared/src/$1",
-      "^workflow/workflow(|/.*)$": "<rootDir>/libs/workflow/src/$1",
-      "^@app/core/auth(|/.*)$": "<rootDir>/libs/core/auth/src/$1",
-      "^@app/core/users(|/.*)$": "<rootDir>/libs/core/users/src/$1",
-      "^@app/users(|/.*)$": "<rootDir>/libs/users/src/$1",
-      "^@app/auth(|/.*)$": "<rootDir>/libs/auth/src/$1"
+      "^@core/auth(|/.*)$": "<rootDir>/libs/core/auth/src/$1",
+      "^@core/users(|/.*)$": "<rootDir>/libs/core/users/src/$1",
+      "^@shared(|/.*)$": "<rootDir>/libs/shared/$1"
     }
   }
 }

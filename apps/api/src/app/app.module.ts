@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { configModuleConfig } from '@shared/config/config-module.config';
+import { wistonConfig } from '@shared/config/wiston.config';
 import { WinstonModule } from 'nest-winston';
-import { configModuleConfig } from '../../../../libs/shared/config/config-module.config';
-import { wistonConfig } from '../../../../libs/shared/config/wiston.config';
 import HttpModule from './http/http.module';
 
 @Module({

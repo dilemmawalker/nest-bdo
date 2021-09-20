@@ -1,9 +1,8 @@
-import { CoreUserModule } from "@app/core/users/user.module";
-import { UserRepository } from "@app/core/users/user.repository";
-import { UserService } from "@app/core/users/user.service";
+
+import { CoreUserModule } from "@core/users/core-user.module";
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
-import { User, UserSchema } from "libs/shared/app/schemas/users/user.schema";
+import { User, UserSchema } from "@shared/app/schemas/users/user.schema";
 import { UserController } from "./user.controller";
 
 @Module({

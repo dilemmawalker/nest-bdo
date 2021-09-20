@@ -11,7 +11,7 @@
     "^.+\\.(t|j)s$": "ts-jest"
   },
   "moduleNameMapper": {
-    "@app/core/auth/(.*)": "<rootDir>/../libs/core/auth/src/$1",
-    "@app/core/auth": "<rootDir>/../libs/core/auth/src"
+    "@core/auth/(.*)": "<rootDir>/../libs/core/auth/src/$1",
+    "@core/auth": "<rootDir>/../libs/core/auth/src"
   }
 }
