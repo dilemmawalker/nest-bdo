@@ -3,11 +3,11 @@
         {
             "type": "aws-sam",
             "request": "direct-invoke",
-            "name": "nestjs-dockerize:src/app/http/v1/v1.route.v1Routes (nodejs14.x)",
+            "name": "api:src/app/http/v1/v1.route.appRoutes (nodejs14.x)",
             "invokeTarget": {
                 "target": "code",
                 "projectRoot": "${workspaceFolder}/",
-                "lambdaHandler": "src/app/http/v1/v1.route.v1Routes"
+                "lambdaHandler": "src/app/http/v1/v1.route.appRoutes"
             },
             "lambda": {
                 "runtime": "nodejs14.x",

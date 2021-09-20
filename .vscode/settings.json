@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
         "dockerize",
+        "dtos",
         "nestjs",
         "ormconfig",
         "prebuild",
