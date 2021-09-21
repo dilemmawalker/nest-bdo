@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from '@shared/app/schemas/users/user.schema';
 import { FilterQuery, Model } from 'mongoose';
+import { UserDto } from './dtos/user.dto';
 
 @Injectable()
 export class UserRepository {
@@ -15,8 +16,8 @@ export class UserRepository {
     return await this.userModel.find(usersFilterQuery);
   }
 
-  async create(user: User): Promise<User> {
-    const newUser = new this.userModel(user);
+  async create(userDto: UserDto): Promise<User> {
+    const newUser = new this.userModel(userDto);
     return await newUser.save();
   }
 

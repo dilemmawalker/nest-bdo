@@ -43,10 +43,9 @@ export class UserController {
 
   @Post()
   @UseInterceptors(TransformInterceptor)
-  async createUser(@Body() createUserDto: CreateUserRequest): Promise<any> {
+  async createUser(@Body() createUserRequest: CreateUserRequest): Promise<any> {
     const user = await this.UserService.createUser(
-      createUserDto.email,
-      createUserDto.age,
+      CreateUserRequest.getUserDto(createUserRequest),
     );
     return ResponseUtils.success(UserResponse.fromUser(user));
   }
