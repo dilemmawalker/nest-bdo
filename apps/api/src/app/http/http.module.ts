@@ -4,9 +4,6 @@ import { appRoutes } from '../app.route';
 import { UserModule } from './users/user.module';
 
 @Module({
-  imports: [
-    RouterModule.register(appRoutes),
-    UserModule,
-  ],
+  imports: [RouterModule.register(appRoutes), UserModule],
 })
-export default class HttpModule { }
+export default class HttpModule {}

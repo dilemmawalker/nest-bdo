@@ -1,4 +1,4 @@
 export class UserDto {
-    email: string;
-    age: number;
+  email: string;
+  age: number;
 }

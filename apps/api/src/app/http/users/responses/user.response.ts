@@ -1,5 +1,4 @@
-import { User } from "libs/shared/app/schemas/users/user.schema";
-
+import { User } from 'libs/shared/app/schemas/users/user.schema';
 
 export class UserResponse {
   userId: string;
@@ -14,8 +13,8 @@ export class UserResponse {
 
   static fromUserArray(users: User[]): UserResponse[] {
     const entities = [];
-    users.forEach(user => {
-        entities.push(this.fromUser(user));
+    users.forEach((user) => {
+      entities.push(this.fromUser(user));
     });
     return entities;
   }

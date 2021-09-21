@@ -11,7 +11,7 @@ import HttpModule from './http/http.module';
     ConfigModule.forRoot(configModuleConfig()),
     MongooseModule.forRoot(process.env.MONGO_DB_CONNECTION),
     WinstonModule.forRoot(wistonConfig()),
-    HttpModule
+    HttpModule,
   ],
   controllers: [],
   providers: [],
