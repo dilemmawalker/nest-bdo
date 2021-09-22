@@ -4,8 +4,8 @@ export class ResponseUtils {
   public static success(result?: any, message?: string, meta?: any) {
     const statusCode = HttpStatus.OK;
     return {
-      message,
       result,
+      message,
       meta,
       statusCode,
     };
