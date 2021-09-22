@@ -1,0 +1,19 @@
+1. Responsibility of Request class
+    - request class is only responsible to validate incoming request, we will never never pass it to any service
+    - we map request class to dto and pass it to service
+
+2. Responsibility of Dto class
+    - we pass data in form of dto and primitive data type only from controller to service to repository
+
+3. Responsibility of Response class
+    - response class is responsible to return response from controller to client application
+
+4. Responsibility of Controller Class
+    - controller class is responsible to validate incoming request , construct dto and call service , and send response to client.
+
+5. Responsibility of Service class
+    - service class is responsible for all business logic and to intract with repository.
+
+6. Responsibility of Repository class
+    - repository class is responsible to to access data source and perform query in database.
+
