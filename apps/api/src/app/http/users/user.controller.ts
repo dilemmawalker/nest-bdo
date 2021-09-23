@@ -3,6 +3,7 @@ import {
   Body,
   Controller,
   Get,
+  HttpStatus,
   Inject,
   Param,
   Patch,
@@ -11,16 +12,12 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { TransformInterceptor } from '@shared/app/interceptors/transform.interceptor';
 import { ResponseUtils } from '@shared/app/utils/response.utils';
-import { Role } from 'apps/api/src/constant/roles.constant';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
-import { Roles } from '../../decorators/roles.decorators';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
-import { RolesGuard } from '../../guards/roles.guard';
 import { CreateUserRequest } from './requests/create-user.request';
 import { UpdateUserRequest } from './requests/update-user.request';
 import { UserResponse } from './responses/user.response';
@@ -37,7 +34,7 @@ export class UserController {
   @Get(':username')
   @UseInterceptors(TransformInterceptor)
   @ApiResponse({
-    status: 200,
+    status: HttpStatus.OK,
     type: UserResponse,
   })
   async getUser(@Param('username') username: string): Promise<any> {
@@ -45,11 +42,10 @@ export class UserController {
     return ResponseUtils.success(UserResponse.fromUser(user));
   }
 
-  @Roles(Role.Admin)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(TransformInterceptor)
   @ApiResponse({
-    status: 200,
+    status: HttpStatus.OK,
     type: UserResponse,
   })
   @Get()

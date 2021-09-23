@@ -1,7 +1,10 @@
 {
     "cSpell.words": [
+        "Casl",
         "dockerize",
         "dtos",
+        "inteface",
+        "ipolicy",
         "maxsize",
         "nestjs",
         "ormconfig",
