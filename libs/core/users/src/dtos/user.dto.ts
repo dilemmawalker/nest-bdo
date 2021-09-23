@@ -1,4 +1,4 @@
-import { Role } from 'apps/api/src/constant/roles.constant';
+import { Role } from 'apps/api/src/constant/auth/roles.constant';
 
 export class UserDto {
   userId: string;

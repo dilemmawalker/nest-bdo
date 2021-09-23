@@ -10,8 +10,8 @@ import {
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { TransformInterceptor } from '@shared/app/interceptors/transform.interceptor';
 import { ResponseUtils } from '@shared/app/utils/response.utils';
-import { Role } from 'apps/api/src/constant/roles.constant';
-import { Roles } from '../../decorators/roles.decorators';
+import { Role } from 'apps/api/src/constant/auth/roles.constant';
+import { Roles } from '../../decorators/auth/roles.decorators';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { LocalAuthGuard } from '../../guards/local-auth.guard';
 import { RolesGuard } from '../../guards/roles.guard';

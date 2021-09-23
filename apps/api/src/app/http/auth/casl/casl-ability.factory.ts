@@ -7,8 +7,8 @@ import {
 } from '@casl/ability';
 import { Injectable } from '@nestjs/common';
 import { User } from '@shared/app/schemas/users/user.schema';
-import { Action } from '../../../../constant/actions.constant';
-import { Role } from '../../../../constant/roles.constant';
+import { Action } from '../../../../constant/auth/actions.constant';
+import { Role } from '../../../../constant/auth/roles.constant';
 
 type Subjects = InferSubjects<typeof User> | 'all';
 

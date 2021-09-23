@@ -4,8 +4,8 @@ import {
   AppAbility,
   CaslAbilityFactory,
 } from '../http/auth/casl/casl-ability.factory';
-import { CHECK_POLICIES_KEY } from '../http/auth/casl/policies/decorators/check-policy.decorators';
-import { PolicyHandler } from '../http/auth/casl/policies/interface/ipolicy.interface';
+import { CHECK_POLICIES_KEY } from '../decorators/auth/check-policy.decorators';
+import { PolicyHandler } from '../interfaces/auth/ipolicy.interface';
 
 @Injectable()
 export class PoliciesGuard implements CanActivate {
