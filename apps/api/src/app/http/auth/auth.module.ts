@@ -9,14 +9,7 @@ import { JwtStrategy } from './jwt.strategy';
 import { LocalStrategy } from './local.strategy';
 
 @Module({
-  imports: [
-    CoreUserModule,
-    PassportModule,
-    JwtModule.register({
-      secret: jwtConfig.secret,
-      signOptions: { expiresIn: '10000' },
-    }),
-  ],
+  imports: [CoreUserModule, PassportModule, JwtModule.register(jwtConfig)],
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy, JwtStrategy],
 })
