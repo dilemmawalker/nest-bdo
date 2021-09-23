@@ -10,8 +10,12 @@ import {
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { TransformInterceptor } from '@shared/app/interceptors/transform.interceptor';
 import { ResponseUtils } from '@shared/app/utils/response.utils';
+import { Role } from 'apps/api/src/constant/roles.constant';
+import { Roles } from '../../decorators/roles.decorators';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { LocalAuthGuard } from '../../guards/local-auth.guard';
+import { RolesGuard } from '../../guards/roles.guard';
+import { UserResponse } from '../users/responses/user.response';
 import { AuthService } from './auth.service';
 import { AUTH_SUCCESS_MESSAGE } from './message/auth.message';
 import { LoginRequest } from './requests/login.request';
@@ -38,8 +42,32 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  @Get('secret')
+  @Get('protected')
   ok() {
     return ResponseUtils.success('yeah ok');
+  }
+
+  @Roles(Role.Admin)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    type: UserResponse,
+  })
+  @Get('admin')
+  async adminRole(@Request() req): Promise<any> {
+    return ResponseUtils.success('yeah, you have admin access');
+  }
+
+  @Roles(Role.User)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    type: UserResponse,
+  })
+  @Get('user')
+  async userRole(@Request() req): Promise<any> {
+    return ResponseUtils.success('yeah, you have user access');
   }
 }
