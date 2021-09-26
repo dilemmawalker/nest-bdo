@@ -1,0 +1,9 @@
+Resources:
+  nestjsdockerize:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/app/http/v1/v1.route.appRoutes
+      CodeUri: /Users/sauravkumar/Development/nestjs/nestjs-dockerize
+      Runtime: nodejs14.x
+      Environment:
+        Variables: {}

@@ -1,11 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Role } from 'apps/api/src/constant/auth/roles.constant';
 import { Document } from 'mongoose';
+import { BaseItemSchema } from '../base/base-Item.schema';
 
 export type UserDocument = User & Document;
 
 @Schema()
-export class User {
+export class User extends BaseItemSchema {
   @Prop()
   userId: string;
 

@@ -27,7 +27,7 @@ export class UserService {
     return await this.UserRepository.create(userDto);
   }
 
-  async updateUser(userId: string, userDto: UserDto): Promise<User> {
-    return await this.UserRepository.findOneAndUpdate({ userId }, userDto);
+  async updateUser(username: string, userDto: UserDto): Promise<User> {
+    return await this.UserRepository.findOneAndUpdate({ username }, userDto);
   }
 }
