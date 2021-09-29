@@ -31,7 +31,6 @@ export class CaslAbilityFactory {
     // cannot(Action.Delete, Article, { isPublished: true }); #REFERENCE_ONLY
 
     return build({
-      // Read https://casl.js.org/v5/en/guide/subject-type-detection#use-classes-as-subject-types for details
       detectSubjectType: (item) =>
         item.constructor as ExtractSubjectType<Subjects>,
     });
