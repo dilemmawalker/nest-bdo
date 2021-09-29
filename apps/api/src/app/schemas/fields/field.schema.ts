@@ -1,15 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { Document, ObjectId, SchemaTypes, Types } from 'mongoose';
-import { Workflow, WorkflowSchema } from '../workflows/workflow.schema';
+import * as mongoose from 'mongoose';
 
 export type FieldDocument = Field & Document;
 
 @Schema()
 export class Field {
-  @Prop({ type: SchemaTypes.ObjectId })
-  _id: ObjectId;
-
   @ApiProperty()
   @Prop({ required: true })
   label: string;
@@ -21,19 +18,6 @@ export class Field {
   @ApiProperty()
   @Prop({ required: true })
   dataType: string;
-
-  @ApiProperty()
-  @Prop()
-  position: number;
-
-  @Prop({ type: SchemaTypes.ObjectId, ref: 'Workflow' })
-  workflow: Types.ObjectId;
 }
 
 export const FieldSchema = SchemaFactory.createForClass(Field);
-
-FieldSchema.virtual('workflows', {
-  ref: 'Workflow',
-  localField: '_id',
-  foreignField: 'fields',
-});

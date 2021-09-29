@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Type } from 'class-transformer';
-import { Document, SchemaTypeOptions, SchemaTypes, Types } from 'mongoose';
-import { Field } from '../fields/field.schema';
+import { Document, Types } from 'mongoose';
+import { Step } from '../steps/steps.schema';
 
 export type WorkflowDocument = Workflow & Document;
 
@@ -10,9 +9,10 @@ export class Workflow {
   @Prop({ required: true })
   name: string;
 
-  @Prop([{ type: SchemaTypes.ObjectId, ref: 'Field' }])
-  fields!: Types.ObjectId[];
+  @Prop()
+  steps: Step[] = [];
 
+  @Prop()
   position: number;
 
   @Prop({ required: true, unique: true })

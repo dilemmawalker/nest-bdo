@@ -3,6 +3,7 @@ import { BaseItemSchema } from '@shared/app/schemas/base/base-Item.schema';
 import { Document } from 'mongoose';
 import { Field } from '../fields/field.schema';
 import { Workflow } from '../workflows/workflow.schema';
+import * as mongoose from 'mongoose';
 
 export type StoreDocument = Store & Document;
 
@@ -10,12 +11,8 @@ export type StoreDocument = Store & Document;
 export class Store extends BaseItemSchema {
   @Prop({ required: true })
   name: string;
-
-  @Prop()
-  properties: Field[];
-
-  @Prop()
-  workflow: Workflow[];
+  
+  workflow: Workflow;
 }
 
 export const StoreSchema = SchemaFactory.createForClass(Store);

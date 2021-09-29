@@ -4,6 +4,8 @@ import { Role } from 'apps/api/src/constant/auth/roles.constant';
 import { v4 as uuidv4 } from 'uuid';
 import { Field } from '../../schemas/fields/field.schema';
 import { Workflow } from '../../schemas/workflows/workflow.schema';
+import { FieldsDto } from './dtos/fields.dto';
+import { StepDto } from './dtos/step.dto';
 import { WorkflowDto } from './dtos/workflow.dto';
 import { WorkflowRepository } from './workflow.repository';
 @Injectable()
@@ -26,7 +28,12 @@ export class WorkflowService {
     return await this.workflowRepository.create(workflowDto);
   }
 
-  async addFields(key: string, fields: Field[]): Promise<Workflow> {
-    return await this.workflowRepository.findOneAndUpdate(key, fields);
+  async addFields(fieldDto: FieldsDto): Promise<Workflow> {
+    return await this.workflowRepository.addFields(fieldDto);
+  }
+
+  async addStep(step: StepDto): Promise<Workflow> {
+    step.stepId = uuidv4();
+    return await this.workflowRepository.addStep(step);
   }
 }

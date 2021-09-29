@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { ObjectId } from 'bson';
-import { FilterQuery, Model, Types } from 'mongoose';
+import { FilterQuery, Model } from 'mongoose';
 import { Field } from '../../schemas/fields/field.schema';
+import { Step } from '../../schemas/steps/steps.schema';
 import { Workflow } from '../../schemas/workflows/workflow.schema';
+import { FieldsDto } from './dtos/fields.dto';
+import { StepDto } from './dtos/step.dto';
 import { WorkflowDto } from './dtos/workflow.dto';
 
 @Injectable()
@@ -26,17 +28,45 @@ export class WorkflowRepository {
     return await newWorkflow.save();
   }
 
-  async findOneAndUpdate(key: string, fields: Field[]): Promise<Workflow> {
-    const workflow = await this.workflowModel.findOne({ key });
-    console.log(workflow);
+  async addFields(fieldsDto: FieldsDto): Promise<Workflow> {
     const fieldRefs = [];
-    fields.forEach(async (field) => {
-      const fieldModel = new this.fieldModel(field);
-      fieldModel.workflow = workflow._id;
-      fieldModel._id = new ObjectId();
-      const fieldCol = await fieldModel.save();
-      fieldRefs.push(fieldCol);
-    });
+    const workflow = await this.workflowModel.findOne({ key: fieldsDto.key });
+    const steps = workflow.steps;
+    for (const i in steps) {
+      const element = steps[i];
+      if (element.stepId === fieldsDto.stepId) {
+        console.log(' i run after');
+        fieldsDto.fields.forEach(async (field: Field) => {
+          field.value = 'g';
+          const fieldCol = new this.fieldModel(field);
+          await fieldCol.save();
+          console.log(steps);
+          console.log('i run after');
+
+          steps[i].fields.push(field);
+          steps[i].name = 'de';
+          // this.steps.push(steps[i]);
+          workflow.steps = steps;
+          console.log(steps);
+          await workflow.update({ steps: steps });
+        });
+      }
+    }
+    workflow.position += 1;
+    console.log(steps);
+    return workflow;
+  }
+
+  async addStep(stepDto: StepDto): Promise<Workflow> {
+    const workflow = await this.workflowModel.findOne({ key: stepDto.key });
+    console.log(workflow);
+    const step = new Step();
+    step.stepId = stepDto.stepId;
+    step.name = stepDto.name;
+    step.position = stepDto.position;
+    step.fields = [];
+    workflow.steps = [step];
+    await workflow.save();
     return workflow;
   }
 }

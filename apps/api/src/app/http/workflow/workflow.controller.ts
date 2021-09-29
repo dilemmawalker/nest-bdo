@@ -17,10 +17,10 @@ import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { AddFieldsRequest } from './requests/add-fields.request';
+import { AddStepRequest } from './requests/add-steps.request';
 import { CreateWorkflowRequest } from './requests/create-workflow.request';
 import { WorkflowResponse } from './responses/workflow.response';
 import { WorkflowService } from './workflow.service';
-// import { WorkflowResponse } from './responses/workflow.response';
 
 @ApiTags('Workflows')
 @Controller('workflows')
@@ -43,7 +43,6 @@ export class WorkflowController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @UseInterceptors(TransformInterceptor)
   @ApiResponse({
     status: HttpStatus.OK,
     type: WorkflowResponse,
@@ -69,15 +68,20 @@ export class WorkflowController {
     return ResponseUtils.success(WorkflowResponse.fromWorkflow(workflow));
   }
 
-  @Post('fields/:key')
+  @Post('step/add')
   @UseInterceptors(TransformInterceptor)
-  async updateUser(
-    @Param('key') key: string,
-    @Body() fieldsRequest: AddFieldsRequest,
-  ): Promise<any> {
+  async addStep(@Body() stepsRequest: AddStepRequest): Promise<any> {
+    const workflow = await this.workflowService.addStep(
+      AddStepRequest.getStepDto(stepsRequest),
+    );
+    return ResponseUtils.success(WorkflowResponse.fromWorkflow(workflow));
+  }
+
+  @Post('field/add')
+  @UseInterceptors(TransformInterceptor)
+  async addFields(@Body() fieldsRequest: AddFieldsRequest): Promise<any> {
     const workflow = await this.workflowService.addFields(
-      key,
-      fieldsRequest.fields,
+      AddFieldsRequest.getFieldsDto(fieldsRequest),
     );
     return ResponseUtils.success(WorkflowResponse.fromWorkflow(workflow));
   }

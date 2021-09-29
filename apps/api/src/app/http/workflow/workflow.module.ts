@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Field, FieldSchema } from '../../schemas/fields/field.schema';
+import { Step, StepSchema } from '../../schemas/steps/steps.schema';
 import {
   Workflow,
   WorkflowSchema,
@@ -17,6 +18,7 @@ import { WorkflowService } from './workflow.service';
       { name: Workflow.name, schema: WorkflowSchema },
     ]),
     MongooseModule.forFeature([{ name: Field.name, schema: FieldSchema }]),
+    MongooseModule.forFeature([{ name: Step.name, schema: StepSchema }]),
   ],
   controllers: [WorkflowController],
   providers: [WorkflowService, WorkflowRepository],
