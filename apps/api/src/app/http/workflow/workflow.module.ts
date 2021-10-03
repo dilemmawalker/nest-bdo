@@ -6,7 +6,7 @@ import {
   Workflow,
   WorkflowSchema,
 } from '../../schemas/workflows/workflow.schema';
-import { CaslModule } from '../auth/casl/casl.module';
+import { CaslModule } from '../../../../../../libs/core/auth/src/casl/casl.module';
 import { WorkflowController } from './workflow.controller';
 import { WorkflowRepository } from './workflow.repository';
 import { WorkflowService } from './workflow.service';

@@ -11,7 +11,6 @@ export type StoreDocument = Store & Document;
 export class Store extends BaseItemSchema {
   @Prop({ required: true })
   name: string;
-  
   workflow: Workflow;
 }
 

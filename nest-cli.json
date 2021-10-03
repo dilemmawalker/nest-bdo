@@ -43,6 +43,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/auth/tsconfig.lib.json"
       }
+    },
+    "boilerplate": {
+      "type": "application",
+      "root": "apps/boilerplate",
+      "entryFile": "main",
+      "sourceRoot": "apps/boilerplate/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/boilerplate/tsconfig.app.json"
+      }
     }
   }
 }

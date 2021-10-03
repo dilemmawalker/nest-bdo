@@ -16,10 +16,10 @@ import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { LocalAuthGuard } from '../../guards/local-auth.guard';
 import { RolesGuard } from '../../guards/roles.guard';
 import { UserResponse } from '../users/responses/user.response';
-import { AuthService } from './auth.service';
-import { AUTH_SUCCESS_MESSAGE } from './message/auth.message';
+import { AuthService } from '../../../../../../libs/core/auth/src/auth.service';
+import { AUTH_SUCCESS_MESSAGE } from '../../../../../../libs/core/auth/src/message/auth.message';
 import { LoginRequest } from './requests/login.request';
-import { LoginResponse } from './response/login.response';
+import { LoginResponse } from './responses/login.response';
 
 @ApiTags('Auth')
 @Controller('auth')

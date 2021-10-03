@@ -1,14 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { AdminModule } from './../src/Admin.module';
+import { BoilerplateModule } from './../src/Boilerplate.module';
 
-describe('AdminController (e2e)', () => {
+describe('BoilerplateController (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AdminModule],
+      imports: [BoilerplateModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();
