@@ -10,6 +10,7 @@ import * as basicAuth from 'express-basic-auth';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
 
   app.use(toUriPath(SWAGGER_API_PATH), basicAuth(basicAuthConfig));
   const document = SwaggerModule.createDocument(app, swaggerConfig);
