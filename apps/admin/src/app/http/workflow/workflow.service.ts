@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { User } from '@shared/app/schemas/users/user.schema';
-import { Role } from 'apps/api/src/constant/auth/roles.constant';
+import { Role } from 'apps/admin/src/constant/auth/roles.constant';
 import { v4 as uuidv4 } from 'uuid';
 import { Field } from '../../schemas/fields/field.schema';
 import { Workflow } from '../../schemas/workflows/workflow.schema';

@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Role } from 'apps/api/src/constant/auth/roles.constant';
+import { Role } from 'apps/admin/src/constant/auth/roles.constant';
 import { Document, SchemaTypes, Types } from 'mongoose';
 import { BaseItemSchema } from '../base/base-Item.schema';
 import { Permission } from './permission.schema';
