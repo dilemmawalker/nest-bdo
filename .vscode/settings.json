@@ -5,6 +5,7 @@
         "dtos",
         "inteface",
         "ipolicy",
+        "maxlength",
         "maxsize",
         "nestjs",
         "ormconfig",
