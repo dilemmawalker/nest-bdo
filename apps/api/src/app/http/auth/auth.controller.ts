@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { TransformInterceptor } from '@shared/app/interceptors/transform.interceptor';
-import { ResponseUtils } from '@shared/app/utils/response.utils';
+import { ResponseUtils } from '@shared/app/utils/class/response.utils';
 import { Role } from 'apps/api/src/constant/auth/roles.constant';
 import { Roles } from '../../decorators/auth/roles.decorators';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';

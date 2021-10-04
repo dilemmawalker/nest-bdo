@@ -13,3 +13,12 @@ export const swaggerConfig = new DocumentBuilder()
     in: 'header',
   })
   .build();
+
+export const basicAuthConfig = {
+  challenge: true,
+  users: {
+    admin: 'supersecret',
+    adam: 'password1234',
+    eve: 'asdfghjkl',
+  },
+};
