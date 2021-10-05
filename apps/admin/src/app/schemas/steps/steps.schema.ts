@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { Document, SchemaTypes, Types } from 'mongoose';
 import { Field } from '../fields/field.schema';
+import * as mongoose from 'mongoose';
 
 export type StepDocument = Step & Document;
 
@@ -15,9 +16,9 @@ export class Step {
   @Prop({ required: true })
   name: string;
 
-  @ApiProperty({ type: [Field] })
-  @Prop()
-  fields: Field[] = [];
+  @ApiProperty()
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Field' })
+  fields: Types.ObjectId[] = [];
 
   @ApiProperty()
   position: number;
