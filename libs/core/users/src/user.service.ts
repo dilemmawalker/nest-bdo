@@ -23,7 +23,6 @@ export class UserService {
 
   async createUser(userDto: UserDto): Promise<User> {
     userDto.userId = uuidv4();
-    userDto.roles = [Role.Admin, Role.User];
     return await this.UserRepository.create(userDto);
   }
 

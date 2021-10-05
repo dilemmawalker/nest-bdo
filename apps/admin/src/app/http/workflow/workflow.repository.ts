@@ -43,8 +43,7 @@ export class WorkflowRepository {
           console.log(steps);
           console.log('i run after');
 
-          steps[i].fields.push(field);
-          steps[i].name = 'de';
+          steps[i].fields.push(fieldCol._id);
           // this.steps.push(steps[i]);
           workflow.steps = steps;
           console.log(steps);

@@ -4,6 +4,7 @@ import { appRoutes } from '../app.route';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { RolesGuard } from '../guards/roles.guard';
 import { AuthModule } from './auth/auth.module';
+import { RoleModule } from './roles/role.module';
 import { UserModule } from './users/user.module';
 import { WorkflowModule } from './workflow/workflow.module';
 
@@ -12,6 +13,7 @@ import { WorkflowModule } from './workflow/workflow.module';
     RouterModule.register(appRoutes),
     UserModule,
     WorkflowModule,
+    RoleModule,
     AuthModule,
   ],
   providers: [],

@@ -26,12 +26,6 @@ export class UserRepository {
 
   async create(userDto: UserDto): Promise<User> {
     const newUser = new this.userModel(userDto);
-    const permission = new Permission();
-    permission.name = 'test124';
-    permission.permissionId = 'testId';
-    const permissionModel = new this.permissionModel(permission);
-    await permissionModel.save();
-    newUser.permission = [permissionModel.id];
     return await newUser.save();
   }
 

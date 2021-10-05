@@ -20,7 +20,7 @@ import { Logger } from 'winston';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { CreateUserRequest } from './requests/create-user.request';
 import { UpdateUserRequest } from './requests/update-user.request';
-import { UserResponse } from './responses/user.response';
+import { UserResponse } from './responses/store.response';
 
 @ApiTags('Users')
 @Controller('users')

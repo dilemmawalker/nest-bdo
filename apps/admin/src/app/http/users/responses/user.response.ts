@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Role } from 'apps/admin/src/constant/auth/roles.constant';
 import { User } from 'libs/shared/app/schemas/users/user.schema';
 
 export class UserResponse {
@@ -15,16 +14,12 @@ export class UserResponse {
   @ApiProperty()
   username: string;
 
-  @ApiProperty()
-  roles: Role[];
-
   static fromUser(user: User) {
     const entity = new UserResponse();
     entity.userId = user.userId;
     entity.email = user.email;
     entity.password = user.password;
     entity.username = user.username;
-    entity.roles = user.roles;
     return entity;
   }
 
