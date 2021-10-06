@@ -29,4 +29,16 @@ export class UserService {
   async updateUser(username: string, userDto: UserDto): Promise<User> {
     return await this.UserRepository.findOneAndUpdate({ username }, userDto);
   }
+
+  async findOneByMobile(mobile: number): Promise<User> {
+    const user = this.UserRepository.findOne({ mobile });
+    if (user) {
+      return user;
+    }
+    throw new NotFoundException();
+  }
+
+  async updateUserByMobile(mobile: number, userDto: UserDto): Promise<User> {
+    return await this.UserRepository.findOneAndUpdate({ mobile }, userDto);
+  }
 }

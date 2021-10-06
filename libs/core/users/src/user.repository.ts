@@ -17,7 +17,12 @@ export class UserRepository {
   ) {}
 
   async findOne(userFilterQuery: FilterQuery<User>): Promise<User> {
-    return await this.userModel.findOne({ username: userFilterQuery.username });
+    return await this.userModel.findOne({
+      $or: [
+        { username: userFilterQuery.username },
+        { mobile: userFilterQuery.mobile },
+      ],
+    });
   }
 
   async find(usersFilterQuery: FilterQuery<User>): Promise<User[]> {
@@ -34,7 +39,12 @@ export class UserRepository {
     user: Partial<User>,
   ): Promise<User> {
     return await this.userModel.findOneAndUpdate(
-      { username: userFilterQuery.username },
+      {
+        $or: [
+          { username: userFilterQuery.username },
+          { mobile: userFilterQuery.mobile },
+        ],
+      },
       user,
       {
         new: true,

@@ -1,3 +1,4 @@
+import { UserDto } from '@core/users/dtos/user.dto';
 import { UserService } from '@core/users/user.service';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -24,5 +25,17 @@ export class AuthService {
     return {
       access_token: this.jwtService.sign(payload),
     };
+  }
+
+  async validateUserByOtp(mobile: number, otp: string): Promise<User> {
+    const user = await this.usersService.findOneByMobile(mobile);
+    if (user && user.otp === otp) {
+      return user;
+    }
+    return null;
+  }
+
+  async updateUserOtp(mobile: number, userDto: UserDto): Promise<User> {
+    return await this.usersService.updateUserByMobile(mobile, userDto);
   }
 }
