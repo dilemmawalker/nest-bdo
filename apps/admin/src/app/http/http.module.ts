@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
-import { APP_GUARD, RouterModule, Routes } from '@nestjs/core';
+import { RouterModule } from '@nestjs/core';
 import { appRoutes } from '../app.route';
-import { JwtAuthGuard } from '../guards/jwt-auth.guard';
-import { RolesGuard } from '../guards/roles.guard';
 import { AuthModule } from './auth/auth.module';
 import { RoleModule } from './roles/role.module';
+import { StoreModule } from './stores/store.module';
 import { UserModule } from './users/user.module';
 import { WorkflowModule } from './workflow/workflow.module';
 
@@ -13,6 +12,7 @@ import { WorkflowModule } from './workflow/workflow.module';
     RouterModule.register(appRoutes),
     UserModule,
     WorkflowModule,
+    StoreModule,
     RoleModule,
     AuthModule,
   ],
