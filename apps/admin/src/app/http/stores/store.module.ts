@@ -1,34 +1,18 @@
-import { CoreUserModule } from '@core/users/core-user.module';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from '@shared/app/schemas/users/user.schema';
-import { CaslModule } from '../../../../../../libs/core/auth/src/casl/casl.module';
-import { UserController } from './store.controller';
+import { Store, StoreSchema } from '../../schemas/stores/store.schema';
+import { WorkflowModule } from '../workflow/workflow.module';
+import { StoreController } from './store.controller';
+import { StoreRepository } from './store.repository';
+import { StoreService } from './store.service';
 
 @Module({
   imports: [
-    CaslModule,
-    CoreUserModule,
-    MongooseModule.forFeatureAsync([
-      {
-        name: User.name,
-        useFactory: () => {
-          const schema = UserSchema;
-          schema.pre<User>('save', function (next) {
-            if (!this.createdAt) {
-              this.createdAt = new Date();
-            }
-            console.log('i am called');
-            this.updatedAt = new Date();
-            next();
-          });
-          return schema;
-        },
-      },
-    ]),
+    WorkflowModule,
+    MongooseModule.forFeature([{ name: Store.name, schema: StoreSchema }]),
   ],
-  controllers: [UserController],
-  providers: [],
+  controllers: [StoreController],
+  providers: [StoreRepository, StoreService],
   exports: [],
 })
-export class UserModule {}
+export class StoreModule {}
