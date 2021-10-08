@@ -22,6 +22,6 @@ import { WorkflowService } from './workflow.service';
   ],
   controllers: [WorkflowController],
   providers: [WorkflowService, WorkflowRepository],
-  exports: [],
+  exports: [WorkflowService, WorkflowRepository],
 })
 export class WorkflowModule {}

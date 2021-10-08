@@ -1,8 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { User } from '@shared/app/schemas/users/user.schema';
-import { Role } from 'apps/admin/src/constant/auth/roles.constant';
 import { v4 as uuidv4 } from 'uuid';
-import { Field } from '../../schemas/fields/field.schema';
 import { Workflow } from '../../schemas/workflows/workflow.schema';
 import { FieldsDto } from './dtos/fields.dto';
 import { StepDto } from './dtos/step.dto';
@@ -24,7 +21,7 @@ export class WorkflowService {
     return await this.workflowRepository.find({});
   }
 
-  async createUser(workflowDto: WorkflowDto): Promise<Workflow> {
+  async createWorkFlow(workflowDto: WorkflowDto): Promise<Workflow> {
     return await this.workflowRepository.create(workflowDto);
   }
 

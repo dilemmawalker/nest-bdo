@@ -16,11 +16,24 @@ export class WorkflowRepository {
   ) {}
 
   async findOne(WorkflowFilterQuery: FilterQuery<Workflow>): Promise<Workflow> {
-    return await this.workflowModel.findOne(WorkflowFilterQuery);
+    return await this.workflowModel.findOne(WorkflowFilterQuery).populate({
+      path: 'steps',
+      populate: {
+        path: 'fields',
+        model: 'Field',
+      },
+    });
   }
 
   async find(WorkflowsFilterQuery: FilterQuery<Workflow>): Promise<Workflow[]> {
-    return await this.workflowModel.find(WorkflowsFilterQuery);
+    const data = await this.workflowModel.find({}).populate({
+      path: 'steps',
+      populate: {
+        path: 'fields',
+        model: 'Field',
+      },
+    });
+    return data;
   }
 
   async create(WorkflowDto: WorkflowDto): Promise<Workflow> {
@@ -37,14 +50,9 @@ export class WorkflowRepository {
       if (element.stepId === fieldsDto.stepId) {
         console.log(' i run after');
         fieldsDto.fields.forEach(async (field: Field) => {
-          field.value = 'g';
           const fieldCol = new this.fieldModel(field);
           await fieldCol.save();
-          console.log(steps);
-          console.log('i run after');
-
           steps[i].fields.push(fieldCol._id);
-          // this.steps.push(steps[i]);
           workflow.steps = steps;
           console.log(steps);
           await workflow.update({ steps: steps });
@@ -68,4 +76,7 @@ export class WorkflowRepository {
     await workflow.save();
     return workflow;
   }
+}
+function forEach(arg0: (workflow: any) => void) {
+  throw new Error('Function not implemented.');
 }
