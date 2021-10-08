@@ -21,7 +21,7 @@ import { RoleResponse } from './responses/role.response';
 @Controller('roles')
 @ApiBearerAuth()
 export class RoleController {
-  constructor(private readonly roleService: RoleService) {}
+  constructor(private readonly roleService: RoleService) { }
 
   @Get(':rolename')
   @UseInterceptors(TransformInterceptor)
@@ -48,7 +48,7 @@ export class RoleController {
 
   @Post()
   @UseInterceptors(TransformInterceptor)
-  async createUser(@Body() createRoleRequest: CreateRoleRequest): Promise<any> {
+  async create(@Body() createRoleRequest: CreateRoleRequest): Promise<any> {
     const role = await this.roleService.createRole(
       CreateRoleRequest.getRoleDto(createRoleRequest),
     );

@@ -7,7 +7,7 @@ import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly UserRepository: UserRepository) {}
+  constructor(private readonly UserRepository: UserRepository) { }
 
   async findOne(username: string): Promise<User> {
     const user = await this.UserRepository.findOne({ username });
@@ -21,12 +21,12 @@ export class UserService {
     return await this.UserRepository.find({});
   }
 
-  async createUser(userDto: UserDto): Promise<User> {
+  async create(userDto: UserDto): Promise<User> {
     userDto.userId = uuidv4();
     return await this.UserRepository.create(userDto);
   }
 
-  async updateUser(username: string, userDto: UserDto): Promise<User> {
+  async update(username: string, userDto: UserDto): Promise<User> {
     return await this.UserRepository.findOneAndUpdate({ username }, userDto);
   }
 
@@ -39,8 +39,10 @@ export class UserService {
   }
 
   async updateUserByMobile(mobile: number, otp: string): Promise<User> {
-    const entity = new UserDto();
-    entity.otp = otp;
-    return await this.UserRepository.findOneAndUpdate({ mobile }, entity);
+    const user = await this.findOneByMobile(mobile);
+    if (!user) {
+      throw new NotFoundException();
+    }
+    return await this.UserRepository.findOneAndUpdate({ mobile }, user);
   }
 }

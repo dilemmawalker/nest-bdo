@@ -21,6 +21,7 @@ export class OtpStrategy extends PassportStrategy(Strategy) {
     let user = await this.authService.validateUserByOtp(mobile, otp);
     if (!user) {
       throw new UnauthorizedException(AUTH_FAILURE_MESSAGE);
+      return;
     }
     user = await this.userService.updateUserByMobile(mobile, '');
     const userPayload = { user };
