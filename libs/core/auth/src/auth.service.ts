@@ -37,7 +37,7 @@ export class AuthService {
   }
 
   generateOtp(): string {
-    if (process.env.STAGE === 'staging') {
+    if (process.env.SERVER_ENV === 'staging') {
       return TEMP_OTP;
     }
     const digits = '0123456789';

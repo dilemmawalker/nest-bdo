@@ -19,6 +19,7 @@ import { LoginResponse } from './responses/login.response';
 import { SendOtpRequest } from './requests/send-otp.request';
 import { UserService } from '@core/users/user.service';
 import { OtpAuthGuard } from '../../guards/otp-auth.guard';
+import { LoginRequest } from './requests/login.request';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -51,7 +52,7 @@ export class AuthController {
   })
   @UseGuards(OtpAuthGuard)
   @Post('login')
-  async login(@Request() req) {
+  async login(@Body() loginRequest: LoginRequest, @Request() req) {
     return ResponseUtils.success(
       new LoginResponse(
         req.user.access_token,
