@@ -50,7 +50,7 @@ export class WorkflowController {
   @Get()
   async getWorkflows(@Request() req): Promise<any> {
     const workflow = await this.workflowService.getWorkflows();
-    return ResponseUtils.success(WorkflowResponse.fromWorkflowArray(workflow));
+    return workflow;
   }
 
   @Post()
@@ -59,10 +59,10 @@ export class WorkflowController {
     type: WorkflowResponse,
   })
   @UseInterceptors(TransformInterceptor)
-  async createUser(
+  async createWorkFlow(
     @Body() createWorkflowRequest: CreateWorkflowRequest,
   ): Promise<any> {
-    const workflow = await this.workflowService.createUser(
+    const workflow = await this.workflowService.createWorkFlow(
       CreateWorkflowRequest.getWorkFlowDto(createWorkflowRequest),
     );
     return ResponseUtils.success(WorkflowResponse.fromWorkflow(workflow));

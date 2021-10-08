@@ -40,6 +40,7 @@
     "mongoose": "^6.0.6",
     "nest-winston": "^1.6.0",
     "passport": "^0.4.1",
+    "passport-custom": "^1.1.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "reflect-metadata": "^0.1.13",

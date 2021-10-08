@@ -5,6 +5,7 @@ import * as mongoose from 'mongoose';
 
 export type RoleDocument = Role & Document;
 
+
 @Schema()
 export class Role extends BaseItemSchema {
   @Prop()

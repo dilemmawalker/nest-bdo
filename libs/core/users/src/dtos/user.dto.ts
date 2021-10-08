@@ -8,4 +8,5 @@ export class UserDto {
   mobile: number;
   password: string;
   username: string;
+  otp: string;
 }
