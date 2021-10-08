@@ -37,10 +37,10 @@ export class AuthController {
   async sendOtp(@Body() sendOtpRequest: SendOtpRequest) {
     const user = await this.userService.updateUserByMobile(
       sendOtpRequest.mobile,
-      SendOtpRequest.getUserDto(this.authService.generateOtp()),
+      this.authService.generateOtp(),
     );
     return ResponseUtils.success(
-      new SendOtpResponse(SendOtpResponse.fromUser(user)),
+      new SendOtpResponse(user.mobile),
       OTP_SUCCESS_MESSAGE,
     );
   }
@@ -53,7 +53,10 @@ export class AuthController {
   @Post('login')
   async login(@Request() req) {
     return ResponseUtils.success(
-      new LoginResponse(req.user.access_token),
+      new LoginResponse(
+        req.user.access_token,
+        LoginResponse.fromUser(req.user.userBody),
+      ),
       AUTH_SUCCESS_MESSAGE,
     );
   }

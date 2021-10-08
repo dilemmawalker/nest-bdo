@@ -22,14 +22,11 @@ export class OtpStrategy extends PassportStrategy(Strategy) {
     if (!user) {
       throw new UnauthorizedException(AUTH_FAILURE_MESSAGE);
     }
-    user = await this.userService.updateUserByMobile(
-      mobile,
-      OtpStrategy.getUserDto(''),
-    );
+    user = await this.userService.updateUserByMobile(mobile, '');
     const userPayload = { user };
     const access_token = this.jwtService.sign(userPayload);
     const roles = user.roles;
-    return { access_token, roles };
+    return { access_token, roles, userBody: user };
   }
   static getUserDto(otp: string): UserDto {
     const entity = new UserDto();
