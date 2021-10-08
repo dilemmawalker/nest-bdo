@@ -38,7 +38,9 @@ export class UserService {
     throw new NotFoundException();
   }
 
-  async updateUserByMobile(mobile: number, userDto: UserDto): Promise<User> {
-    return await this.UserRepository.findOneAndUpdate({ mobile }, userDto);
+  async updateUserByMobile(mobile: number, otp: string): Promise<User> {
+    const entity = new UserDto();
+    entity.otp = otp;
+    return await this.UserRepository.findOneAndUpdate({ mobile }, entity);
   }
 }
