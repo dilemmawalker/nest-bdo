@@ -1,37 +1,35 @@
+import { Prop } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
-import { Role } from 'apps/admin/src/constant/auth/roles.constant';
 import { User } from 'libs/shared/app/schemas/users/user.schema';
+import { StepData, Store } from '../../../schemas/stores/store.schema';
 
-export class UserResponse {
+export class StoreResponse {
   @ApiProperty()
-  userId: string;
-
-  @ApiProperty()
-  email: string;
-
-  @ApiProperty()
-  password: string;
+  @Prop({ required: true })
+  name: string;
 
   @ApiProperty()
-  username: string;
+  mobile: string;
 
   @ApiProperty()
-  roles: Role[];
+  attributes: StepData[];
 
-  static fromUser(user: User) {
-    const entity = new UserResponse();
-    entity.userId = user.userId;
-    entity.email = user.email;
-    entity.password = user.password;
-    entity.username = user.username;
-    entity.roles = user.roles;
+  @ApiProperty()
+  lead: StepData;
+
+  static fromStore(store: Store) {
+    const entity = new StoreResponse();
+    entity.name = store.name;
+    entity.mobile = store.mobile;
+    entity.attributes = store.attributes;
+    entity.lead = store.lead;
     return entity;
   }
 
-  static fromUserArray(users: User[]): UserResponse[] {
+  static fromStoreArray(stores: Store[]): StoreResponse[] {
     const entities = [];
-    users.forEach((user) => {
-      entities.push(this.fromUser(user));
+    stores.forEach((store) => {
+      entities.push(this.fromStore(store));
     });
     return entities;
   }
