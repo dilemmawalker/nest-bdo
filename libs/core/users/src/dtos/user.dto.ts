@@ -4,6 +4,7 @@ import { Types } from 'mongoose';
 export class UserDto {
   userId: string;
   email: string;
+  name: string;
   age: number;
   mobile: number;
   password: string;

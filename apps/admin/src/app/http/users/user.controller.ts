@@ -29,7 +29,7 @@ export class UserController {
   constructor(
     private readonly UserService: UserService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
-  ) { }
+  ) {}
 
   @Get(':username')
   @UseInterceptors(TransformInterceptor)

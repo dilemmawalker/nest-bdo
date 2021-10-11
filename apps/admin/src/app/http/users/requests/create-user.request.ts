@@ -15,6 +15,10 @@ export class CreateUserRequest {
   @IsEmail()
   email: string;
 
+  @ApiProperty()
+  @IsNotEmpty()
+  name: string;
+
   @ApiProperty({ required: true, type: 'number' })
   @IsInt()
   @Max(9999999999)
@@ -44,6 +48,7 @@ export class CreateUserRequest {
     userDto.email = createUserRequest.email;
     userDto.password = createUserRequest.password;
     userDto.age = createUserRequest.age;
+    userDto.name = createUserRequest.name;
     userDto.username = createUserRequest.username;
     userDto.mobile = createUserRequest.mobile;
     return userDto;
