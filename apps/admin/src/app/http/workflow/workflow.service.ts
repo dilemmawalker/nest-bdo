@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { DEFAULT_WORKFLOW_POSITION } from 'apps/admin/src/constant/workflows/workflow.constant';
 import { v4 as uuidv4 } from 'uuid';
 import { Workflow } from '../../schemas/workflows/workflow.schema';
 import { FieldsDto } from './dtos/fields.dto';
@@ -7,7 +8,7 @@ import { WorkflowDto } from './dtos/workflow.dto';
 import { WorkflowRepository } from './workflow.repository';
 @Injectable()
 export class WorkflowService {
-  constructor(private readonly workflowRepository: WorkflowRepository) {}
+  constructor(private readonly workflowRepository: WorkflowRepository) { }
 
   async findOne(key: string): Promise<Workflow> {
     const workflow = await this.workflowRepository.findOne({ key });
@@ -22,6 +23,8 @@ export class WorkflowService {
   }
 
   async createWorkFlow(workflowDto: WorkflowDto): Promise<Workflow> {
+    workflowDto.key = uuidv4();
+    workflowDto.position = DEFAULT_WORKFLOW_POSITION;
     return await this.workflowRepository.create(workflowDto);
   }
 

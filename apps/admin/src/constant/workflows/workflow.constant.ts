@@ -1,0 +1,1 @@
+export const DEFAULT_WORKFLOW_POSITION = 0;
