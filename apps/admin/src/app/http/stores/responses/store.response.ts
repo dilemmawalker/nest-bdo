@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Role } from 'apps/admin/src/constant/auth/roles.constant';
+import { Role } from '@shared/app/schemas/users/roles.schema';
 import { User } from 'libs/shared/app/schemas/users/user.schema';
 
 export class UserResponse {

@@ -21,11 +21,11 @@ export class CaslAbilityFactory {
       Ability<[Action, Subjects]>
     >(Ability as AbilityClass<AppAbility>);
 
-    if (user.roles.indexOf(Role.Admin) != -1) {
-      can(Action.Manage, 'all'); // read-write access to everything
-    } else {
-      can(Action.Read, 'all'); // read-only access to everything
-    }
+    // if (user.roles.indexOf(Role.Admin) != -1) {
+    //   can(Action.Manage, 'all'); // read-write access to everything
+    // } else {
+    //   can(Action.Read, 'all'); // read-only access to everything
+    // }
 
     can(Action.Update, User, { username: user.username });
     // cannot(Action.Delete, Article, { isPublished: true }); #REFERENCE_ONLY
