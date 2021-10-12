@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { removeItem } from '@shared/app/utils/function/helper.function';
 import { FilterQuery, Model } from 'mongoose';
-import { Field } from '../../schemas/fields/field.schema';
-import { Step } from '../../schemas/steps/steps.schema';
-import { Workflow } from '../../schemas/workflows/workflow.schema';
+import { Field } from '../../../apps/admin/src/app/schemas/fields/field.schema';
+import { Step } from '../../../apps/admin/src/app/schemas/steps/steps.schema';
+import { Workflow } from '../../../apps/admin/src/app/schemas/workflows/workflow.schema';
 import { AssignFieldDto } from './dtos/assign-field.dto';
 import { FieldsDto } from './dtos/fields.dto';
 import { StepDto } from './dtos/step.dto';
@@ -15,7 +15,7 @@ export class WorkflowRepository {
   constructor(
     @InjectModel(Workflow.name) private workflowModel: Model<Workflow>,
     @InjectModel(Field.name) private fieldModel: Model<Field>,
-  ) { }
+  ) {}
 
   async findOne(WorkflowFilterQuery: FilterQuery<Workflow>): Promise<Workflow> {
     return await this.workflowModel.findOne(WorkflowFilterQuery).populate({

@@ -21,7 +21,7 @@ import { AddStepRequest } from './requests/add-steps.request';
 import { AssignFieldRequest } from './requests/assign-field.request';
 import { CreateWorkflowRequest } from './requests/create-workflow.request';
 import { WorkflowResponse } from './responses/workflow.response';
-import { WorkflowService } from './workflow.service';
+import { WorkflowService } from '../../../../../../libs/core/workflow/workflow.service';
 
 @ApiTags('Workflows')
 @Controller('workflows')

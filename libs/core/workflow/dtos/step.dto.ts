@@ -1,5 +1,5 @@
 import { DEFAULT_STEP_POSITION } from 'apps/admin/src/constant/workflows/workflow.constant';
-import { Field } from '../../../schemas/fields/field.schema';
+import { Field } from '../../../../apps/admin/src/app/schemas/fields/field.schema';
 
 export class StepDto {
   name: string;
