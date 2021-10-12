@@ -8,8 +8,9 @@ import { StoreDto } from './dtos/store.dtos';
 export class StoreRepository {
   constructor(@InjectModel(Store.name) private StoreModel: Model<Store>) {}
 
-  async create(StoreDto: StoreDto): Promise<Store> {
-    const newStore = new this.StoreModel(StoreDto);
+  async create(storeDto: StoreDto): Promise<Store> {
+    console.log(StoreDto.getStore(storeDto));
+    const newStore = new this.StoreModel(StoreDto.getStore(storeDto));
     return await newStore.save();
   }
 }

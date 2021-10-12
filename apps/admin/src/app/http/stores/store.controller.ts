@@ -16,8 +16,6 @@ import { CreateStoreRequest } from './requests/create-store.request';
 import { StoreResponse } from './responses/store.response';
 import { StoreService } from './store.service';
 
-
-
 @ApiTags('Stores')
 @Controller('stores')
 @ApiBearerAuth()

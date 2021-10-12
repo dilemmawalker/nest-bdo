@@ -36,7 +36,7 @@ export class AuthController {
   })
   @Post('send-otp')
   async sendOtp(@Body() sendOtpRequest: SendOtpRequest) {
-    const user = await this.userService.updateUserByMobile(
+    const user = await this.userService.updateOtp(
       sendOtpRequest.mobile,
       this.authService.generateOtp(),
     );

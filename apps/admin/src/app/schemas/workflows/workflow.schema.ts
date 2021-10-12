@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { DEFAULT_WORKFLOW_POSITION } from 'apps/admin/src/constant/workflows/workflow.constant';
 import { Document, Types } from 'mongoose';
 import { Step } from '../steps/steps.schema';
 
@@ -13,7 +14,7 @@ export class Workflow {
   steps: Step[] = [];
 
   @Prop()
-  position: number;
+  position: number = DEFAULT_WORKFLOW_POSITION;
 
   @Prop({ required: true, unique: true })
   key: string;

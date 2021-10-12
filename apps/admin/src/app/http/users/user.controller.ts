@@ -56,8 +56,8 @@ export class UserController {
 
   @Post()
   @UseInterceptors(TransformInterceptor)
-  async createUser(@Body() createUserRequest: CreateUserRequest): Promise<any> {
-    const user = await this.UserService.createUser(
+  async create(@Body() createUserRequest: CreateUserRequest): Promise<any> {
+    const user = await this.UserService.create(
       CreateUserRequest.getUserDto(createUserRequest),
     );
     return ResponseUtils.success(UserResponse.fromUser(user));
@@ -65,11 +65,11 @@ export class UserController {
 
   @Patch(':userId')
   @UseInterceptors(TransformInterceptor)
-  async updateUser(
+  async update(
     @Param('userId') userId: string,
     @Body() updateUserDto: UpdateUserRequest,
   ): Promise<any> {
-    const user = await this.UserService.updateUser(
+    const user = await this.UserService.update(
       userId,
       UpdateUserRequest.getUserDto(updateUserDto),
     );
