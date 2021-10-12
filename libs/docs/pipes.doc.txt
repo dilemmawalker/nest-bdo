@@ -1,0 +1,12 @@
+Nest comes with eight pipes available out-of-the-box:
+
+ValidationPipe
+ParseIntPipe
+ParseFloatPipe
+ParseBoolPipe
+ParseArrayPipe
+ParseUUIDPipe
+ParseEnumPipe
+DefaultValuePipe
+
+Follow Links for Docs - https://docs.nestjs.com/pipes

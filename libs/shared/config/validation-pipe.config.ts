@@ -1,5 +1,5 @@
-export function validationPipeConfig(): object {
-    return {
-        transform: true
-    }
+export function validationPipeConfig(): any {
+  return {
+    transform: true,
+  };
 }

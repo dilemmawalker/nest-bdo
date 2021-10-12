@@ -1,5 +1,5 @@
-export function configModuleConfig(): object {
-    return {
-        transform: true
-    }
+export function configModuleConfig(): any {
+  return {
+    transform: true,
+  };
 }

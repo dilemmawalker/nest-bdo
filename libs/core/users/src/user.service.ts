@@ -1,36 +1,46 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { User } from '@shared/app/schemas/users/user.schema';
+import { Role } from 'apps/admin/src/constant/auth/roles.constant';
 import { v4 as uuidv4 } from 'uuid';
-import { User } from "../../../shared/app/schemas/users/user.schema";
-import { UserDto } from "./dtos/user.dto";
-import { UserRepository } from "./user.repository";
+import { UserDto } from './dtos/user.dto';
+import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UserService {
-    constructor(private readonly UserRepository: UserRepository) {}
+  constructor(private readonly userRepository: UserRepository) {}
 
-    async getUserById(userId: string): Promise<User> {
-        let user = await this.UserRepository.findOne({ userId });
-        if(user){
-            console.log(user);
-            return user;
-        }
-        throw new NotFoundException();
+  async findOne(username: string): Promise<User> {
+    const user = await this.userRepository.findOne({ username });
+    if (user) {
+      return user;
     }
+    throw new NotFoundException();
+  }
 
-    async getUsers(): Promise<User[]> {
-        return await this.UserRepository.find({});
-    }
+  async getUsers(): Promise<User[]> {
+    return await this.userRepository.find({});
+  }
 
-    async createUser(email: string, age: number): Promise<User> {
-        return await this.UserRepository.create({
-            userId: uuidv4(),
-            email,
-            age,
-            favoriteFoods: []
-        })
-    }
+  async create(userDto: UserDto): Promise<User> {
+    userDto.userId = uuidv4();
+    return await this.userRepository.create(userDto);
+  }
 
-    async updateUser(userId: string, userUpdates: UserDto): Promise<User> {
-        return await this.UserRepository.findOneAndUpdate({ userId }, userUpdates);
+  async update(username: string, userDto: UserDto): Promise<User> {
+    return await this.userRepository.findOneAndUpdate({ username }, userDto);
+  }
+
+  async findOneByMobile(mobile: number): Promise<User> {
+    const user = await this.userRepository.findOne({ mobile });
+    if (user) {
+      return user;
     }
+    throw new NotFoundException();
+  }
+
+  async updateOtp(mobile: number, otp: string): Promise<User> {
+    const user = await this.findOneByMobile(mobile);
+    user.otp = otp;
+    return await this.update(user.username, user);
+  }
 }
