@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { removeItem } from '@shared/app/utils/function/helper.function';
 import { FilterQuery, Model } from 'mongoose';
-import { Field } from '../../schemas/fields/field.schema';
-import { Step } from '../../schemas/steps/steps.schema';
-import { Workflow } from '../../schemas/workflows/workflow.schema';
-import { AssignFieldDto } from './dtos/assign-field.dto';
-import { FieldsDto } from './dtos/fields.dto';
-import { StepDto } from './dtos/step.dto';
-import { WorkflowDto } from './dtos/workflow.dto';
+import { Field } from '../../../apps/admin/src/app/schemas/fields/field.schema';
+import { Step } from '../../../apps/admin/src/app/schemas/steps/steps.schema';
+import { Workflow } from '../../../apps/admin/src/app/schemas/workflows/workflow.schema';
+import { AssignFieldDto } from '../../../apps/admin/src/app/http/workflow/dtos/assign-field.dto';
+import { FieldsDto } from '../../../apps/admin/src/app/http/workflow/dtos/fields.dto';
+import { StepDto } from '../../../apps/admin/src/app/http/workflow/dtos/step.dto';
+import { WorkflowDto } from '../../../apps/admin/src/app/http/workflow/dtos/workflow.dto';
 
 @Injectable()
 export class WorkflowRepository {
@@ -139,7 +139,7 @@ export class WorkflowRepository {
           await fieldCol.save();
           steps[i].fields.push(fieldCol._id);
           workflow.steps = steps;
-          console.log(steps);
+          
           await workflow.update({ steps: steps });
         });
       }
@@ -152,7 +152,7 @@ export class WorkflowRepository {
     const workflow = await this.workflowModel.findOne({
       key: stepDto.workflowKey,
     });
-    console.log(workflow);
+    
     const step = new Step();
     step.stepId = stepDto.stepId;
     step.name = stepDto.name;
@@ -162,7 +162,4 @@ export class WorkflowRepository {
     await workflow.save();
     return workflow;
   }
-}
-function forEach(arg0: (workflow: any) => void) {
-  throw new Error('Function not implemented.');
 }

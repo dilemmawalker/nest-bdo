@@ -21,7 +21,7 @@ import { RoleResponse } from './responses/role.response';
 @Controller('roles')
 @ApiBearerAuth()
 export class RoleController {
-  constructor(private readonly roleService: RoleService) { }
+  constructor(private readonly roleService: RoleService) {}
 
   @Get(':rolename')
   @UseInterceptors(TransformInterceptor)

@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { DEFAULT_WORKFLOW_POSITION } from 'apps/admin/src/constant/workflows/workflow.constant';
 import { v4 as uuidv4 } from 'uuid';
-import { Workflow } from '../../schemas/workflows/workflow.schema';
-import { AssignFieldDto } from './dtos/assign-field.dto';
-import { FieldsDto } from './dtos/fields.dto';
-import { StepDto } from './dtos/step.dto';
-import { WorkflowDto } from './dtos/workflow.dto';
+import { Workflow } from '../../../apps/admin/src/app/schemas/workflows/workflow.schema';
+import { AssignFieldDto } from '../../../apps/admin/src/app/http/workflow/dtos/assign-field.dto';
+import { FieldsDto } from '../../../apps/admin/src/app/http/workflow/dtos/fields.dto';
+import { StepDto } from '../../../apps/admin/src/app/http/workflow/dtos/step.dto';
+import { WorkflowDto } from '../../../apps/admin/src/app/http/workflow/dtos/workflow.dto';
 import { WorkflowRepository } from './workflow.repository';
 @Injectable()
 export class WorkflowService {
