@@ -9,16 +9,12 @@ export class AddStepRequest {
   name: string;
 
   @ApiProperty()
-  position: number;
-
-  @ApiProperty()
-  key: string;
+  workflowKey: string;
 
   static getStepDto(addStepsRequest: AddStepRequest) {
     const stepDto = new StepDto();
     stepDto.name = addStepsRequest.name;
-    stepDto.position = addStepsRequest.position;
-    stepDto.key = addStepsRequest.key;
+    stepDto.workflowKey = addStepsRequest.workflowKey;
     return stepDto;
   }
 }

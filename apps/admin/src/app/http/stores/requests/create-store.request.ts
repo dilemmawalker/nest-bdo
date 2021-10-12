@@ -1,6 +1,7 @@
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
-import { FieldData } from '../../../schemas/stores/store.schema';
+import { FieldInputData } from '../../../schemas/stores/store.schema';
+import { FieldData } from '../../workflow/requests/add-fields.request';
 import { StoreDto } from '../dtos/store.dtos';
 
 const NAME_KEY = 'name';
@@ -11,16 +12,14 @@ export class CreateStoreFieldData {
   inputValue: any;
 
   @ApiProperty()
-  name: string;
+  label: string;
 
   @ApiProperty()
   fieldId: string;
+
+  @ApiProperty()
+  keyName: string;
 }
-
-
-
-
-
 
 export class CreateStoreRequest {
   @ApiProperty({ type: [CreateStoreFieldData] })
@@ -34,17 +33,15 @@ export class CreateStoreRequest {
   static getStoreDto(createStoreRequest: CreateStoreRequest) {
     const storeDto = new StoreDto();
     storeDto.lead.stepId = createStoreRequest.stepId;
-    storeDto.lead.data = {};
+    storeDto.lead.data = [];
     createStoreRequest.data.forEach((element) => {
-      const fieldData = new FieldData();
-      fieldData.name = element.name;
+      const fieldData = new FieldInputData();
+      fieldData.label = element.label;
       fieldData.fieldId = element.fieldId;
       fieldData.inputValue = element.inputValue;
-      storeDto.lead.data[fieldData.name] = fieldData;
+      fieldData.keyName = element.keyName;
+      storeDto.lead.data.push(fieldData);
     });
-
-    storeDto.name = storeDto.lead.data[NAME_KEY].inputValue;
-    storeDto.name = storeDto.lead.data[MOBILE_KEY].inputValue;
     return storeDto;
   }
 }

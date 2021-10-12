@@ -21,7 +21,6 @@ export class StoreResponse {
     const entity = new StoreResponse();
     entity.name = store.name;
     entity.mobile = store.mobile;
-    entity.lead = store.lead;
     return entity;
   }
 

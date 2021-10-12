@@ -6,34 +6,30 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export type StoreDocument = Store & Document;
 
-@Schema()
+@Schema({ strict: false })
 export class Store extends BaseItemSchema {
   @Prop({ required: true })
   name: string;
-
   mobile: string;
-
   workflow: Workflow;
-
-  attributes: Record<string, StepData>;
-
-  lead: StepData;
-
   currentStepId: string;
 }
 
 export class StepData extends BaseItemSchema {
-  data: Record<string, FieldData>;
+  data: FieldInputData[];
   stepId: string;
   position: number;
 }
 
-export class FieldData extends BaseItemSchema {
+export class FieldInputData extends BaseItemSchema {
   @ApiProperty()
-  name: string;
+  label: string;
 
   @ApiProperty()
   inputValue: any;
+
+  @ApiProperty()
+  keyName: any;
 
   @ApiProperty()
   dataType: string;
