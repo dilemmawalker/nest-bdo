@@ -16,6 +16,12 @@ export class RoleService {
     throw new NotFoundException();
   }
 
+  async findMany(roleNames: string[]): Promise<Role[]> {
+    const Roles = await this.roleRepository.findMany({ roleNames });
+    if (Roles.length === 0) return null;
+    return Roles;
+  }
+
   async getRoles(): Promise<Role[]> {
     return await this.roleRepository.find({});
   }

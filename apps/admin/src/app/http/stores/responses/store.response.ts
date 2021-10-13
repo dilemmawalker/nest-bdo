@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Role } from '@shared/app/schemas/users/roles.schema';
 import { User } from 'libs/shared/app/schemas/users/user.schema';
+import * as mongoose from 'mongoose';
 
 export class UserResponse {
   @ApiProperty()
@@ -16,7 +17,7 @@ export class UserResponse {
   username: string;
 
   @ApiProperty()
-  roles: Role[];
+  roles: mongoose.Types.ObjectId[];
 
   static fromUser(user: User) {
     const entity = new UserResponse();

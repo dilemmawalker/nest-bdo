@@ -30,7 +30,7 @@ export class User extends BaseItemSchema {
   otp: string;
 
   @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Role' }])
-  roles: Role[] = [];
+  roles: mongoose.Types.ObjectId[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
