@@ -21,9 +21,9 @@ export class RoleRepository {
     return await this.roleModel.find({});
   }
 
-  async create(userDto: RoleDto): Promise<Role> {
-    const newUser = new this.roleModel(userDto);
-    return await newUser.save();
+  async create(roleDto: RoleDto): Promise<Role> {
+    const newRole = new this.roleModel(roleDto);
+    return await newRole.save();
   }
 
   async findOneAndUpdate(

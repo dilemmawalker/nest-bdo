@@ -18,8 +18,10 @@ import { ResponseUtils } from '@shared/app/utils/class/response.utils';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
+import { AddRoleRequest } from './requests/add-role.request';
 import { CreateUserRequest } from './requests/create-user.request';
 import { UpdateUserRequest } from './requests/update-user.request';
+import { AddRoleResponse } from './responses/add-role.response';
 import { UserResponse } from './responses/user.response';
 
 @ApiTags('Users')
@@ -74,5 +76,19 @@ export class UserController {
       UpdateUserRequest.getUserDto(updateUserDto),
     );
     return ResponseUtils.success(UserResponse.fromUser(user));
+  }
+
+  @Post('roles/add')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: AddRoleResponse,
+  })
+  @UseInterceptors(TransformInterceptor)
+  async addRoles(@Body() addRoleRequest: AddRoleRequest): Promise<any> {
+    const user = await this.UserService.addRole(
+      addRoleRequest.userId,
+      AddRoleRequest.getRoleDto(addRoleRequest),
+    );
+    return ResponseUtils.success(AddRoleResponse.fromUser(user));
   }
 }

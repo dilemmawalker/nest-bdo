@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { User } from '@shared/app/schemas/users/user.schema';
 import { Role } from 'apps/admin/src/constant/auth/roles.constant';
+import { RoleDto } from 'libs/core/roles/src/dtos/role.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { UserDto } from './dtos/user.dto';
 import { UserRepository } from './user.repository';
@@ -42,5 +43,9 @@ export class UserService {
     const user = await this.findOneByMobile(mobile);
     user.otp = otp;
     return await this.update(user.username, user);
+  }
+
+  async addRole(userId: string, roleDto: RoleDto) {
+    return await this.UserRepository.addRole(userId, roleDto);
   }
 }
