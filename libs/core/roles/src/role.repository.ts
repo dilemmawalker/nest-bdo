@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Permission } from '@shared/app/schemas/users/permission.schema';
 import { Role } from '@shared/app/schemas/users/roles.schema';
+import { ObjectId } from 'bson';
 import { FilterQuery, Model } from 'mongoose';
 import { RoleDto } from './dtos/role.dto';
 
@@ -14,7 +15,13 @@ export class RoleRepository {
   ) {}
 
   async findOne(roleFilterQuery: FilterQuery<Role>): Promise<Role> {
-    return await this.roleModel.findOne({ username: roleFilterQuery.username });
+    return await this.roleModel.findOne({ name: roleFilterQuery.name });
+  }
+
+  async findMany(roleFilterQuery: FilterQuery<Role>): Promise<Role[]> {
+    return await this.roleModel.find({
+      name: { $in: roleFilterQuery.roleNames },
+    });
   }
 
   async find(usersFilterQuery: FilterQuery<Role>): Promise<Role[]> {

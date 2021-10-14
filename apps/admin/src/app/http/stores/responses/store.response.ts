@@ -3,6 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Role } from '@shared/app/schemas/users/roles.schema';
 import { User } from 'libs/shared/app/schemas/users/user.schema';
 import { StepData, Store } from '../../../schemas/stores/store.schema';
+import * as mongoose from 'mongoose';
 
 export class StoreResponse {
   @ApiProperty()
