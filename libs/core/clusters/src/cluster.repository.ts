@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Cluster } from '@shared/app/schemas/users/cluster.schema';
 import { Workflow } from 'apps/admin/src/app/schemas/workflows/workflow.schema';
-import { FilterQuery, Model } from 'mongoose';
+import { FilterQuery, Model, Types } from 'mongoose';
 import { ClusterDto } from './dtos/cluster.dto';
 
 @Injectable()
@@ -51,5 +51,9 @@ export class ClusterRepository {
         new: true,
       },
     );
+  }
+
+  async findOneById(clusterId: Types.ObjectId): Promise<Cluster> {
+    return await this.clusterModel.findById(clusterId);
   }
 }

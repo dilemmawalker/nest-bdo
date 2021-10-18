@@ -35,11 +35,11 @@ export class RoleRepository {
 
   async findOneAndUpdate(
     roleFilterQuery: FilterQuery<Role>,
-    user: Partial<Role>,
+    role: Partial<Role>,
   ): Promise<Role> {
     return await this.roleModel.findOneAndUpdate(
       { username: roleFilterQuery.username },
-      user,
+      role,
       {
         new: true,
       },

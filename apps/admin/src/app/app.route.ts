@@ -1,4 +1,5 @@
 import { Routes } from '@nestjs/core';
+import { AgentModule } from './http/agent/agent.module';
 import { AuthModule } from './http/auth/auth.module';
 import { ClusterModule } from './http/clusters/cluster.module';
 import { FieldModule } from './http/fields/field.module';
@@ -18,6 +19,7 @@ const appRoutes: Routes = [
       { path: '/', module: RoleModule },
       { path: '/', module: StoreModule },
       { path: '/', module: ClusterModule },
+      { path: '/', module: AgentModule },
     ],
   },
 ];
