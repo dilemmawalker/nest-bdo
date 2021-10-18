@@ -1,6 +1,6 @@
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
-import { AssignFieldDto } from '../dtos/assign-field.dto';
-import { FieldsDto } from '../dtos/fields.dto';
+import { AssignFieldDto } from '../../../../../../../libs/core/workflow/dtos/assign-field.dto';
+import { FieldsDto } from '../../../../../../../libs/core/workflow/dtos/fields.dto';
 
 @ApiTags('Workflow')
 export class AssignFieldRequest {

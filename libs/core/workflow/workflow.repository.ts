@@ -5,10 +5,10 @@ import { FilterQuery, Model } from 'mongoose';
 import { Field } from '../../shared/app/schemas/fields/field.schema';
 import { Step } from '../../shared/app/schemas/steps/steps.schema';
 import { Workflow } from '../../shared/app/schemas/workflows/workflow.schema';
-import { AssignFieldDto } from '../../../apps/admin/src/app/http/workflow/dtos/assign-field.dto';
-import { FieldsDto } from '../../../apps/admin/src/app/http/workflow/dtos/fields.dto';
-import { StepDto } from '../../../apps/admin/src/app/http/workflow/dtos/step.dto';
-import { WorkflowDto } from '../../../apps/admin/src/app/http/workflow/dtos/workflow.dto';
+import { AssignFieldDto } from './dtos/assign-field.dto';
+import { FieldsDto } from './dtos/fields.dto';
+import { StepDto } from './dtos/step.dto';
+import { WorkflowDto } from './dtos/workflow.dto';
 
 @Injectable()
 export class WorkflowRepository {

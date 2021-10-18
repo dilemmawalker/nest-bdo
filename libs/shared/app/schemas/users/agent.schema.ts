@@ -23,4 +23,11 @@ export class Agent extends BaseItemSchema {
   stores: Types.ObjectId[];
 }
 
+export class AgentDto {
+  userId: string;
+  active: boolean;
+  agentId: string;
+  clusterName: string;
+  cluster: Types.ObjectId;
+}
 export const AgentSchema = SchemaFactory.createForClass(Agent);

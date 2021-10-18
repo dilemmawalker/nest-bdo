@@ -19,7 +19,7 @@ export class AddRoleResponse {
   username: string;
 
   @ApiProperty()
-  roles: Role[];
+  roles: mongoose.Types.ObjectId[];
 
   static fromUser(user: User) {
     const entity = new AddRoleResponse();

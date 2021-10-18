@@ -30,6 +30,12 @@
       "@core/users/*": [
         "libs/core/users/src/*"
       ],
+      "@core/clusters": [
+        "libs/core/clusters/src"
+      ],
+      "@core/clusters/*": [
+        "libs/core/clusters/src/*"
+      ],
       "@shared": [
         "libs/shared"
       ],

@@ -46,6 +46,6 @@ export class UserService {
   }
 
   async addRole(userId: string, roleDto: RoleDto) {
-    return await this.UserRepository.addRole(userId, roleDto);
+    return await this.userRepository.addRole(userId, roleDto);
   }
 }
