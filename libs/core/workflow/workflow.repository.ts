@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { removeItem } from '@shared/app/utils/function/helper.function';
 import { FilterQuery, Model } from 'mongoose';
-import { Field } from '../../../apps/admin/src/app/schemas/fields/field.schema';
-import { Step } from '../../../apps/admin/src/app/schemas/steps/steps.schema';
-import { Workflow } from '../../../apps/admin/src/app/schemas/workflows/workflow.schema';
+import { Field } from '../../shared/app/schemas/fields/field.schema';
+import { Step } from '../../shared/app/schemas/steps/steps.schema';
+import { Workflow } from '../../shared/app/schemas/workflows/workflow.schema';
 import { AssignFieldDto } from '../../../apps/admin/src/app/http/workflow/dtos/assign-field.dto';
 import { FieldsDto } from '../../../apps/admin/src/app/http/workflow/dtos/fields.dto';
 import { StepDto } from '../../../apps/admin/src/app/http/workflow/dtos/step.dto';
@@ -15,7 +15,7 @@ export class WorkflowRepository {
   constructor(
     @InjectModel(Workflow.name) private workflowModel: Model<Workflow>,
     @InjectModel(Field.name) private fieldModel: Model<Field>,
-  ) { }
+  ) {}
 
   async findOne(WorkflowFilterQuery: FilterQuery<Workflow>): Promise<Workflow> {
     return await this.workflowModel.findOne(WorkflowFilterQuery).populate({
@@ -139,7 +139,6 @@ export class WorkflowRepository {
           await fieldCol.save();
           steps[i].fields.push(fieldCol._id);
           workflow.steps = steps;
-          
           await workflow.update({ steps: steps });
         });
       }
@@ -152,7 +151,7 @@ export class WorkflowRepository {
     const workflow = await this.workflowModel.findOne({
       key: stepDto.workflowKey,
     });
-    
+
     const step = new Step();
     step.stepId = stepDto.stepId;
     step.name = stepDto.name;
@@ -160,6 +159,12 @@ export class WorkflowRepository {
     step.fields = [];
     workflow.steps.push(step);
     await workflow.save();
-    return workflow;
+    return workflow.populate({
+      path: 'steps',
+      populate: {
+        path: 'fields',
+        model: 'Field',
+      },
+    });
   }
 }

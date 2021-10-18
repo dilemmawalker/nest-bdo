@@ -1,7 +1,7 @@
 import { Prop } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
-import { Step } from '../../../schemas/steps/steps.schema';
-import { Workflow } from '../../../schemas/workflows/workflow.schema';
+import { Step } from '@shared/app/schemas/steps/steps.schema';
+import { Workflow } from '@shared/app/schemas/workflows/workflow.schema';
 
 export class WorkflowResponse {
   @ApiProperty()

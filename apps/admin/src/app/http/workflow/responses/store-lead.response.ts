@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Field } from '../../../schemas/fields/field.schema';
-import { Workflow } from '../../../schemas/workflows/workflow.schema';
+import { Field } from '@shared/app/schemas/fields/field.schema';
+import { Workflow } from '@shared/app/schemas/workflows/workflow.schema';
 
 export class StoreLeadResponse {
   static fromStore(leadFlow: Workflow): any {

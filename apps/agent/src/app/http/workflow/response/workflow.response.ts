@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { FieldInputData } from '@shared/app/schemas/stores/store.schema';
+import { FieldInputData, Store } from '@shared/app/schemas/stores/store.schema';
+import { Workflow } from '@shared/app/schemas/workflows/workflow.schema';
 import { User } from 'libs/shared/app/schemas/users/user.schema';
 
 class WorkflowResponseMeta {
