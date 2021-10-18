@@ -2,8 +2,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { BaseItemSchema } from '@shared/app/schemas/base/base-Item.schema';
 import { Document } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
-import { Workflow } from 'apps/admin/src/app/schemas/workflows/workflow.schema';
-import { Field } from 'apps/admin/src/app/schemas/fields/field.schema';
+import { Workflow } from '@shared/app/schemas/workflows/workflow.schema';
+import { Field } from '@shared/app/schemas/fields/field.schema';
 
 export type StoreDocument = Store & Document;
 
@@ -11,6 +11,10 @@ export type StoreDocument = Store & Document;
 export class Store extends BaseItemSchema {
   @Prop({ required: true })
   name: string;
+
+  @Prop({ required: true, unique: true })
+  storeId: string;
+
   mobile: string;
   workflow: Workflow;
   currentStepId: string;
@@ -27,13 +31,16 @@ export class FieldInputData extends BaseItemSchema {
   label: string;
 
   @ApiProperty()
-  inputValue: any;
+  inputValue: any = '';
 
   @ApiProperty()
   keyName: any;
 
   @ApiProperty()
-  dataType: string;
+  group: FieldInputData[] = [];
+
+  @ApiProperty()
+  type: string;
 
   @ApiProperty()
   position: number;
@@ -42,7 +49,7 @@ export class FieldInputData extends BaseItemSchema {
     const entity = new FieldInputData();
     entity.label = field.label;
     entity.keyName = field.keyName;
-    entity.dataType = field.dataType;
+    entity.type = field.type;
     return entity;
   }
 

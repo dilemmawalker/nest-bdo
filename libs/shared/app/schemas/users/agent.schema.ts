@@ -13,8 +13,11 @@ export class Agent extends BaseItemSchema {
   @Prop({ unique: true })
   userId: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Workflow' })
-  workflow: Types.ObjectId[];
+  @Prop({ unique: true })
+  status: boolean;
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Cluster' })
+  cluster: Types.ObjectId;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Store' })
   stores: Types.ObjectId[];
