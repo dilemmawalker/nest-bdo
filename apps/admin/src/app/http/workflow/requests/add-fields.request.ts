@@ -1,25 +1,39 @@
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
-import { Field } from '../../../schemas/fields/field.schema';
 import { FieldsDto } from '../dtos/fields.dto';
+
+export class FieldData {
+  @ApiProperty()
+  label: string;
+
+  @ApiProperty()
+  options: any;
+
+  position: number;
+
+  @ApiProperty()
+  type: string;
+
+  @ApiProperty()
+  isGroup: boolean;
+}
 
 @ApiTags('Workflow')
 export class AddFieldsRequest {
-  @ApiProperty({ type: [Field] })
+  @ApiProperty({ type: [FieldData] })
   @IsNotEmpty()
-  fields: Field[];
+  fields: FieldData[];
 
   @ApiProperty()
   stepId: string;
 
   @ApiProperty()
-  key: string;
+  workflowKey: string;
 
   static getFieldsDto(addStepsRequest: AddFieldsRequest) {
     const fieldsDto = new FieldsDto();
-    fieldsDto.key = addStepsRequest.key;
+    fieldsDto.workflowKey = addStepsRequest.workflowKey;
     fieldsDto.stepId = addStepsRequest.stepId;
-    fieldsDto.fields = addStepsRequest.fields;
     return fieldsDto;
   }
 }

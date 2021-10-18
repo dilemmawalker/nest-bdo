@@ -29,7 +29,7 @@ import { UserResponse } from './responses/user.response';
 @ApiBearerAuth()
 export class UserController {
   constructor(
-    private readonly UserService: UserService,
+    private readonly userService: UserService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
   ) {}
 
@@ -40,7 +40,7 @@ export class UserController {
     type: UserResponse,
   })
   async getUser(@Param('username') username: string): Promise<any> {
-    const user = await this.UserService.findOne(username);
+    const user = await this.userService.findOne(username);
     return ResponseUtils.success(UserResponse.fromUser(user));
   }
 
@@ -52,14 +52,14 @@ export class UserController {
   })
   @Get()
   async getUsers(@Request() req): Promise<any> {
-    const user = await this.UserService.getUsers();
+    const user = await this.userService.getUsers();
     return ResponseUtils.success(UserResponse.fromUserArray(user));
   }
 
   @Post()
   @UseInterceptors(TransformInterceptor)
-  async createUser(@Body() createUserRequest: CreateUserRequest): Promise<any> {
-    const user = await this.UserService.createUser(
+  async create(@Body() createUserRequest: CreateUserRequest): Promise<any> {
+    const user = await this.userService.create(
       CreateUserRequest.getUserDto(createUserRequest),
     );
     return ResponseUtils.success(UserResponse.fromUser(user));
@@ -67,11 +67,11 @@ export class UserController {
 
   @Patch(':userId')
   @UseInterceptors(TransformInterceptor)
-  async updateUser(
+  async update(
     @Param('userId') userId: string,
     @Body() updateUserDto: UpdateUserRequest,
   ): Promise<any> {
-    const user = await this.UserService.updateUser(
+    const user = await this.userService.update(
       userId,
       UpdateUserRequest.getUserDto(updateUserDto),
     );

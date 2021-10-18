@@ -1,0 +1,2 @@
+export const DEFAULT_WORKFLOW_POSITION = 0;
+export const DEFAULT_STEP_POSITION = 0;

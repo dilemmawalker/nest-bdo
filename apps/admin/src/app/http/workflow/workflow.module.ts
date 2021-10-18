@@ -1,19 +1,18 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Field, FieldSchema } from '../../schemas/fields/field.schema';
-import { Step, StepSchema } from '../../schemas/steps/steps.schema';
+import { CoreWorkflowModule } from 'libs/core/workflow/core-workflow.module';
+import { Field, FieldSchema } from '@shared/app/schemas/fields/field.schema';
+import { Step, StepSchema } from '@shared/app/schemas/steps/steps.schema';
 import {
   Workflow,
   WorkflowSchema,
-} from '../../schemas/workflows/workflow.schema';
-import { CaslModule } from '../../../../../../libs/core/auth/src/casl/casl.module';
+} from '@shared/app/schemas/workflows/workflow.schema';
+import { StoreModule } from '../stores/store.module';
 import { WorkflowController } from './workflow.controller';
-import { WorkflowRepository } from './workflow.repository';
-import { WorkflowService } from './workflow.service';
 
 @Module({
   imports: [
-    CaslModule,
+    CoreWorkflowModule,
     MongooseModule.forFeature([
       { name: Workflow.name, schema: WorkflowSchema },
     ]),
@@ -21,7 +20,7 @@ import { WorkflowService } from './workflow.service';
     MongooseModule.forFeature([{ name: Step.name, schema: StepSchema }]),
   ],
   controllers: [WorkflowController],
-  providers: [WorkflowService, WorkflowRepository],
+  providers: [],
   exports: [],
 })
 export class WorkflowModule {}

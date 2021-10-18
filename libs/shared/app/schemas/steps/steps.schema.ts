@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
-import { Document, SchemaTypes, Types } from 'mongoose';
-import { Field } from '../fields/field.schema';
+import { Document, Types } from 'mongoose';
 import * as mongoose from 'mongoose';
 
 export type StepDocument = Step & Document;

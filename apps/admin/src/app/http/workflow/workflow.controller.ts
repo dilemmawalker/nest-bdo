@@ -18,9 +18,11 @@ import { Logger } from 'winston';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { AddFieldsRequest } from './requests/add-fields.request';
 import { AddStepRequest } from './requests/add-steps.request';
+import { AssignFieldRequest } from './requests/assign-field.request';
 import { CreateWorkflowRequest } from './requests/create-workflow.request';
 import { WorkflowResponse } from './responses/workflow.response';
-import { WorkflowService } from './workflow.service';
+import { WorkflowService } from '../../../../../../libs/core/workflow/workflow.service';
+import { StoreService } from '../stores/store.service';
 
 @ApiTags('Workflows')
 @Controller('workflows')
@@ -37,7 +39,7 @@ export class WorkflowController {
     status: HttpStatus.OK,
     type: WorkflowResponse,
   })
-  async getUser(@Param('key') key: string): Promise<any> {
+  async getWorkflow(@Param('key') key: string): Promise<any> {
     const workflow = await this.workflowService.findOne(key);
     return ResponseUtils.success(WorkflowResponse.fromWorkflow(workflow));
   }
@@ -50,7 +52,7 @@ export class WorkflowController {
   @Get()
   async getWorkflows(@Request() req): Promise<any> {
     const workflow = await this.workflowService.getWorkflows();
-    return ResponseUtils.success(WorkflowResponse.fromWorkflowArray(workflow));
+    return workflow;
   }
 
   @Post()
@@ -59,10 +61,10 @@ export class WorkflowController {
     type: WorkflowResponse,
   })
   @UseInterceptors(TransformInterceptor)
-  async createUser(
+  async createWorkFlow(
     @Body() createWorkflowRequest: CreateWorkflowRequest,
   ): Promise<any> {
-    const workflow = await this.workflowService.createUser(
+    const workflow = await this.workflowService.createWorkFlow(
       CreateWorkflowRequest.getWorkFlowDto(createWorkflowRequest),
     );
     return ResponseUtils.success(WorkflowResponse.fromWorkflow(workflow));
@@ -77,11 +79,48 @@ export class WorkflowController {
     return ResponseUtils.success(WorkflowResponse.fromWorkflow(workflow));
   }
 
-  @Post('field/add')
+  @Post(':workflowKey/step/:stepId/remove')
   @UseInterceptors(TransformInterceptor)
-  async addFields(@Body() fieldsRequest: AddFieldsRequest): Promise<any> {
-    const workflow = await this.workflowService.addFields(
-      AddFieldsRequest.getFieldsDto(fieldsRequest),
+  async removeStep(
+    @Param('workflowKey') workflowKey: string,
+    @Param('stepId') stepId: string,
+  ): Promise<any> {
+    const workflow = await this.workflowService.removeStep(workflowKey, stepId);
+    return ResponseUtils.success(WorkflowResponse.fromWorkflow(workflow));
+  }
+
+  // TODO: REMOVE LATER
+  //  @Post('step/fields/add')
+  // @UseInterceptors(TransformInterceptor)
+  // async addFields(@Body() fieldsRequest: AddFieldsRequest): Promise<any> {
+  //   const workflow = await this.workflowService.addFields(
+  //     AddFieldsRequest.getFieldsDto(fieldsRequest),
+  //   );
+  //   return ResponseUtils.success(WorkflowResponse.fromWorkflow(workflow));
+  // }
+
+  @Post('step/fields/assign')
+  @UseInterceptors(TransformInterceptor)
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: WorkflowResponse,
+  })
+  async assignFields(@Body() assignField: AssignFieldRequest): Promise<any> {
+    const workflow = await this.workflowService.assignField(
+      AssignFieldRequest.getAssignFieldDto(assignField),
+    );
+    return ResponseUtils.success(WorkflowResponse.fromWorkflow(workflow));
+  }
+
+  @Post('step/fields/unassign')
+  @UseInterceptors(TransformInterceptor)
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: WorkflowResponse,
+  })
+  async unassignFields(@Body() assignField: AssignFieldRequest): Promise<any> {
+    const workflow = await this.workflowService.unassignField(
+      AssignFieldRequest.getAssignFieldDto(assignField),
     );
     return ResponseUtils.success(WorkflowResponse.fromWorkflow(workflow));
   }

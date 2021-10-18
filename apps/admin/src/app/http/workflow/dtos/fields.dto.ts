@@ -1,7 +1,7 @@
-import { Field } from '../../../schemas/fields/field.schema';
+import { Field } from '@shared/app/schemas/fields/field.schema';
 
 export class FieldsDto {
   fields: Field[];
   stepId: string;
-  key: string;
+  workflowKey: string;
 }
