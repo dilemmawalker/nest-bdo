@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CoreWorkflowModule } from 'libs/core/workflow/core-workflow.module';
 import { Field, FieldSchema } from '@shared/app/schemas/fields/field.schema';
 import { Step, StepSchema } from '@shared/app/schemas/steps/steps.schema';
 import {
   Workflow,
   WorkflowSchema,
 } from '@shared/app/schemas/workflows/workflow.schema';
-import { StoreModule } from '../stores/store.module';
+import { CoreWorkflowModule } from 'libs/core/workflow/core-workflow.module';
 import { WorkflowController } from './workflow.controller';
 
 @Module({

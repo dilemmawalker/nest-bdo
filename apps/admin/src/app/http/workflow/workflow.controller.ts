@@ -22,6 +22,7 @@ import { AssignFieldRequest } from './requests/assign-field.request';
 import { CreateWorkflowRequest } from './requests/create-workflow.request';
 import { WorkflowResponse } from './responses/workflow.response';
 import { WorkflowService } from '../../../../../../libs/core/workflow/workflow.service';
+import { StoreService } from '../stores/store.service';
 
 @ApiTags('Workflows')
 @Controller('workflows')
@@ -88,14 +89,15 @@ export class WorkflowController {
     return ResponseUtils.success(WorkflowResponse.fromWorkflow(workflow));
   }
 
-  // @Post('step/fields/add')
-  @UseInterceptors(TransformInterceptor)
-  async addFields(@Body() fieldsRequest: AddFieldsRequest): Promise<any> {
-    const workflow = await this.workflowService.addFields(
-      AddFieldsRequest.getFieldsDto(fieldsRequest),
-    );
-    return ResponseUtils.success(WorkflowResponse.fromWorkflow(workflow));
-  }
+  // TODO: REMOVE LATER
+  //  @Post('step/fields/add')
+  // @UseInterceptors(TransformInterceptor)
+  // async addFields(@Body() fieldsRequest: AddFieldsRequest): Promise<any> {
+  //   const workflow = await this.workflowService.addFields(
+  //     AddFieldsRequest.getFieldsDto(fieldsRequest),
+  //   );
+  //   return ResponseUtils.success(WorkflowResponse.fromWorkflow(workflow));
+  // }
 
   @Post('step/fields/assign')
   @UseInterceptors(TransformInterceptor)
