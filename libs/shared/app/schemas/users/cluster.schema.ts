@@ -9,9 +9,6 @@ export class Cluster extends BaseItemSchema {
   name: string;
 
   @Prop({ required: true, type: mongoose.Types.ObjectId, ref: 'Workflow' })
-  lead: mongoose.Types.ObjectId;
-
-  @Prop({ required: true, type: mongoose.Types.ObjectId, ref: 'Workflow' })
   onboarding: mongoose.Types.ObjectId;
 }
 

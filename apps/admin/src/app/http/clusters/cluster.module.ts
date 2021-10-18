@@ -6,6 +6,10 @@ import {
   ClusterSchema,
 } from '@shared/app/schemas/users/cluster.schema';
 import { CoreClusterModule } from 'libs/core/clusters/src/core-cluster.module';
+import {
+  Workflow,
+  WorkflowSchema,
+} from '../../schemas/workflows/workflow.schema';
 import { ClusterController } from './cluster.controller';
 
 @Module({

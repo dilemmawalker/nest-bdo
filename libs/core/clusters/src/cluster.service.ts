@@ -18,4 +18,8 @@ export class ClusterService {
   async getClusters(): Promise<Cluster[]> {
     return await this.clusterRepository.find();
   }
+
+  async updateCluster(name: string, clusterDto: ClusterDto): Promise<Cluster> {
+    return await this.clusterRepository.findOneAndUpdate({ name }, clusterDto);
+  }
 }

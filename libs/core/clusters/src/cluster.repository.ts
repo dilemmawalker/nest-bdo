@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Cluster } from '@shared/app/schemas/users/cluster.schema';
+import { Workflow } from 'apps/admin/src/app/schemas/workflows/workflow.schema';
 import { FilterQuery, Model } from 'mongoose';
 import { ClusterDto } from './dtos/cluster.dto';
 
@@ -8,6 +9,7 @@ import { ClusterDto } from './dtos/cluster.dto';
 export class ClusterRepository {
   constructor(
     @InjectModel(Cluster.name) private clusterModel: Model<Cluster>,
+    @InjectModel(Workflow.name) private workflowModel: Model<Workflow>,
   ) {}
 
   async findOne(clusterFilterQuery: FilterQuery<Cluster>): Promise<Cluster> {
@@ -19,6 +21,13 @@ export class ClusterRepository {
   }
 
   async create(clusterDto: ClusterDto): Promise<Cluster> {
+    const workflow = await this.workflowModel.findOne({
+      key: clusterDto.onboardingWorkflowKey,
+    });
+    if (workflow === null) {
+      throw new NotFoundException();
+    }
+    clusterDto.onboarding = workflow._id;
     const newCluster = new this.clusterModel(clusterDto);
     await newCluster.save();
     return newCluster;
@@ -26,11 +35,18 @@ export class ClusterRepository {
 
   async findOneAndUpdate(
     roleFilterQuery: FilterQuery<Cluster>,
-    cluster: Partial<Cluster>,
+    clusterDto: ClusterDto,
   ): Promise<Cluster> {
+    const workflow = await this.workflowModel.findOne({
+      key: clusterDto.onboardingWorkflowKey,
+    });
+    if (workflow === null) {
+      throw new NotFoundException();
+    }
+    clusterDto.onboarding = workflow._id;
     return await this.clusterModel.findOneAndUpdate(
       { name: roleFilterQuery.name },
-      cluster,
+      clusterDto,
       {
         new: true,
       },
