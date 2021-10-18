@@ -1,9 +1,12 @@
-import { Mixed } from 'mongoose';
+import { Mixed, Types } from 'mongoose';
 
 export class FieldDto {
   label: string;
   keyName: string;
   options: Mixed;
+  groupKey: string;
   position = 0;
-  dataType: string;
+  groups: Types.ObjectId[] = [];
+  validations: Types.ObjectId[] = [];
+  type: string;
 }

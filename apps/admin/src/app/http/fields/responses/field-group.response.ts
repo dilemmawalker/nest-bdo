@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Field } from '@shared/app/schemas/fields/field.schema';
+import { FieldGroup } from '@shared/app/schemas/fields/field-group.schema';
 import { Types } from 'mongoose';
 
-export class FieldResponse {
+export class FieldGroupResponse {
   @ApiProperty()
-  keyName: string;
+  groupKey: string;
 
   @ApiProperty()
   label: string;
@@ -20,22 +20,19 @@ export class FieldResponse {
 
   @ApiProperty()
   groups: Types.ObjectId[] = [];
-
-  static fromField(field: Field) {
-    const entity = new FieldResponse();
-    entity.keyName = field.keyName;
+  static fromFieldGroup(field: FieldGroup) {
+    const entity = new FieldGroupResponse();
+    entity.groupKey = field.groupKey;
     entity.label = field.label;
     entity.options = field.options;
     entity.type = field.type;
-    entity.validations = field.validations;
-    entity.groups = field.groups;
     return entity;
   }
 
-  static fromFieldArray(fields: Field[]): FieldResponse[] {
+  static fromFieldGroupArray(fieldGroups: FieldGroup[]): FieldGroupResponse[] {
     const entities = [];
-    fields.forEach((field) => {
-      entities.push(this.fromField(field));
+    fieldGroups.forEach((fieldGroup) => {
+      entities.push(this.fromFieldGroup(fieldGroup));
     });
     return entities;
   }
