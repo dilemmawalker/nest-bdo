@@ -1,13 +1,22 @@
-import { StepData } from '../../../schemas/stores/store.schema';
-
+class StoreField {
+  inputValue: any = '';
+  keyName: any;
+}
 export class StoreDto {
-  name: string;
-  mobile: string;
-  lead: StepData = new StepData();
+  constructor(workflowKey: string, stepId: string, storeId: string) {
+    this.workflowKey = workflowKey;
+    this.stepId = stepId;
+    this.storeId = storeId;
+  }
+  stepId: string;
+  storeId: string;
+  workflowKey: string;
+  fields: StoreField[] = [];
 
   static getStore(storeData: StoreDto) {
     const storeObj = {};
-    storeData.lead.data.forEach((element) => {
+    storeObj['storeId'] = storeData.storeId;
+    storeData.fields.forEach((element) => {
       storeObj[element.keyName] = element.inputValue;
     });
     return storeObj;

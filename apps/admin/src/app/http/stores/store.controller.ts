@@ -12,7 +12,6 @@ import { ResponseUtils } from '@shared/app/utils/class/response.utils';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
 import { StoreLeadResponse } from '../workflow/responses/store-lead.response';
-import { CreateStoreRequest } from './requests/create-store.request';
 import { StoreResponse } from './responses/store.response';
 import { StoreService } from './store.service';
 
@@ -24,17 +23,6 @@ export class StoreController {
     private readonly storeService: StoreService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
   ) {}
-
-  @Post()
-  @UseInterceptors(TransformInterceptor)
-  async createStore(
-    @Body() createStoreRequest: CreateStoreRequest,
-  ): Promise<any> {
-    const store = await this.storeService.createStore(
-      CreateStoreRequest.getStoreDto(createStoreRequest),
-    );
-    return ResponseUtils.success(StoreResponse.fromStore(store));
-  }
 
   @Get('/lead-flow')
   @UseInterceptors(TransformInterceptor)
