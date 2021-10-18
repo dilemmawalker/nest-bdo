@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { RouterModule } from '@nestjs/core';
 import { appRoutes } from '../app.route';
 import { AuthModule } from './auth/auth.module';
+import { ClusterModule } from './clusters/cluster.module';
 import { FieldModule } from './fields/field.module';
 import { RoleModule } from './roles/role.module';
 import { StoreModule } from './stores/store.module';
@@ -17,6 +18,7 @@ import { WorkflowModule } from './workflow/workflow.module';
     FieldModule,
     RoleModule,
     AuthModule,
+    ClusterModule,
   ],
   providers: [],
 })

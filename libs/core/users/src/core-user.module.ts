@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { Agent, AgentSchema } from '@shared/app/schemas/users/agent.schema';
 import {
   Permission,
   PermissionSchema,
@@ -16,6 +17,7 @@ import { UserService } from './user.service';
       { name: Permission.name, schema: PermissionSchema },
     ]),
     MongooseModule.forFeature([{ name: Role.name, schema: RoleSchema }]),
+    MongooseModule.forFeature([{ name: Agent.name, schema: AgentSchema }]),
   ],
   providers: [UserService, UserRepository],
   exports: [UserService, UserRepository],
