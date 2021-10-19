@@ -5,7 +5,7 @@ import { Agent, AgentDto } from '@shared/app/schemas/users/agent.schema';
 export class AgentResponse extends AgentDto {
   static fromAgent(agent: Agent): AgentResponse {
     const agentResponse = new AgentResponse();
-    agentResponse.active = agent.active;
+    agentResponse.active = agent.status;
     agentResponse.cluster = agent.cluster;
     agentResponse.agentId = agent.agentId;
     return agentResponse;

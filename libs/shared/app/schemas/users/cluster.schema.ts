@@ -1,5 +1,4 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Workflow } from 'apps/admin/src/app/schemas/workflows/workflow.schema';
 import { BaseItemSchema } from '../base/base-Item.schema';
 import * as mongoose from 'mongoose';
 

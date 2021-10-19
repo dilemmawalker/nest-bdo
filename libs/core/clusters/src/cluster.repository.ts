@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Cluster } from '@shared/app/schemas/users/cluster.schema';
-import { Workflow } from 'apps/admin/src/app/schemas/workflows/workflow.schema';
+import { Workflow } from '@shared/app/schemas/workflows/workflow.schema';
 import { FilterQuery, Model, Types } from 'mongoose';
 import { ClusterDto } from './dtos/cluster.dto';
 

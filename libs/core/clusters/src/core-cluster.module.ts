@@ -7,7 +7,7 @@ import {
 import {
   Workflow,
   WorkflowSchema,
-} from 'apps/admin/src/app/schemas/workflows/workflow.schema';
+} from '@shared/app/schemas/workflows/workflow.schema';
 import { ClusterRepository } from './cluster.repository';
 import { ClusterService } from './cluster.service';
 

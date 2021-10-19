@@ -13,8 +13,8 @@ export class Agent extends BaseItemSchema {
   @Prop({ unique: true })
   userId: string;
 
-  @Prop({ unique: true })
-  status: boolean;
+  @Prop({ required: true })
+  active: boolean;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Cluster' })
   cluster: Types.ObjectId;

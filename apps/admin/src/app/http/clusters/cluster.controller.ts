@@ -20,7 +20,7 @@ import { ClusterResponse } from './response/cluster.response';
 export class ClusterController {
   constructor(private readonly clusterService: ClusterService) {}
 
-  @Post('create')
+  @Post()
   @UseInterceptors(TransformInterceptor)
   @ApiResponse({
     status: HttpStatus.OK,
@@ -36,7 +36,7 @@ export class ClusterController {
     return ResponseUtils.success(ClusterResponse.fromCluster(cluster));
   }
 
-  @Post('update')
+  @Post()
   @UseInterceptors(TransformInterceptor)
   @ApiResponse({
     status: HttpStatus.OK,

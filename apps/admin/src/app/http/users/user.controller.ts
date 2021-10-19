@@ -85,7 +85,7 @@ export class UserController {
   })
   @UseInterceptors(TransformInterceptor)
   async addRoles(@Body() addRoleRequest: AddRoleRequest): Promise<any> {
-    const user = await this.UserService.addRole(
+    const user = await this.userService.addRole(
       addRoleRequest.userId,
       AddRoleRequest.getRoleDto(addRoleRequest),
     );

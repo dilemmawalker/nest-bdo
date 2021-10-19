@@ -31,7 +31,6 @@ export class OtpStrategy extends PassportStrategy(Strategy) {
     const agent = await this.agentService.findAgent(user.userId);
     if (!agent) {
       throw new UnauthorizedException();
-      return;
     }
     const cluster = await this.clusterService.findOneById(agent.cluster);
     const userPayload = {
