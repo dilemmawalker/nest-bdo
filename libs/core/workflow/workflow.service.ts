@@ -9,6 +9,7 @@ import { WorkflowDto } from './dtos/workflow.dto';
 import { FieldsDto } from './dtos/fields.dto';
 import { AssignFieldDto } from './dtos/assign-field.dto';
 import { StepDto } from './dtos/step.dto';
+import { generateWorkflowUrl } from '@shared/app/utils/function/helper.function';
 @Injectable()
 export class WorkflowService {
   constructor(
@@ -68,7 +69,7 @@ export class WorkflowService {
         current_step = i + 1;
         current_step_name = step.name;
         if (next_step) {
-          next_step_url = this.generateStepUrl(
+          next_step_url = generateWorkflowUrl(
             workflow.key,
             next_step.stepId,
             storeId,
@@ -76,7 +77,7 @@ export class WorkflowService {
         }
 
         if (prev_step) {
-          prev_step_url = this.generateStepUrl(
+          prev_step_url = generateWorkflowUrl(
             workflow.key,
             prev_step.stepId,
             storeId,
@@ -91,10 +92,6 @@ export class WorkflowService {
       next_step_url,
       prev_step_url,
     };
-  }
-
-  generateStepUrl(workflowKey: string, stepId: string, storeId: string) {
-    return `agent/api/workflow/${workflowKey}/${stepId}/${storeId}`;
   }
 
   getStepsFields(workflow: Workflow, stepId: string) {

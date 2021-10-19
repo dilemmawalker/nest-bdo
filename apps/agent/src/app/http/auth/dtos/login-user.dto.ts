@@ -10,5 +10,5 @@ export class LoginUserDto {
   username: string;
   otp: string;
   agentId: string;
-  workflowKey: Types.ObjectId;
+  leadUrl: string;
 }

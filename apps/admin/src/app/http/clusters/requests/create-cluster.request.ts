@@ -7,12 +7,12 @@ export class CreateClusterRequest {
   name: string;
 
   @ApiProperty({ required: true })
-  onboardingWorkflowkey: string;
+  onboardingWorkflowKey: string;
 
   static getClusterDto(createClusterRequest: CreateClusterRequest): ClusterDto {
     const entity = new ClusterDto();
     entity.name = createClusterRequest.name;
-    entity.onboardingWorkflowKey = createClusterRequest.onboardingWorkflowkey;
+    entity.onboardingWorkflowKey = createClusterRequest.onboardingWorkflowKey;
     return entity;
   }
 }

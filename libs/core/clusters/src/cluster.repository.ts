@@ -54,6 +54,9 @@ export class ClusterRepository {
   }
 
   async findOneById(clusterId: Types.ObjectId): Promise<Cluster> {
-    return await this.clusterModel.findById(clusterId);
+    return await this.clusterModel.findById(clusterId).populate({
+      path: 'onboarding',
+      model: 'Workflow',
+    });
   }
 }
