@@ -23,6 +23,16 @@ export class AgentRepository {
       ],
     });
   }
+
+  async getStores(agentId: string): Promise<any> {
+    const agent = await this.agentModel.findOne({ agentId: agentId }).populate({
+      path: 'stores',
+      model: 'Store',
+    });
+    console.log(agent);
+    return agent['stores'];
+  }
+
   async findOneAndUpdate(
     agentFilterQuery: FilterQuery<Agent>,
     agentDto: AgentDto,

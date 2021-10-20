@@ -24,8 +24,10 @@ export class WorkflowRequest {
     workflowKey: string,
     stepId: string,
     storeId: string,
+    agentId: string,
   ) {
     const storeDto = new StoreDto(workflowKey, stepId, storeId);
+    storeDto.agentId = agentId;
     createStoreRequest.fields.forEach((element) => {
       storeDto.fields.push(element);
     });

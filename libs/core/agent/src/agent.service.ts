@@ -10,6 +10,10 @@ export class AgentService {
     return await this.agentRepository.findOneAndUpdate({ agentId }, agentDto);
   }
 
+  async getStores(agentId: string): Promise<any> {
+    return await this.agentRepository.getStores(agentId);
+  }
+
   async findAgent(userId: string): Promise<Agent> {
     const agentDto = new AgentDto();
     agentDto.userId = userId;

@@ -1,23 +1,40 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { BaseItemSchema } from '@shared/app/schemas/base/base-Item.schema';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { Workflow } from '@shared/app/schemas/workflows/workflow.schema';
 import { Field } from '@shared/app/schemas/fields/field.schema';
+import * as mongoose from 'mongoose';
 
 export type StoreDocument = Store & Document;
 
 @Schema({ strict: false })
-export class Store extends BaseItemSchema {
+export class Store {
   @Prop({ required: true })
   name: string;
 
   @Prop({ required: true, unique: true })
   storeId: string;
 
+  @Prop({ required: true })
+  status: string;
+
+  @Prop({ required: true })
+  address: string;
+
   mobile: string;
-  workflow: Workflow;
+
+  @Prop({ required: true })
+  workflowKey: string;
+
+  @Prop({ required: true })
   currentStepId: string;
+
+  @Prop({ type: Date })
+  createdAt: Date;
+
+  @Prop({ type: Date })
+  updatedAt: Date;
 }
 
 export class StepData extends BaseItemSchema {
@@ -46,6 +63,7 @@ export class FieldInputData extends BaseItemSchema {
   position: number;
 
   static fromField(field: Field) {
+    console.log(field);
     const entity = new FieldInputData();
     entity.label = field.label;
     entity.keyName = field.keyName;

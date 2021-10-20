@@ -3,6 +3,7 @@ import {
   Body,
   Controller,
   Get,
+  Headers,
   HttpStatus,
   Param,
   Post,
@@ -10,8 +11,10 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { TransformInterceptor } from '@shared/app/interceptors/transform.interceptor';
+import { JWTUtil } from '@shared/app/utils/class/jwt.utils';
 import { ResponseUtils } from '@shared/app/utils/class/response.utils';
 import { ClassValidator } from '@shared/app/validators/class.validator';
+import { StoreResponse } from 'apps/admin/src/app/http/stores/responses/store.response';
 import { WorkflowResponse } from 'apps/admin/src/app/http/workflow/responses/workflow.response';
 import { WorkflowService } from 'libs/core/workflow/workflow.service';
 import { WorkflowRequest } from './requests/workflow.request';
@@ -20,7 +23,10 @@ import { WorkflowRequest } from './requests/workflow.request';
 @Controller('workflows')
 @ApiBearerAuth()
 export class WorkflowController {
-  constructor(private readonly workflowService: WorkflowService) {}
+  constructor(
+    private readonly workflowService: WorkflowService,
+    private readonly jwtUtil: JWTUtil,
+  ) {}
 
   @Get(':workflowKey/:stepId/:storeId')
   @UseInterceptors(TransformInterceptor)
@@ -49,6 +55,7 @@ export class WorkflowController {
   @Post(':workflowKey/:stepId/:storeId')
   @UseInterceptors(TransformInterceptor)
   async postWorkflow(
+    @Headers('Authorization') auth: string,
     @Body() workflowRequest: WorkflowRequest,
     @Param('workflowKey') workflowKey: string,
     @Param('stepId') stepId: string,
@@ -62,12 +69,14 @@ export class WorkflowController {
       storeId,
       stepId,
     );
+    const json = await this.jwtUtil.decode(auth);
     const store = await this.workflowService.post(
       WorkflowRequest.getStoreDto(
         workflowRequest,
         workflowKey,
         stepId,
         storeId,
+        json.agentId,
       ),
     );
     return ResponseUtils.success(store);

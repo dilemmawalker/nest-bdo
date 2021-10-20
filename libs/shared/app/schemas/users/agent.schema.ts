@@ -19,7 +19,7 @@ export class Agent extends BaseItemSchema {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Cluster' })
   cluster: Types.ObjectId;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Store' })
+  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'Store' })
   stores: Types.ObjectId[];
 }
 
