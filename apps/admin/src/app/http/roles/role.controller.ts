@@ -46,9 +46,15 @@ export class RoleController {
     return ResponseUtils.success(RoleResponse.fromRoleArray(roles));
   }
 
-  @Post()
   @UseInterceptors(TransformInterceptor)
-  async create(@Body() createRoleRequest: CreateRoleRequest): Promise<any> {
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: RoleResponse,
+  })
+  @Post('create')
+  async createRoles(
+    @Body() createRoleRequest: CreateRoleRequest,
+  ): Promise<any> {
     const role = await this.roleService.createRole(
       CreateRoleRequest.getRoleDto(createRoleRequest),
     );

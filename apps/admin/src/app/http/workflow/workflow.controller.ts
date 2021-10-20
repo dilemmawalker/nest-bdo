@@ -16,13 +16,11 @@ import { ResponseUtils } from '@shared/app/utils/class/response.utils';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
-import { AddFieldsRequest } from './requests/add-fields.request';
 import { AddStepRequest } from './requests/add-steps.request';
 import { AssignFieldRequest } from './requests/assign-field.request';
 import { CreateWorkflowRequest } from './requests/create-workflow.request';
 import { WorkflowResponse } from './responses/workflow.response';
 import { WorkflowService } from '../../../../../../libs/core/workflow/workflow.service';
-import { StoreService } from '../stores/store.service';
 
 @ApiTags('Workflows')
 @Controller('workflows')

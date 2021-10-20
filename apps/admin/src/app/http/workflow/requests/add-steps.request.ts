@@ -1,6 +1,6 @@
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
-import { StepDto } from '../dtos/step.dto';
+import { StepDto } from '../../../../../../../libs/core/workflow/dtos/step.dto';
 
 @ApiTags('Workflow')
 export class AddStepRequest {

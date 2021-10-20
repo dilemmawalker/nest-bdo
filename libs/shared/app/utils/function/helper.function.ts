@@ -9,3 +9,11 @@ export function removeItem<T>(arr: Array<T>, value: T): Array<T> {
   }
   return arr;
 }
+
+export function generateWorkflowUrl(
+  workflowKey: string,
+  stepId: string,
+  storeId: string,
+) {
+  return `agent/api/workflow/${workflowKey}/${stepId}/${storeId}`;
+}
