@@ -10,12 +10,27 @@ export class StoreDto {
   }
   stepId: string;
   storeId: string;
+  workflow: any;
   workflowKey: string;
+  currentStepId: string;
+  agentId: string;
+  status: string;
+  createdAt: Date;
+  updatedAt: Date;
   fields: StoreField[] = [];
 
   static getStore(storeData: StoreDto) {
     const storeObj = {};
     storeObj['storeId'] = storeData.storeId;
+    storeObj['status'] = storeData.status;
+    if (storeData.createdAt) {
+      storeObj['createdAt'] = storeData.createdAt;
+    }
+    if (storeData.workflowKey) {
+      storeObj['workflowKey'] = storeData.workflowKey;
+    }
+    storeObj['currentStepId'] = storeData.currentStepId;
+    storeObj['updatedAt'] = storeData.updatedAt;
     storeData.fields.forEach((element) => {
       storeObj[element.keyName] = element.inputValue;
     });

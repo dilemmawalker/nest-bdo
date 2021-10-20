@@ -1,4 +1,5 @@
 import { Routes } from '@nestjs/core';
+import { AgentModule } from './http/agents/agent.module';
 import { AuthModule } from './http/auth/auth.module';
 import { WorkflowModule } from './http/workflow/workflow.module';
 
@@ -8,6 +9,7 @@ export const appRoutes: Routes = [
     children: [
       { path: '/', module: WorkflowModule },
       { path: '/', module: AuthModule },
+      { path: '/', module: AgentModule },
     ],
   },
 ];

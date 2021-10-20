@@ -1,16 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 import { Workflow } from '../../shared/app/schemas/workflows/workflow.schema';
-import { AssignFieldDto } from '../../../apps/admin/src/app/http/workflow/dtos/assign-field.dto';
-import { FieldsDto } from '../../../apps/admin/src/app/http/workflow/dtos/fields.dto';
-import { StepDto } from '../../../apps/admin/src/app/http/workflow/dtos/step.dto';
-import { WorkflowDto } from '../../../apps/admin/src/app/http/workflow/dtos/workflow.dto';
 import { WorkflowRepository } from './workflow.repository';
 import { StoreRepository } from 'apps/admin/src/app/http/stores/store.repository';
-import { WorkflowResponse } from 'apps/agent/src/app/http/workflow/response/workflow.response';
-import { Field } from '@shared/app/schemas/fields/field.schema';
 import { FieldInputData, Store } from '@shared/app/schemas/stores/store.schema';
 import { StoreDto } from 'apps/admin/src/app/http/stores/dtos/store.dtos';
+import { WorkflowDto } from './dtos/workflow.dto';
+import { FieldsDto } from './dtos/fields.dto';
+import { AssignFieldDto } from './dtos/assign-field.dto';
+import { StepDto } from './dtos/step.dto';
+import { generateWorkflowUrl } from '@shared/app/utils/function/helper.function';
 @Injectable()
 export class WorkflowService {
   constructor(
@@ -36,19 +35,27 @@ export class WorkflowService {
     }
   }
   async createStore(storeDto: StoreDto): Promise<Store> {
+    storeDto.status = 'open';
+    storeDto.createdAt = new Date();
+    storeDto.updatedAt = new Date();
     return await this.storeRepository.create(storeDto);
   }
   async updateStore(storeDto: StoreDto): Promise<Store> {
+    storeDto.updatedAt = new Date();
     return await this.storeRepository.update(storeDto);
   }
 
   async get(workflowKey: string, storeId: string, stepId: string) {
     const workflow = await this.findOne(workflowKey);
+    console.log('ok field');
     const store = await this.storeRepository.findOne(storeId);
     const fields: FieldInputData[] = this.getInputFields(
       this.getStepsFields(workflow, stepId),
       store,
     );
+    if (store) {
+      await this.storeRepository.updateObj({ currentStepId: stepId }, storeId);
+    }
     const meta = this.getStoreMeta(workflow, store, stepId);
     return { fields, meta };
   }
@@ -70,7 +77,7 @@ export class WorkflowService {
         current_step = i + 1;
         current_step_name = step.name;
         if (next_step) {
-          next_step_url = this.generateStepUrl(
+          next_step_url = generateWorkflowUrl(
             workflow.key,
             next_step.stepId,
             storeId,
@@ -78,7 +85,7 @@ export class WorkflowService {
         }
 
         if (prev_step) {
-          prev_step_url = this.generateStepUrl(
+          prev_step_url = generateWorkflowUrl(
             workflow.key,
             prev_step.stepId,
             storeId,
@@ -93,10 +100,6 @@ export class WorkflowService {
       next_step_url,
       prev_step_url,
     };
-  }
-
-  generateStepUrl(workflowKey: string, stepId: string, storeId: string) {
-    return `agent/api/workflow/${workflowKey}/${stepId}/${storeId}`;
   }
 
   getStepsFields(workflow: Workflow, stepId: string) {
