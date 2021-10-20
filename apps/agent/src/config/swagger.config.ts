@@ -1,6 +1,6 @@
 import { DocumentBuilder } from '@nestjs/swagger';
 
-export const serverUrl = process.env.ADMIN_URL || '';
+export const serverUrl = process.env.AGENT_URL || '';
 
 export const swaggerConfig = new DocumentBuilder()
   .setTitle('Agent Apps 2 Api')
