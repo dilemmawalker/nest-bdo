@@ -35,19 +35,27 @@ export class WorkflowService {
     }
   }
   async createStore(storeDto: StoreDto): Promise<Store> {
+    storeDto.status = 'open';
+    storeDto.createdAt = new Date();
+    storeDto.updatedAt = new Date();
     return await this.storeRepository.create(storeDto);
   }
   async updateStore(storeDto: StoreDto): Promise<Store> {
+    storeDto.updatedAt = new Date();
     return await this.storeRepository.update(storeDto);
   }
 
   async get(workflowKey: string, storeId: string, stepId: string) {
     const workflow = await this.findOne(workflowKey);
+    console.log('ok field');
     const store = await this.storeRepository.findOne(storeId);
     const fields: FieldInputData[] = this.getInputFields(
       this.getStepsFields(workflow, stepId),
       store,
     );
+    if (store) {
+      await this.storeRepository.updateObj({ currentStepId: stepId }, storeId);
+    }
     const meta = this.getStoreMeta(workflow, store, stepId);
     return { fields, meta };
   }

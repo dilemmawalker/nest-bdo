@@ -10,6 +10,7 @@ import {
 } from '@shared/app/schemas/workflows/workflow.schema';
 import { WorkflowRepository } from './workflow.repository';
 import { WorkflowService } from './workflow.service';
+import { Agent, AgentSchema } from '@shared/app/schemas/users/agent.schema';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { WorkflowService } from './workflow.service';
     MongooseModule.forFeature([{ name: Field.name, schema: FieldSchema }]),
     MongooseModule.forFeature([{ name: Step.name, schema: StepSchema }]),
     MongooseModule.forFeature([{ name: Store.name, schema: StoreSchema }]),
+    MongooseModule.forFeature([{ name: Agent.name, schema: AgentSchema }]),
   ],
   providers: [WorkflowService, WorkflowRepository, StoreRepository],
   exports: [WorkflowService, WorkflowRepository],

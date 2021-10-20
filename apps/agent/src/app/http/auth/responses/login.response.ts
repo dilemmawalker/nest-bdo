@@ -18,6 +18,8 @@ export class LoginResponse {
   user: LoginUserDto;
 
   static fromUser(userData: any): LoginUserDto {
+    const leadWorkflowKey = 'd02854e3-c19f-48b0-90d8-4eda96781f60';
+    const leadStepId = '789036ff-e8fd-410d-94e6-b7fe641618fa';
     const entity = new LoginUserDto();
     const { user } = userData;
     entity.email = user.email;
@@ -26,11 +28,7 @@ export class LoginResponse {
     entity.username = user.username;
     entity.userId = user.userId;
     entity.agentId = userData.agentId;
-    entity.leadUrl = generateWorkflowUrl(
-      userData.workflowKey,
-      userData.stepId,
-      'new',
-    );
+    entity.leadUrl = generateWorkflowUrl(leadWorkflowKey, leadStepId, 'new');
     return entity;
   }
 }

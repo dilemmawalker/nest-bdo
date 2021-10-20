@@ -157,6 +157,9 @@ export class WorkflowRepository {
     step.name = stepDto.name;
     step.position = stepDto.position;
     step.fields = [];
+    if (!workflow.steps) {
+      workflow.steps = [];
+    }
     workflow.steps.push(step);
     await workflow.save();
     return workflow.populate({
