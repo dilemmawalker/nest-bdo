@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
@@ -10,6 +11,7 @@ import {
 import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { TransformInterceptor } from '@shared/app/interceptors/transform.interceptor';
 import { ResponseUtils } from '@shared/app/utils/class/response.utils';
+import { ClassValidator } from '@shared/app/validators/class.validator';
 import { WorkflowResponse } from 'apps/admin/src/app/http/workflow/responses/workflow.response';
 import { WorkflowService } from 'libs/core/workflow/workflow.service';
 import { WorkflowRequest } from './requests/workflow.request';
@@ -52,6 +54,9 @@ export class WorkflowController {
     @Param('stepId') stepId: string,
     @Param('storeId') storeId?: string,
   ): Promise<any> {
+    if (!this.validate(workflowRequest)) {
+      throw new BadRequestException();
+    }
     const workflowGet = await this.workflowService.get(
       workflowKey,
       storeId,
@@ -66,5 +71,13 @@ export class WorkflowController {
       ),
     );
     return ResponseUtils.success(store);
+  }
+
+  validate(workflowRequest: WorkflowRequest) {
+    let isValid = true;
+    workflowRequest.fields.forEach((field) => {
+      isValid = isValid && ClassValidator.typeValidation(field);
+    });
+    return isValid;
   }
 }
