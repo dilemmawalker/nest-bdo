@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Validation } from '@shared/app/schemas/validation/validation.schema';
+import { Types } from 'mongoose';
 import { ValidationDto } from './dtos/validation.dto';
 import { ValidationRepository } from './validation.repository';
 
@@ -23,5 +24,9 @@ export class ValidationService {
 
   async getAll(): Promise<Validation[]> {
     return await this.validationRepository.findAll();
+  }
+
+  async findMany(validationKeys: Types.ObjectId[]): Promise<Validation[]> {
+    return await this.validationRepository.findMany(validationKeys);
   }
 }

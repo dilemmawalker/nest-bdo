@@ -8,6 +8,9 @@ export type ValidationDocument = Validation & Document;
 @Schema()
 export class Validation {
   @ApiProperty()
+  _id: Types.ObjectId;
+
+  @ApiProperty()
   @Prop({ required: true })
   name: string;
 

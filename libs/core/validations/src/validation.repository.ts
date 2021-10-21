@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Validation } from '@shared/app/schemas/validation/validation.schema';
-import { FilterQuery, Model } from 'mongoose';
+import { FilterQuery, Model, Types } from 'mongoose';
 import { ValidationDto } from './dtos/validation.dto';
 
 @Injectable()
@@ -41,5 +41,11 @@ export class ValidationRepository {
 
   async findAll(): Promise<Validation[]> {
     return await this.validationModel.find({});
+  }
+
+  async findMany(validationKeys: Types.ObjectId[]): Promise<Validation[]> {
+    return await this.validationModel.find({
+      _id: { $in: validationKeys },
+    });
   }
 }

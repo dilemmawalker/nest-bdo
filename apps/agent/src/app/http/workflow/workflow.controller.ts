@@ -16,6 +16,8 @@ import { ResponseUtils } from '@shared/app/utils/class/response.utils';
 import { ClassValidator } from '@shared/app/validators/class.validator';
 import { StoreResponse } from 'apps/admin/src/app/http/stores/responses/store.response';
 import { WorkflowResponse } from 'apps/admin/src/app/http/workflow/responses/workflow.response';
+import { FieldService } from 'libs/core/fields/src/field.service';
+import { ValidationService } from 'libs/core/validations/src/validation.service';
 import { WorkflowService } from 'libs/core/workflow/workflow.service';
 import { WorkflowRequest } from './requests/workflow.request';
 
@@ -26,6 +28,8 @@ export class WorkflowController {
   constructor(
     private readonly workflowService: WorkflowService,
     private readonly jwtUtil: JWTUtil,
+    private readonly fieldService: FieldService,
+    private readonly validationService: ValidationService,
   ) {}
 
   @Get(':workflowKey/:stepId/:storeId')
@@ -61,9 +65,7 @@ export class WorkflowController {
     @Param('stepId') stepId: string,
     @Param('storeId') storeId?: string,
   ): Promise<any> {
-    if (!this.validate(workflowRequest)) {
-      throw new BadRequestException();
-    }
+    await this.validate(workflowRequest);
     const workflowGet = await this.workflowService.get(
       workflowKey,
       storeId,
@@ -82,11 +84,26 @@ export class WorkflowController {
     return ResponseUtils.success(store);
   }
 
-  validate(workflowRequest: WorkflowRequest) {
-    let isValid = true;
-    workflowRequest.fields.forEach((field) => {
-      isValid = isValid && ClassValidator.typeValidation(field);
+  async validate(workflowRequest: WorkflowRequest) {
+    workflowRequest.fields.forEach(async (workflowRequestField) => {
+      const field = await this.fieldService.findOne(
+        workflowRequestField.keyName,
+      );
+      const validations = await this.validationService.findMany(
+        field.validations,
+      );
+      if (
+        !ClassValidator.typeValidation(workflowRequestField) ||
+        !ClassValidator.dynamicValidation(
+          workflowRequestField.inputValue,
+          validations,
+        )
+      ) {
+        throw new BadRequestException(
+          field,
+          'Error while validating the field:' + field.label,
+        );
+      }
     });
-    return isValid;
   }
 }

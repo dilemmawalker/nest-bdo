@@ -3,16 +3,16 @@ import { slugifyConfig } from 'apps/admin/src/config/slugify.config';
 import slugify from 'slugify';
 import { FieldGroup } from '@shared/app/schemas/fields/field-group.schema';
 import { Field } from '@shared/app/schemas/fields/field.schema';
-import { FieldGroupDto } from './dtos/field-group.dto';
-import { FieldDto } from './dtos/field.dto';
 import { FieldRepository } from './field.repository';
+import { FieldDto } from './dtos/field.dto';
+import { FieldGroupDto } from './dtos/field-group.dto';
 
 @Injectable()
 export class FieldService {
   constructor(private readonly fieldRepository: FieldRepository) {}
 
   async findOne(keyName: string): Promise<Field> {
-    const Role = await this.fieldRepository.findOne({ keyName: keyName });
+    const Role = await this.fieldRepository.findOne({ keyName });
     if (Role) {
       return Role;
     }

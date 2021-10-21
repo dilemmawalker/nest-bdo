@@ -1,7 +1,7 @@
 import { Prop } from '@nestjs/mongoose';
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
+import { FieldGroupDto } from 'libs/core/fields/src/dtos/field-group.dto';
 import { Mixed } from 'mongoose';
-import { FieldGroupDto } from '../dtos/field-group.dto';
 
 @ApiTags('Fields')
 export class CreateFieldGroupRequest {

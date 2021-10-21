@@ -1,6 +1,6 @@
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
+import { FieldDto } from 'libs/core/fields/src/dtos/field.dto';
 import { Types } from 'mongoose';
-import { FieldDto } from '../dtos/field.dto';
 
 @ApiTags('Fields')
 export class CreateFieldRequest {

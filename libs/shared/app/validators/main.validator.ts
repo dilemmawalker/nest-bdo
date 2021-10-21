@@ -14,7 +14,7 @@ export class Validator {
   }
 
   static isBoolean(value: any): boolean {
-    return typeof value === 'boolean';
+    return value === 'true' || value === 'false';
   }
 
   static isArray(value: any): boolean {
@@ -41,5 +41,13 @@ export class Validator {
 
   static isOtp(value: number): boolean {
     return value >= 100000 && value <= 999999;
+  }
+
+  static inRange(options: number, lBound: number, rBound: number): boolean {
+    return options >= lBound && options <= rBound;
+  }
+
+  static isPresent(array: any[], value: any): boolean {
+    return array.some((item) => item === value);
   }
 }

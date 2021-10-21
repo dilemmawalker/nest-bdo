@@ -9,6 +9,8 @@ import {
 } from '@shared/app/schemas/workflows/workflow.schema';
 import { JWTUtil } from '@shared/app/utils/class/jwt.utils';
 import { jwtConfig } from '@shared/config/auth.config';
+import { CoreFieldModule } from 'libs/core/fields/src/core-field.module';
+import { CoreValidationModule } from 'libs/core/validations/src/core-validation.module';
 import { CoreWorkflowModule } from 'libs/core/workflow/core-workflow.module';
 import { WorkflowController } from './workflow.controller';
 
@@ -21,6 +23,8 @@ import { WorkflowController } from './workflow.controller';
     ]),
     MongooseModule.forFeature([{ name: Field.name, schema: FieldSchema }]),
     MongooseModule.forFeature([{ name: Step.name, schema: StepSchema }]),
+    CoreValidationModule,
+    CoreFieldModule,
   ],
   controllers: [WorkflowController],
   providers: [JWTUtil],
