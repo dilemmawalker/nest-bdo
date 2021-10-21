@@ -10,6 +10,7 @@ import { TransformInterceptor } from '@shared/app/interceptors/transform.interce
 import { ResponseUtils } from '@shared/app/utils/class/response.utils';
 import { ValidationService } from 'libs/core/validations/src/validation.service';
 import { CreateValidationRequest } from './requests/create-validation.request';
+import { UpdateValidationRequest } from './requests/update-validation.request';
 import { ValidationResponse } from './responses/validation.reponse';
 
 @ApiTags('Validation')
@@ -41,6 +42,11 @@ export class ValidationController {
   async updateResponse(
     @Body() updateValidationRequest: UpdateValidationRequest,
   ): Promise<any> {
-    const updatedResponse = await this.validationService.update(UpdateV);
+    const updatedValidation = await this.validationService.update(
+      UpdateValidationRequest.getValidationDto(updateValidationRequest),
+    );
+    return ResponseUtils.success(
+      ValidationResponse.fromValidation(updatedValidation),
+    );
   }
 }
