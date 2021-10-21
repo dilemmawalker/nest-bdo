@@ -13,8 +13,7 @@ export class ValidationRepository {
 
   async create(validationDto: ValidationDto): Promise<Validation> {
     const newValidation = new this.validationModel(validationDto);
-    await newValidation.save();
-    return newValidation;
+    return await newValidation.save();
   }
 
   async findOne(

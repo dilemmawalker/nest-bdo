@@ -12,9 +12,11 @@ export class Validation {
   name: string;
 
   @ApiProperty()
+  @Prop()
   options: any[];
 
   @ApiProperty()
+  @Prop()
   type: string;
 
   @ApiProperty()

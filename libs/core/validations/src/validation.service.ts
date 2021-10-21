@@ -8,6 +8,7 @@ export class ValidationService {
   constructor(private readonly validationRepository: ValidationRepository) {}
 
   async create(validationDto: ValidationDto): Promise<Validation> {
+    console.log(validationDto);
     return await this.validationRepository.create(validationDto);
   }
 
