@@ -23,6 +23,10 @@ export class WorkflowRepository {
       populate: {
         path: 'fields',
         model: 'Field',
+        populate: {
+          path: 'groups',
+          model: 'Field',
+        },
       },
     });
   }

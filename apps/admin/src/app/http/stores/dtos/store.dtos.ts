@@ -1,6 +1,7 @@
 class StoreField {
   inputValue: any = '';
   keyName: any;
+  groupKey: any;
 }
 export class StoreDto {
   constructor(workflowKey: string, stepId: string, storeId: string) {
@@ -32,7 +33,14 @@ export class StoreDto {
     storeObj['currentStepId'] = storeData.currentStepId;
     storeObj['updatedAt'] = storeData.updatedAt;
     storeData.fields.forEach((element) => {
-      storeObj[element.keyName] = element.inputValue;
+      if (!element.groupKey) {
+        storeObj[element.keyName] = element.inputValue;
+      } else {
+        if (!storeObj[element.groupKey]) {
+          storeObj[element.groupKey] = {};
+        }
+        storeObj[element.groupKey][element.keyName] = element.inputValue;
+      }
     });
     return storeObj;
   }
