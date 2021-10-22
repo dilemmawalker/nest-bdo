@@ -37,6 +37,10 @@ export class ClassValidator {
         return Validator.isBoolean(value);
       case 'select':
         return Validator.isPresent(validation.options, value);
+      case 'image':
+        return Validator.isImageUrl(value);
+      case 'url':
+        return Validator.isUrl(value);
     }
     return false;
   }
