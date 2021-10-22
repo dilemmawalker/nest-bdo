@@ -47,7 +47,6 @@ export class WorkflowService {
 
   async get(workflowKey: string, storeId: string, stepId: string) {
     const workflow = await this.findOne(workflowKey);
-    console.log('ok field');
     const store = await this.storeRepository.findOne(storeId);
     const fields: FieldInputData[] = this.getInputFields(
       this.getStepsFields(workflow, stepId),
@@ -118,7 +117,15 @@ export class WorkflowService {
     }
     for (const i in inputFields) {
       const inputField = inputFields[i];
-      inputField.inputValue = store[inputField.keyName];
+      if (inputField.group.length == 0) {
+        inputField.inputValue = store[inputField.keyName];
+      } else {
+        inputField.group.forEach((field) => {
+          if (store[inputField.keyName]) {
+            inputField.inputValue = store[inputField.keyName][field.keyName];
+          }
+        });
+      }
     }
     return inputFields;
   }

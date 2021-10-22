@@ -3,7 +3,7 @@ import { DocumentBuilder } from '@nestjs/swagger';
 export const serverUrl = process.env.AGENT_URL || '';
 
 export const swaggerConfig = new DocumentBuilder()
-  .setTitle('Agent Apps 2 Api')
+  .setTitle('Agent Apps Api')
   .setDescription('The api hub for aggent android applications')
   .setVersion('1.0')
   .setBasePath('gi')

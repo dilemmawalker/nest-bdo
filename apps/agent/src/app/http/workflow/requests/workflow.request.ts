@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { StoreDto } from 'apps/admin/src/app/http/stores/dtos/store.dtos';
 
-class WorkflowRequestField {
+export class WorkflowRequestField {
   @ApiProperty()
   inputValue: any = '';
 
@@ -10,6 +10,9 @@ class WorkflowRequestField {
 
   @ApiProperty()
   groupKey: string;
+
+  @ApiProperty()
+  type: string;
 }
 
 export class WorkflowRequest {
