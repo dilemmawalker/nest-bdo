@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Inject,
+  Param,
   Post,
   UseInterceptors,
 } from '@nestjs/common';
@@ -28,5 +29,12 @@ export class StoreController {
   async leadFlow() {
     const leadFlow = await this.storeService.getLeadFlow();
     return ResponseUtils.success(StoreLeadResponse.fromWorkflow(leadFlow));
+  }
+
+  @Get(':storeId')
+  @UseInterceptors(TransformInterceptor)
+  async getStoreInfo(@Param('storeId') storeKey: string): Promise<any> {
+    const storeInfo = await this.storeService.getStoreInfo(storeKey);
+    return ResponseUtils.success(storeInfo);
   }
 }
