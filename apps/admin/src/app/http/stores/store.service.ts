@@ -5,6 +5,7 @@ import { WorkflowRepository } from 'libs/core/workflow/workflow.repository';
 import { Workflow } from '@shared/app/schemas/workflows/workflow.schema';
 import { StoreDto } from './dtos/store.dtos';
 import { StoreRepository } from './store.repository';
+import { Step } from '@shared/app/schemas/steps/steps.schema';
 
 @Injectable()
 export class StoreService {
@@ -34,8 +35,8 @@ export class StoreService {
     const stepFieldMapping = this.getStepsFields(workflow);
     stepFieldMapping.forEach((item) => {
       stepInputMapping.push({
-        id: item.id,
-        fields: this.getInputFields(item.fields, store),
+        name: item.name,
+        data: this.getInputFields(item.fields, store),
       });
     });
     return stepInputMapping;
@@ -45,12 +46,13 @@ export class StoreService {
     const stepFieldMapping = [];
     for (const i in workflow.steps) {
       const step = workflow.steps[i];
-      stepFieldMapping.push({ id: step.stepId, fields: step.fields });
+      stepFieldMapping.push({ name: step.name, fields: step.fields });
     }
     return stepFieldMapping;
   }
 
   getInputFields(fields: any[], store: Store) {
+    const dataObject = {};
     const inputFields = FieldInputData.fromFieldArray(fields);
     if (!store) {
       return inputFields;
@@ -58,7 +60,8 @@ export class StoreService {
     for (const i in inputFields) {
       const inputField = inputFields[i];
       inputField.inputValue = store[inputField.keyName];
+      dataObject[inputField.keyName] = inputField.inputValue;
     }
-    return inputFields;
+    return dataObject;
   }
 }
