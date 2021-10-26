@@ -8,14 +8,11 @@ import { basicAuthConfig, swaggerConfig } from './config/swagger.config';
 import { SWAGGER_API_PATH } from './constant/swagger/swagger.constant';
 import * as basicAuth from 'express-basic-auth';
 import * as AWS from 'aws-sdk';
+import { awsConfig } from '@shared/config/aws.config';
 
 async function bootstrap() {
-  AWS.config.update({
-    apiVersion: '2010-12-01',
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region: process.env.AWS_REGION,
-  });
+  AWS.config.update(awsConfig);
+
   const app = await NestFactory.create(AppModule);
   app.enableCors();
 

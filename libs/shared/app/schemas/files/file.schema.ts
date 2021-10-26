@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { Document, Mixed, Types } from 'mongoose';
-import * as mongoose from 'mongoose';
 
 export type FileDocument = File & Document;
 
@@ -11,33 +10,19 @@ export class File {
   _id: string;
 
   @ApiProperty()
-  @Prop({ required: true })
-  label: string;
-
-  @ApiProperty()
   @Prop({ required: true, unique: true })
   keyName: string;
 
   @ApiProperty()
-  @Prop({ required: true })
-  options: Mixed;
+  @Prop()
+  isTemp: boolean;
 
   @ApiProperty()
-  position = 0;
+  @Prop()
+  url: string;
 
   @ApiProperty()
-  isGroup: boolean;
-
-  @ApiProperty()
-  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'File' })
-  groups: Types.ObjectId[] = [];
-
-  @ApiProperty()
-  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'Validation' })
-  validations: Types.ObjectId[] = [];
-
-  @ApiProperty()
-  @Prop({ required: true })
+  @Prop()
   type: string;
 }
 

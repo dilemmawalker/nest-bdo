@@ -19,11 +19,13 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { ResponseUtils } from '@shared/app/utils/class/response.utils';
 import { imageFileFilter } from '@shared/app/utils/function/helper.function';
 import {
   ApiUploadImageRequest,
   UploadImageRequest,
 } from './request/upload-image.request';
+import { FileResponse } from './response/file.response';
 
 class testUpload {
   @ApiProperty({ type: 'string', format: 'binary' })
@@ -57,11 +59,15 @@ export class FileController {
     @Body() uploadImageRequest: UploadImageRequest,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    console.log(uploadImageRequest);
     if (!file || req.fileValidationError) {
       throw new BadRequestException('invalid file');
     }
-    return await this.fileService.uploadFile(file.buffer, file.originalname);
+    const fileObj = await this.fileService.uploadFile(
+      file.buffer,
+      file.originalname,
+      UploadImageRequest.getFileDto(uploadImageRequest),
+    );
+    return ResponseUtils.success(FileResponse.fromFile(fileObj));
   }
 
   @Post('/multiple-upload')

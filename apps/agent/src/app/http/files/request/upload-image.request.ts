@@ -1,3 +1,4 @@
+import { FileDto } from '@file/file/dtos/file.dto';
 import { ApiBody, ApiProperty } from '@nestjs/swagger';
 export class UploadImageRequest {
   @ApiProperty()
@@ -6,8 +7,12 @@ export class UploadImageRequest {
   @ApiProperty()
   keyName: string;
 
-  @ApiProperty()
-  test: string;
+  static getFileDto(uploadImageRequest: UploadImageRequest) {
+    const fileDto = new FileDto();
+    fileDto.keyName = uploadImageRequest.keyName;
+    fileDto.storeId = uploadImageRequest.storeId;
+    return fileDto;
+  }
 }
 
 export const ApiUploadImageRequest =
