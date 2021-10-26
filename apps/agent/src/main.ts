@@ -7,8 +7,12 @@ import { AppModule } from './app/app.module';
 import { basicAuthConfig, swaggerConfig } from './config/swagger.config';
 import { SWAGGER_API_PATH } from './constant/swagger/swagger.constant';
 import * as basicAuth from 'express-basic-auth';
+import * as AWS from 'aws-sdk';
+import { awsConfig } from '@shared/config/aws.config';
 
 async function bootstrap() {
+  AWS.config.update(awsConfig);
+
   const app = await NestFactory.create(AppModule);
   app.enableCors();
 

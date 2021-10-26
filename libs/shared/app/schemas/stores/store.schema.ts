@@ -63,15 +63,18 @@ export class FieldInputData extends BaseItemSchema {
   position: number;
 
   static fromField(field: Field) {
-    console.log(field);
     const entity = new FieldInputData();
     entity.label = field.label;
     entity.keyName = field.keyName;
     entity.type = field.type;
+
+    if (field.groups.length != 0) {
+      entity.group = this.fromFieldArray(field.groups);
+    }
     return entity;
   }
 
-  static fromFieldArray(fields: Field[]): FieldInputData[] {
+  static fromFieldArray(fields: any[]): FieldInputData[] {
     const entities = [];
     fields.forEach((field) => {
       entities.push(this.fromField(field));

@@ -14,7 +14,6 @@ import { TransformInterceptor } from '@shared/app/interceptors/transform.interce
 import { JWTUtil } from '@shared/app/utils/class/jwt.utils';
 import { ResponseUtils } from '@shared/app/utils/class/response.utils';
 import { ClassValidator } from '@shared/app/validators/class.validator';
-import { StoreResponse } from 'apps/admin/src/app/http/stores/responses/store.response';
 import { WorkflowResponse } from 'apps/admin/src/app/http/workflow/responses/workflow.response';
 import { FieldService } from 'libs/core/fields/src/field.service';
 import { ValidationService } from 'libs/core/validations/src/validation.service';

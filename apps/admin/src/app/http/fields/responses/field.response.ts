@@ -4,6 +4,9 @@ import { Types } from 'mongoose';
 
 export class FieldResponse {
   @ApiProperty()
+  _id: string;
+
+  @ApiProperty()
   keyName: string;
 
   @ApiProperty()
@@ -24,6 +27,7 @@ export class FieldResponse {
   static fromField(field: Field) {
     const entity = new FieldResponse();
     entity.keyName = field.keyName;
+    entity._id = field._id;
     entity.label = field.label;
     entity.options = field.options;
     entity.type = field.type;

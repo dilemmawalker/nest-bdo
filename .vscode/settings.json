@@ -8,6 +8,8 @@
         "maxlength",
         "maxsize",
         "nestjs",
+        "originalame",
+        "originalname",
         "ormconfig",
         "prebuild",
         "rolename",
