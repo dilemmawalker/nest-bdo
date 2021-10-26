@@ -3,8 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model } from 'mongoose';
 import { FieldGroup } from '@shared/app/schemas/fields/field-group.schema';
 import { Field } from '@shared/app/schemas/fields/field.schema';
-import { FieldGroupDto } from './dtos/field-group.dto';
 import { FieldDto } from './dtos/field.dto';
+import { FieldGroupDto } from './dtos/field-group.dto';
 
 @Injectable()
 export class FieldRepository {
@@ -14,7 +14,7 @@ export class FieldRepository {
   ) {}
 
   async findOne(userFilterQuery: FilterQuery<Field>): Promise<Field> {
-    return await this.fieldModel.findOne(userFilterQuery);
+    return await this.fieldModel.findOne({ keyName: userFilterQuery.keyName });
   }
 
   async find(fieldFilterQuery: FilterQuery<Field>): Promise<Field[]> {

@@ -6,6 +6,7 @@ import { FieldModule } from './http/fields/field.module';
 import { RoleModule } from './http/roles/role.module';
 import { StoreModule } from './http/stores/store.module';
 import { UserModule } from './http/users/user.module';
+import { ValidationModule } from './http/validations/validation.module';
 import { WorkflowModule } from './http/workflow/workflow.module';
 
 const appRoutes: Routes = [
@@ -20,6 +21,7 @@ const appRoutes: Routes = [
       { path: '/', module: StoreModule },
       { path: '/', module: ClusterModule },
       { path: '/', module: AgentModule },
+      { path: '/', module: ValidationModule },
     ],
   },
 ];

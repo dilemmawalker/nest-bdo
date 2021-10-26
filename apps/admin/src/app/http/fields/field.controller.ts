@@ -12,10 +12,10 @@ import {
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { TransformInterceptor } from '@shared/app/interceptors/transform.interceptor';
 import { ResponseUtils } from '@shared/app/utils/class/response.utils';
+import { FieldService } from 'libs/core/fields/src/field.service';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
-import { FieldService } from './field.service';
 import { CreateFieldGroupRequest } from './requests/create-field-group.request';
 import { CreateFieldRequest } from './requests/create-field.request';
 import { FieldGroupResponse } from './responses/field-group.response';

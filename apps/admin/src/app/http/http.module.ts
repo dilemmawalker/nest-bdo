@@ -8,6 +8,7 @@ import { FieldModule } from './fields/field.module';
 import { RoleModule } from './roles/role.module';
 import { StoreModule } from './stores/store.module';
 import { UserModule } from './users/user.module';
+import { ValidationModule } from './validations/validation.module';
 import { WorkflowModule } from './workflow/workflow.module';
 
 @Module({
@@ -21,6 +22,7 @@ import { WorkflowModule } from './workflow/workflow.module';
     AuthModule,
     ClusterModule,
     AgentModule,
+    ValidationModule,
   ],
   providers: [],
 })

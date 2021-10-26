@@ -15,8 +15,13 @@ import { JWTUtil } from '@shared/app/utils/class/jwt.utils';
 import { ResponseUtils } from '@shared/app/utils/class/response.utils';
 import { ClassValidator } from '@shared/app/validators/class.validator';
 import { WorkflowResponse } from 'apps/admin/src/app/http/workflow/responses/workflow.response';
+import { FieldService } from 'libs/core/fields/src/field.service';
+import { ValidationService } from 'libs/core/validations/src/validation.service';
 import { WorkflowService } from 'libs/core/workflow/workflow.service';
-import { WorkflowRequest } from './requests/workflow.request';
+import {
+  WorkflowRequest,
+  WorkflowRequestField,
+} from './requests/workflow.request';
 
 @ApiTags('Workflows')
 @Controller('workflows')
@@ -25,6 +30,8 @@ export class WorkflowController {
   constructor(
     private readonly workflowService: WorkflowService,
     private readonly jwtUtil: JWTUtil,
+    private readonly fieldService: FieldService,
+    private readonly validationService: ValidationService,
   ) {}
 
   @Get(':workflowKey/:stepId/:storeId')
@@ -60,9 +67,7 @@ export class WorkflowController {
     @Param('stepId') stepId: string,
     @Param('storeId') storeId?: string,
   ): Promise<any> {
-    if (!this.validate(workflowRequest)) {
-      throw new BadRequestException();
-    }
+    await this.validate(workflowRequest);
     const workflowGet = await this.workflowService.get(
       workflowKey,
       storeId,
@@ -81,11 +86,30 @@ export class WorkflowController {
     return ResponseUtils.success(store);
   }
 
-  validate(workflowRequest: WorkflowRequest) {
-    let isValid = true;
-    workflowRequest.fields.forEach((field) => {
-      isValid = isValid && ClassValidator.typeValidation(field);
-    });
-    return isValid;
+  async validate(workflowRequest: WorkflowRequest) {
+    for (const workflowRequestField of workflowRequest.fields) {
+      await this.validateField(workflowRequestField);
+    }
+  }
+
+  async validateField(workflowRequestField: WorkflowRequestField) {
+    const field = await this.fieldService.findOne(workflowRequestField.keyName);
+    const validations = await this.validationService.findMany(
+      field.validations,
+    );
+    if (
+      !ClassValidator.typeValidation(workflowRequestField) ||
+      !ClassValidator.dynamicValidation(
+        workflowRequestField.inputValue,
+        validations,
+      )
+    ) {
+      throw new BadRequestException(
+        'Error while validating the field: ' +
+          field.label +
+          ' Expected: ' +
+          field.type,
+      );
+    }
   }
 }
