@@ -16,7 +16,6 @@ import { ResponseUtils } from '@shared/app/utils/class/response.utils';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
-import { AddFieldsRequest } from './requests/add-fields.request';
 import { AddStepRequest } from './requests/add-steps.request';
 import { AssignFieldRequest } from './requests/assign-field.request';
 import { CreateWorkflowRequest } from './requests/create-workflow.request';
@@ -88,14 +87,15 @@ export class WorkflowController {
     return ResponseUtils.success(WorkflowResponse.fromWorkflow(workflow));
   }
 
-  // @Post('step/fields/add')
-  @UseInterceptors(TransformInterceptor)
-  async addFields(@Body() fieldsRequest: AddFieldsRequest): Promise<any> {
-    const workflow = await this.workflowService.addFields(
-      AddFieldsRequest.getFieldsDto(fieldsRequest),
-    );
-    return ResponseUtils.success(WorkflowResponse.fromWorkflow(workflow));
-  }
+  // TODO: REMOVE LATER
+  //  @Post('step/fields/add')
+  // @UseInterceptors(TransformInterceptor)
+  // async addFields(@Body() fieldsRequest: AddFieldsRequest): Promise<any> {
+  //   const workflow = await this.workflowService.addFields(
+  //     AddFieldsRequest.getFieldsDto(fieldsRequest),
+  //   );
+  //   return ResponseUtils.success(WorkflowResponse.fromWorkflow(workflow));
+  // }
 
   @Post('step/fields/assign')
   @UseInterceptors(TransformInterceptor)

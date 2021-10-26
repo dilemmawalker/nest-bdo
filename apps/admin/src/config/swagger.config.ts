@@ -1,5 +1,5 @@
 import { DocumentBuilder } from '@nestjs/swagger';
-
+export const serverUrl = process.env.ADMIN_URL || '';
 export const swaggerConfig = new DocumentBuilder()
   .setTitle('Onboarding Api')
   .setDescription('The api hub for onboarding applications')
@@ -12,6 +12,7 @@ export const swaggerConfig = new DocumentBuilder()
     description: 'Enter JWT token',
     in: 'header',
   })
+  .addServer(serverUrl)
   .build();
 
 export const basicAuthConfig = {

@@ -13,11 +13,21 @@ export class Agent extends BaseItemSchema {
   @Prop({ unique: true })
   userId: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Workflow' })
-  workflow: Types.ObjectId[];
+  @Prop({ required: true })
+  active: boolean;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Store' })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Cluster' })
+  cluster: Types.ObjectId;
+
+  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'Store' })
   stores: Types.ObjectId[];
 }
 
+export class AgentDto {
+  userId: string;
+  active: boolean;
+  agentId: string;
+  clusterName: string;
+  cluster: Types.ObjectId;
+}
 export const AgentSchema = SchemaFactory.createForClass(Agent);

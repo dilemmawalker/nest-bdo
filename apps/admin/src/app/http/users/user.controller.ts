@@ -18,8 +18,10 @@ import { ResponseUtils } from '@shared/app/utils/class/response.utils';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
+import { AddRoleRequest } from './requests/add-role.request';
 import { CreateUserRequest } from './requests/create-user.request';
 import { UpdateUserRequest } from './requests/update-user.request';
+import { AddRoleResponse } from './responses/add-role.response';
 import { UserResponse } from './responses/user.response';
 
 @ApiTags('Users')
@@ -27,7 +29,7 @@ import { UserResponse } from './responses/user.response';
 @ApiBearerAuth()
 export class UserController {
   constructor(
-    private readonly UserService: UserService,
+    private readonly userService: UserService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
   ) {}
 
@@ -38,7 +40,7 @@ export class UserController {
     type: UserResponse,
   })
   async getUser(@Param('username') username: string): Promise<any> {
-    const user = await this.UserService.findOne(username);
+    const user = await this.userService.findOne(username);
     return ResponseUtils.success(UserResponse.fromUser(user));
   }
 
@@ -50,14 +52,14 @@ export class UserController {
   })
   @Get()
   async getUsers(@Request() req): Promise<any> {
-    const user = await this.UserService.getUsers();
+    const user = await this.userService.getUsers();
     return ResponseUtils.success(UserResponse.fromUserArray(user));
   }
 
   @Post()
   @UseInterceptors(TransformInterceptor)
   async create(@Body() createUserRequest: CreateUserRequest): Promise<any> {
-    const user = await this.UserService.create(
+    const user = await this.userService.create(
       CreateUserRequest.getUserDto(createUserRequest),
     );
     return ResponseUtils.success(UserResponse.fromUser(user));
@@ -69,10 +71,24 @@ export class UserController {
     @Param('userId') userId: string,
     @Body() updateUserDto: UpdateUserRequest,
   ): Promise<any> {
-    const user = await this.UserService.update(
+    const user = await this.userService.update(
       userId,
       UpdateUserRequest.getUserDto(updateUserDto),
     );
     return ResponseUtils.success(UserResponse.fromUser(user));
+  }
+
+  @Post('roles/add')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: AddRoleResponse,
+  })
+  @UseInterceptors(TransformInterceptor)
+  async addRoles(@Body() addRoleRequest: AddRoleRequest): Promise<any> {
+    const user = await this.userService.addRole(
+      addRoleRequest.userId,
+      AddRoleRequest.getRoleDto(addRoleRequest),
+    );
+    return ResponseUtils.success(AddRoleResponse.fromUser(user));
   }
 }

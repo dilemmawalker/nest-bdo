@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { removeItem } from '@shared/app/utils/function/helper.function';
 import { FilterQuery, Model } from 'mongoose';
-import { Field } from '../../../apps/admin/src/app/schemas/fields/field.schema';
-import { Step } from '../../../apps/admin/src/app/schemas/steps/steps.schema';
-import { Workflow } from '../../../apps/admin/src/app/schemas/workflows/workflow.schema';
+import { Field } from '../../shared/app/schemas/fields/field.schema';
+import { Step } from '../../shared/app/schemas/steps/steps.schema';
+import { Workflow } from '../../shared/app/schemas/workflows/workflow.schema';
 import { AssignFieldDto } from './dtos/assign-field.dto';
 import { FieldsDto } from './dtos/fields.dto';
 import { StepDto } from './dtos/step.dto';
@@ -23,6 +23,10 @@ export class WorkflowRepository {
       populate: {
         path: 'fields',
         model: 'Field',
+        populate: {
+          path: 'groups',
+          model: 'Field',
+        },
       },
     });
   }
@@ -139,7 +143,6 @@ export class WorkflowRepository {
           await fieldCol.save();
           steps[i].fields.push(fieldCol._id);
           workflow.steps = steps;
-          console.log(steps);
           await workflow.update({ steps: steps });
         });
       }
@@ -152,17 +155,23 @@ export class WorkflowRepository {
     const workflow = await this.workflowModel.findOne({
       key: stepDto.workflowKey,
     });
-    console.log(workflow);
+
     const step = new Step();
     step.stepId = stepDto.stepId;
     step.name = stepDto.name;
     step.position = stepDto.position;
     step.fields = [];
+    if (!workflow.steps) {
+      workflow.steps = [];
+    }
     workflow.steps.push(step);
     await workflow.save();
-    return workflow;
+    return workflow.populate({
+      path: 'steps',
+      populate: {
+        path: 'fields',
+        model: 'Field',
+      },
+    });
   }
-}
-function forEach(arg0: (workflow: any) => void) {
-  throw new Error('Function not implemented.');
 }

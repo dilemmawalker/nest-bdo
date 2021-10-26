@@ -1,10 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { Store } from '@shared/app/schemas/stores/store.schema';
 import { User } from '@shared/app/schemas/users/user.schema';
-import { v4 as uuidv4 } from 'uuid';
-import { Store } from '../../schemas/stores/store.schema';
-import { Workflow } from '../../schemas/workflows/workflow.schema';
-import { WorkflowDto } from '../../../../../../libs/core/workflow/dtos/workflow.dto';
-import { WorkflowRepository } from '../../../../../../libs/core/workflow/workflow.repository';
+import { WorkflowRepository } from 'libs/core/workflow/workflow.repository';
+import { Workflow } from '@shared/app/schemas/workflows/workflow.schema';
 import { StoreDto } from './dtos/store.dtos';
 import { StoreRepository } from './store.repository';
 

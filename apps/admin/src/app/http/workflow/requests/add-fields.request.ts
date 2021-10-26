@@ -12,7 +12,10 @@ export class FieldData {
   position: number;
 
   @ApiProperty()
-  dataType: string;
+  type: string;
+
+  @ApiProperty()
+  isGroup: boolean;
 }
 
 @ApiTags('Workflow')

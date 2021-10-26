@@ -1,11 +1,15 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
-import { Document, Mixed } from 'mongoose';
+import { Document, Mixed, Types } from 'mongoose';
+import * as mongoose from 'mongoose';
 
 export type FieldDocument = Field & Document;
 
 @Schema()
 export class Field {
+  @ApiProperty()
+  _id: string;
+
   @ApiProperty()
   @Prop({ required: true })
   label: string;
@@ -22,8 +26,19 @@ export class Field {
   position = 0;
 
   @ApiProperty()
+  isGroup: boolean;
+
+  @ApiProperty()
+  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'Field' })
+  groups: Types.ObjectId[] = [];
+
+  @ApiProperty()
+  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'Validation' })
+  validations: Types.ObjectId[] = [];
+
+  @ApiProperty()
   @Prop({ required: true })
-  dataType: string;
+  type: string;
 }
 
 export const FieldSchema = SchemaFactory.createForClass(Field);

@@ -10,9 +10,13 @@ export class CreateRoleRequest {
   @IsNotEmpty()
   name: string;
 
+  @ApiProperty()
+  roleId: string;
+
   static getRoleDto(createRoleRequest: CreateRoleRequest) {
     const roleDto = new RoleDto();
     roleDto.name = createRoleRequest.name;
+    roleDto.roleId = createRoleRequest.roleId;
     return roleDto;
   }
 }

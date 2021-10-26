@@ -1,4 +1,4 @@
-import { Field } from '../../../../apps/admin/src/app/schemas/fields/field.schema';
+import { Field } from '@shared/app/schemas/fields/field.schema';
 
 export class WorkflowDto {
   name: string;

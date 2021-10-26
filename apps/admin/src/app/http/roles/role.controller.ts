@@ -21,7 +21,7 @@ import { RoleResponse } from './responses/role.response';
 @Controller('roles')
 @ApiBearerAuth()
 export class RoleController {
-  constructor(private readonly roleService: RoleService) { }
+  constructor(private readonly roleService: RoleService) {}
 
   @Get(':rolename')
   @UseInterceptors(TransformInterceptor)
@@ -46,9 +46,15 @@ export class RoleController {
     return ResponseUtils.success(RoleResponse.fromRoleArray(roles));
   }
 
-  @Post()
   @UseInterceptors(TransformInterceptor)
-  async create(@Body() createRoleRequest: CreateRoleRequest): Promise<any> {
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: RoleResponse,
+  })
+  @Post('create')
+  async createRoles(
+    @Body() createRoleRequest: CreateRoleRequest,
+  ): Promise<any> {
     const role = await this.roleService.createRole(
       CreateRoleRequest.getRoleDto(createRoleRequest),
     );
