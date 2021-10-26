@@ -19,7 +19,10 @@ import { WorkflowResponse } from 'apps/admin/src/app/http/workflow/responses/wor
 import { FieldService } from 'libs/core/fields/src/field.service';
 import { ValidationService } from 'libs/core/validations/src/validation.service';
 import { WorkflowService } from 'libs/core/workflow/workflow.service';
-import { WorkflowRequest } from './requests/workflow.request';
+import {
+  WorkflowRequest,
+  WorkflowRequestField,
+} from './requests/workflow.request';
 
 @ApiTags('Workflows')
 @Controller('workflows')
@@ -85,25 +88,29 @@ export class WorkflowController {
   }
 
   async validate(workflowRequest: WorkflowRequest) {
-    workflowRequest.fields.forEach(async (workflowRequestField) => {
-      const field = await this.fieldService.findOne(
-        workflowRequestField.keyName,
+    for (const workflowRequestField of workflowRequest.fields) {
+      await this.validateField(workflowRequestField);
+    }
+  }
+
+  async validateField(workflowRequestField: WorkflowRequestField) {
+    const field = await this.fieldService.findOne(workflowRequestField.keyName);
+    const validations = await this.validationService.findMany(
+      field.validations,
+    );
+    if (
+      !ClassValidator.typeValidation(workflowRequestField) ||
+      !ClassValidator.dynamicValidation(
+        workflowRequestField.inputValue,
+        validations,
+      )
+    ) {
+      throw new BadRequestException(
+        'Error while validating the field: ' +
+          field.label +
+          ' Expected: ' +
+          field.type,
       );
-      const validations = await this.validationService.findMany(
-        field.validations,
-      );
-      if (
-        !ClassValidator.typeValidation(workflowRequestField) ||
-        !ClassValidator.dynamicValidation(
-          workflowRequestField.inputValue,
-          validations,
-        )
-      ) {
-        throw new BadRequestException(
-          field,
-          'Error while validating the field:' + field.label,
-        );
-      }
-    });
+    }
   }
 }

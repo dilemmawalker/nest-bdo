@@ -23,6 +23,9 @@ export class StoreService {
 
   async getStoreInfo(storeId: string): Promise<any> {
     const store = await this.storeRepository.findOne(storeId);
+    if (!store) {
+      throw new NotFoundException();
+    }
     const { workflowKey } = store;
     const workflow = await this.workflowRepository.findOne({
       key: workflowKey,

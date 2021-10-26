@@ -5,7 +5,7 @@ import { Validator } from './main.validator';
 
 export class ClassValidator {
   static typeValidation(field: WorkflowRequestField): boolean {
-    const value = field.inputValue;
+    const value: string = field.inputValue;
     switch (field.type) {
       case 'number':
         return Validator.isNumber(value);
@@ -28,10 +28,13 @@ export class ClassValidator {
   static validateField(value: string, validation: Validation): boolean {
     switch (validation.type) {
       case 'range':
-        return Validator.inRange(
-          parseFloat(value),
-          validation.options[0],
-          validation.options[1],
+        return (
+          Validator.isNumber(value) &&
+          Validator.inRange(
+            parseFloat(value),
+            validation.options[0],
+            validation.options[1],
+          )
         );
       case 'active':
         return Validator.isBoolean(value);
