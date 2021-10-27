@@ -1,6 +1,9 @@
+import { uploadType } from '@shared/constant/upload-type.constant';
+
 export class FileDto {
   keyName: string;
   isTemp = true;
   url: string;
-  storeId: string;
+  refId: string;
+  type: uploadType;
 }

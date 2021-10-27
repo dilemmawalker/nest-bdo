@@ -3,6 +3,21 @@
         {
             "type": "aws-sam",
             "request": "direct-invoke",
+            "name": "nestjs-dockerize:libs/shared/app/utils/function/helper.function.docFileFilter (nodejs14.x)",
+            "invokeTarget": {
+                "target": "code",
+                "projectRoot": "${workspaceFolder}/",
+                "lambdaHandler": "libs/shared/app/utils/function/helper.function.docFileFilter"
+            },
+            "lambda": {
+                "runtime": "nodejs14.x",
+                "payload": {},
+                "environmentVariables": {}
+            }
+        },
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
             "name": "api:src/app/http/v1/v1.route.appRoutes (nodejs14.x)",
             "invokeTarget": {
                 "target": "code",

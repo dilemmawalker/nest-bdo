@@ -1,16 +1,20 @@
 import { FileDto } from '@file/file/dtos/file.dto';
 import { ApiBody, ApiProperty } from '@nestjs/swagger';
+import { uploadType } from '@shared/constant/upload-type.constant';
 export class UploadImageRequest {
   @ApiProperty()
-  storeId: string;
+  refId: string;
 
   @ApiProperty()
   keyName: string;
 
+  @ApiProperty({ type: uploadType })
+  type: uploadType;
+
   static getFileDto(uploadImageRequest: UploadImageRequest) {
     const fileDto = new FileDto();
     fileDto.keyName = uploadImageRequest.keyName;
-    fileDto.storeId = uploadImageRequest.storeId;
+    fileDto.refId = uploadImageRequest.refId;
     return fileDto;
   }
 }
@@ -26,10 +30,13 @@ export const ApiUploadImageRequest =
             type: 'string',
             format: 'binary',
           },
-          storeId: {
+          refId: {
             type: 'string',
           },
           keyName: {
+            type: 'string',
+          },
+          type: {
             type: 'string',
           },
         },

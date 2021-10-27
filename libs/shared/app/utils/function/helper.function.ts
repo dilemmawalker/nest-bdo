@@ -28,6 +28,13 @@ export const imageFileFilter = (req: any, file: any, callback: any) => {
   callback(null, true);
 };
 
+export const docFileFilter = (req: any, file: any, callback: any) => {
+  if (!file.originalname.match(/\.(doc|docx|txt)$/)) {
+    req.fileValidationError = 'only image files allowed';
+    return callback(null, false);
+  }
+  callback(null, true);
+};
 export const editFilename = (req, file, callback) => {
   const name = file.originalname.split('.')[0];
   const fileExtName = extname(file.originalname);

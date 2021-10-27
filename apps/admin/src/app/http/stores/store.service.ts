@@ -1,11 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { FieldInputData, Store } from '@shared/app/schemas/stores/store.schema';
-import { User } from '@shared/app/schemas/users/user.schema';
 import { WorkflowRepository } from 'libs/core/workflow/workflow.repository';
 import { Workflow } from '@shared/app/schemas/workflows/workflow.schema';
 import { StoreDto } from './dtos/store.dtos';
 import { StoreRepository } from './store.repository';
-import { Step } from '@shared/app/schemas/steps/steps.schema';
 
 @Injectable()
 export class StoreService {
@@ -20,6 +18,10 @@ export class StoreService {
   async getLeadFlow(): Promise<Workflow> {
     const leadWorkflowKey = process.env.LEAD_WORKFLOW || 'lead';
     return await this.workflowRepository.findOne({ key: leadWorkflowKey });
+  }
+
+  async updateStore(obj: any, storeId: string): Promise<Store> {
+    return await this.storeRepository.updateObj(obj, storeId);
   }
 
   async getStoreInfo(storeId: string): Promise<any> {

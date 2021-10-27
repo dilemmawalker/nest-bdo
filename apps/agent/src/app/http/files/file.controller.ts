@@ -20,7 +20,10 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { ResponseUtils } from '@shared/app/utils/class/response.utils';
-import { imageFileFilter } from '@shared/app/utils/function/helper.function';
+import {
+  docFileFilter,
+  imageFileFilter,
+} from '@shared/app/utils/function/helper.function';
 import {
   ApiUploadImageRequest,
   UploadImageRequest,
@@ -35,7 +38,7 @@ class testUpload {
 @Controller('files')
 @ApiBearerAuth()
 export class FileController {
-  constructor(private readonly fileService: FileService) {}
+  constructor(private readonly fileService: FileService) { }
 
   @Get()
   @ApiConsumes('multipart/form-data')
@@ -46,7 +49,7 @@ export class FileController {
     return 'ok';
   }
 
-  @Post('/upload')
+  @Post('/upload/image')
   @ApiConsumes('multipart/form-data')
   @ApiUploadImageRequest('filename')
   @UseInterceptors(
@@ -54,7 +57,32 @@ export class FileController {
       fileFilter: imageFileFilter,
     }),
   )
-  public async uploadFile(
+  public async uploadImage(
+    @Req() req: any,
+    @Body() uploadImageRequest: UploadImageRequest,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    if (!file || req.fileValidationError) {
+      throw new BadRequestException('invalid file');
+    }
+    const fileObj = await this.fileService.uploadFile(
+      file.buffer,
+      file.originalname,
+      UploadImageRequest.getFileDto(uploadImageRequest),
+    );
+    console.log(uploadImageRequest);
+    return ResponseUtils.success(FileResponse.fromFile(fileObj));
+  }
+
+  @Post('/upload/document')
+  @ApiConsumes('multipart/form-data')
+  @ApiUploadImageRequest('filename')
+  @UseInterceptors(
+    FileInterceptor('filename', {
+      fileFilter: docFileFilter,
+    }),
+  )
+  public async uploadDoc(
     @Req() req: any,
     @Body() uploadImageRequest: UploadImageRequest,
     @UploadedFile() file: Express.Multer.File,

@@ -3,10 +3,14 @@ import { S3 } from 'aws-sdk';
 import { FileDto } from './dtos/file.dto';
 import { FileRepository } from './file.repository';
 import { File } from '@shared/app/schemas/files/file.schema';
+import { StoreService } from 'apps/admin/src/app/http/stores/store.service';
 
 @Injectable()
 export class FileService {
-  constructor(private readonly fileRepository: FileRepository) {}
+  constructor(
+    private readonly fileRepository: FileRepository,
+    private readonly storeService: StoreService,
+  ) {}
   public async uploadFile(
     imageBuffer: Buffer,
     fileName: string,
@@ -22,6 +26,9 @@ export class FileService {
       })
       .promise();
     fileDto.url = s3Obj.Location;
+    const storeObj = {};
+    storeObj[fileDto.keyName] = fileDto.url;
+    this.storeService.updateStore(storeObj, fileDto.refId);
     return await this.addFileEntry(fileDto);
   }
 
