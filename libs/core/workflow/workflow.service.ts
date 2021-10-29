@@ -10,6 +10,7 @@ import { FieldsDto } from './dtos/fields.dto';
 import { AssignFieldDto } from './dtos/assign-field.dto';
 import { StepDto } from './dtos/step.dto';
 import { generateWorkflowUrl } from '@shared/app/utils/function/helper.function';
+import { UpdateWorflowDto } from './dtos/updateWorkflow.dto';
 @Injectable()
 export class WorkflowService {
   constructor(
@@ -156,5 +157,8 @@ export class WorkflowService {
   }
   async removeStep(workflowKey: string, stepId: string): Promise<Workflow> {
     return await this.workflowRepository.removeStep(workflowKey, stepId);
+  }
+  async updatePosition(updateWorkflowDto: UpdateWorflowDto): Promise<any> {
+    return await this.workflowRepository.updatePosition(updateWorkflowDto);
   }
 }
