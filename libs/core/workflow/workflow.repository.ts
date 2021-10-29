@@ -182,15 +182,10 @@ export class WorkflowRepository {
   }
 
   async updatePosition(updateWorkflowDto: UpdateWorflowDto): Promise<any> {
-    //finally return parameters as much (khud dekh le bhai.);
-    // return 'hello';
     const workflow = await this.workflowModel.findOne({
       key: updateWorkflowDto.workFlowKey,
     });
     const steps = workflow.steps;
-    // console.log(steps);
-    // workflow.findOne({ stepId: updateWorkflowDto.stepId }).fields;
-    // check once how to get fields array.
 
     let temp;
     let fields;
