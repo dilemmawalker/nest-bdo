@@ -17,9 +17,11 @@ lint:
     - npm run lint
 
 test:
-  stage: test
+  stage: admin
   script:
-    - npm run test
+    - npm run build admin
+  only:
+    - admin
 
 deploy:dev:
   stage: deploy
