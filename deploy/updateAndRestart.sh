@@ -32,7 +32,8 @@ echo "Running npm install"
 npm i
 
 #build node server
-npm run build agent
+echo "Running build"
+npm run build admin
 
 #Restart the node server
 pm2 start "npm start admin"
