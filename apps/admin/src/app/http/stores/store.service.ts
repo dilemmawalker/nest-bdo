@@ -11,6 +11,7 @@ export class StoreService {
     private readonly storeRepository: StoreRepository,
     private readonly workflowRepository: WorkflowRepository,
   ) {}
+
   async createStore(storeDto: StoreDto): Promise<Store> {
     return await this.storeRepository.create(storeDto);
   }
@@ -24,15 +25,22 @@ export class StoreService {
     return await this.storeRepository.updateObj(obj, storeId);
   }
 
+  async findOne(storeId: string): Promise<any> {
+    return await this.storeRepository.findOne(storeId);
+  }
+
   async getStoreInfo(storeId: string): Promise<any> {
     const store = await this.storeRepository.findOne(storeId);
+
     if (!store) {
       throw new NotFoundException();
     }
+
     const { workflowKey } = store;
     const workflow = await this.workflowRepository.findOne({
       key: workflowKey,
     });
+
     const stepInputMapping = [];
     const stepFieldMapping = this.getStepsFields(workflow);
     stepFieldMapping.forEach((item) => {
@@ -53,7 +61,7 @@ export class StoreService {
     return stepFieldMapping;
   }
 
-  getInputFields(fields: any[], store: Store) {
+  getInputFields(fields: any[], store: any) {
     const dataObject = {};
     const inputFields = FieldInputData.fromFieldArray(fields);
     if (!store) {
@@ -61,7 +69,7 @@ export class StoreService {
     }
     for (const i in inputFields) {
       const inputField = inputFields[i];
-      inputField.inputValue = store[inputField.keyName];
+      inputField.inputValue = store.get(inputField.keyName);
       dataObject[inputField.keyName] = inputField.inputValue;
     }
     return dataObject;

@@ -13,17 +13,12 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ApiBearerAuth,
-  ApiBody,
   ApiConsumes,
   ApiProperty,
-  ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { FileUploadingUtils } from '@shared/app/utils/class/file-uploading.utils';
 import { ResponseUtils } from '@shared/app/utils/class/response.utils';
-import {
-  docFileFilter,
-  imageFileFilter,
-} from '@shared/app/utils/function/helper.function';
 import {
   ApiUploadImageRequest,
   UploadImageRequest,
@@ -38,23 +33,14 @@ class testUpload {
 @Controller('files')
 @ApiBearerAuth()
 export class FileController {
-  constructor(private readonly fileService: FileService) { }
-
-  @Get()
-  @ApiConsumes('multipart/form-data')
-  async getWorkflow(
-    @UploadedFile() file: Express.Multer.File,
-    @Body() testUpload: testUpload,
-  ): Promise<any> {
-    return 'ok';
-  }
+  constructor(private readonly fileService: FileService) {}
 
   @Post('/upload/image')
   @ApiConsumes('multipart/form-data')
   @ApiUploadImageRequest('filename')
   @UseInterceptors(
     FileInterceptor('filename', {
-      fileFilter: imageFileFilter,
+      fileFilter: FileUploadingUtils.imageFileFilter,
     }),
   )
   public async uploadImage(
@@ -67,7 +53,7 @@ export class FileController {
     }
     const fileObj = await this.fileService.uploadFile(
       file.buffer,
-      file.originalname,
+      FileUploadingUtils.getImageFilename(file.originalname),
       UploadImageRequest.getFileDto(uploadImageRequest),
     );
     console.log(uploadImageRequest);
@@ -79,7 +65,7 @@ export class FileController {
   @ApiUploadImageRequest('filename')
   @UseInterceptors(
     FileInterceptor('filename', {
-      fileFilter: docFileFilter,
+      fileFilter: FileUploadingUtils.docFileFilter,
     }),
   )
   public async uploadDoc(
@@ -92,32 +78,32 @@ export class FileController {
     }
     const fileObj = await this.fileService.uploadFile(
       file.buffer,
-      file.originalname,
+      FileUploadingUtils.getDocFilename(file.originalname),
       UploadImageRequest.getFileDto(uploadImageRequest),
     );
     return ResponseUtils.success(FileResponse.fromFile(fileObj));
   }
 
-  @Post('/multiple-upload')
-  @ApiConsumes('multipart/form-data')
-  @ApiUploadImageRequest('filename')
-  @UseInterceptors(
-    FileInterceptor('filename', {
-      fileFilter: imageFileFilter,
-    }),
-  )
-  public async uploadMultipleFiles(
-    @UploadedFiles() files: Array<Express.Multer.File>,
-    @Body() uploadImageRequest: UploadImageRequest,
-  ) {
-    const response = [];
-    files.forEach((file) => {
-      const res = {
-        originalname: file.originalname,
-        filename: file.filename,
-      };
-      response.push(res);
-    });
-    return response;
-  }
+  // @Post('/multiple-upload')
+  // @ApiConsumes('multipart/form-data')
+  // @ApiUploadImageRequest('filename')
+  // @UseInterceptors(
+  //   FileInterceptor('filename', {
+  //     fileFilter: imageFileFilter,
+  //   }),
+  // )
+  // public async uploadMultipleFiles(
+  //   @UploadedFiles() files: Array<Express.Multer.File>,
+  //   @Body() uploadImageRequest: UploadImageRequest,
+  // ) {
+  //   const response = [];
+  //   files.forEach((file) => {
+  //     const res = {
+  //       originalname: file.originalname,
+  //       filename: file.filename,
+  //     };
+  //     response.push(res);
+  //   });
+  //   return response;
+  // }
 }
