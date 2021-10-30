@@ -7,7 +7,7 @@ set -e
 rm -rf /home/ubuntu/angular/
 
 # clone the repo again
-git clone --single-branch --branch admin  https://username:password@gitlab.com/varsharautjee/angular.git
+git clone --single-branch --branch admin  https://user:password@gitlab.com/varsharautjee/angular.git
 
 #source the nvm file. In an non
 #If you are not using nvm, add the actual path like
