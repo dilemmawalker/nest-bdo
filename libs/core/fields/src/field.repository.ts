@@ -13,7 +13,7 @@ export class FieldRepository {
     @InjectModel(FieldGroup.name) private fieldGroupModel: Model<FieldGroup>,
   ) {}
 
-  async findOne(userFilterQuery: FilterQuery<Field>): Promise<Field> {
+  async findOne(userFilterQuery: FilterQuery<Field>): Promise<any> {
     return await this.fieldModel.findOne({ keyName: userFilterQuery.keyName });
   }
 

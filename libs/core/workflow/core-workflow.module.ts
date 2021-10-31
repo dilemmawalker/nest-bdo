@@ -11,9 +11,14 @@ import {
 import { WorkflowRepository } from './workflow.repository';
 import { WorkflowService } from './workflow.service';
 import { Agent, AgentSchema } from '@shared/app/schemas/users/agent.schema';
+import { AgentRepository } from '../agent/src/agent.repository';
+import { CoreAgentModule } from '../agent/src/core-agent.module';
+import { CoreFieldModule } from '../fields/src/core-field.module';
 
 @Module({
   imports: [
+    CoreAgentModule,
+    CoreFieldModule,
     MongooseModule.forFeature([
       { name: Workflow.name, schema: WorkflowSchema },
     ]),

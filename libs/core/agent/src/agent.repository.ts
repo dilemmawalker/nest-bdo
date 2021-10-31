@@ -24,12 +24,26 @@ export class AgentRepository {
     });
   }
 
+  async updateObj(obj: any, agentId: string) {
+    return this.agentModel.findOneAndUpdate({ agentId }, obj);
+  }
+
+  async getAgent(agentId: string): Promise<Agent> {
+    return await this.agentModel.findOne({ agentId }).populate({
+      path: 'cluster',
+      model: 'Cluster',
+      populate: {
+        path: 'onboarding',
+        model: 'Workflow',
+      },
+    });
+  }
+
   async getStores(agentId: string): Promise<any> {
     const agent = await this.agentModel.findOne({ agentId: agentId }).populate({
       path: 'stores',
       model: 'Store',
     });
-    console.log(agent);
     return agent['stores'];
   }
 

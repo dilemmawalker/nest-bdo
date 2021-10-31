@@ -62,7 +62,7 @@ export class WorkflowController {
   async createWorkFlow(
     @Body() createWorkflowRequest: CreateWorkflowRequest,
   ): Promise<any> {
-    const workflow = await this.workflowService.createWorkFlow(
+    const workflow = await this.workflowService.updateOrCreateWorkflow(
       CreateWorkflowRequest.getWorkFlowDto(createWorkflowRequest),
     );
     return ResponseUtils.success(WorkflowResponse.fromWorkflow(workflow));
@@ -70,8 +70,8 @@ export class WorkflowController {
 
   @Post('step/add')
   @UseInterceptors(TransformInterceptor)
-  async addStep(@Body() stepsRequest: AddStepRequest): Promise<any> {
-    const workflow = await this.workflowService.addStep(
+  async updateOrCreateStep(@Body() stepsRequest: AddStepRequest): Promise<any> {
+    const workflow = await this.workflowService.updateOrCreateStep(
       AddStepRequest.getStepDto(stepsRequest),
     );
     return ResponseUtils.success(WorkflowResponse.fromWorkflow(workflow));
@@ -86,16 +86,6 @@ export class WorkflowController {
     const workflow = await this.workflowService.removeStep(workflowKey, stepId);
     return ResponseUtils.success(WorkflowResponse.fromWorkflow(workflow));
   }
-
-  // TODO: REMOVE LATER
-  //  @Post('step/fields/add')
-  // @UseInterceptors(TransformInterceptor)
-  // async addFields(@Body() fieldsRequest: AddFieldsRequest): Promise<any> {
-  //   const workflow = await this.workflowService.addFields(
-  //     AddFieldsRequest.getFieldsDto(fieldsRequest),
-  //   );
-  //   return ResponseUtils.success(WorkflowResponse.fromWorkflow(workflow));
-  // }
 
   @Post('step/fields/assign')
   @UseInterceptors(TransformInterceptor)

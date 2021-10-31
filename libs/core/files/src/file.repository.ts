@@ -14,12 +14,10 @@ export class FileRepository {
   }
 
   async updateFileAsTemporary(url: string): Promise<File> {
-    console.log(url);
     const file = await this.fileModel.findOne({ url });
     if (!file) {
       return;
     }
-    console.log('updating file');
     await file.update({ isTemp: true });
   }
 }

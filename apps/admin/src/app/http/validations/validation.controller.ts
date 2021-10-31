@@ -33,6 +33,21 @@ export class ValidationController {
     return ResponseUtils.success(ValidationResponse.fromValidation(validation));
   }
 
+  @Post('all')
+  @UseInterceptors(TransformInterceptor)
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: [ValidationResponse],
+  })
+  async getAll(
+    @Body() createValidationRequest: CreateValidationRequest,
+  ): Promise<any> {
+    const validation = await this.validationService.getAll();
+    return ResponseUtils.success(
+      ValidationResponse.fromValidationArray(validation),
+    );
+  }
+
   @Post('update')
   @UseInterceptors(TransformInterceptor)
   @ApiResponse({

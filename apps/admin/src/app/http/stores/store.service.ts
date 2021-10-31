@@ -18,7 +18,7 @@ export class StoreService {
 
   async getLeadFlow(): Promise<Workflow> {
     const leadWorkflowKey = process.env.LEAD_WORKFLOW || 'lead';
-    return await this.workflowRepository.findOne({ key: leadWorkflowKey });
+    return await this.workflowRepository.findOne(leadWorkflowKey);
   }
 
   async updateStore(obj: any, storeId: string): Promise<Store> {
@@ -37,9 +37,7 @@ export class StoreService {
     }
 
     const { workflowKey } = store;
-    const workflow = await this.workflowRepository.findOne({
-      key: workflowKey,
-    });
+    const workflow = await this.workflowRepository.findOne(workflowKey);
 
     const stepInputMapping = [];
     const stepFieldMapping = this.getStepsFields(workflow);
