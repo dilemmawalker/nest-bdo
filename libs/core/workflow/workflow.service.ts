@@ -12,6 +12,7 @@ import { generateWorkflowUrl } from '@shared/app/utils/function/helper.function'
 import { Step } from '@shared/app/schemas/steps/steps.schema';
 import { AgentRepository } from '../agent/src/agent.repository';
 import { FieldRepository } from '../fields/src/field.repository';
+import { UpdatePositionDto } from './dtos/update-positions.dto';
 @Injectable()
 export class WorkflowService {
   constructor(
@@ -19,7 +20,7 @@ export class WorkflowService {
     private readonly storeRepository: StoreRepository,
     private readonly agentRepository: AgentRepository,
     private readonly fieldRepository: FieldRepository,
-  ) {}
+  ) { }
 
   async findOne(key: string): Promise<Workflow> {
     const workflow = await this.workflowRepository.findOne(key);
@@ -261,5 +262,51 @@ export class WorkflowService {
       }
     });
     return await this.workflowRepository.updateObj({ steps }, workflowKey);
+  }
+
+  async updatePosition(updatePositionDto: UpdatePositionDto): Promise<any> {
+    const workflow = await this.workflowRepository.findOneWithoutPopulate(
+      updatePositionDto.workflowKey,
+    );
+
+    for (let i = 0; i < workflow.steps.length; i++) {
+      const step = workflow.steps[i];
+
+      if (step.stepId == updatePositionDto.stepId) {
+        if (!updatePositionDto.fieldId) {
+          console.log('step update');
+          console.log(workflow.steps);
+          workflow.steps.splice(i, 1);
+          console.log(workflow.steps);
+          workflow.steps.splice(updatePositionDto.index, 0, step);
+          console.log(workflow.steps);
+          break;
+        }
+        console.log('field update');
+        workflow.steps[i].fields = this.changeFieldPosition(
+          step,
+          updatePositionDto,
+          workflow,
+        );
+      }
+    }
+    return this.workflowRepository.updateObj(
+      { steps: workflow.steps },
+      workflow.key,
+    );
+  }
+
+  changeFieldPosition(step, updatePositionDto, workflow) {
+    if (step.stepId === updatePositionDto.stepId) {
+      for (let j = 0; j < step.fields.length; j++) {
+        if (step.fields[j].equals(updatePositionDto.fieldId)) {
+          const selectedField = step.fields[j];
+          const index = updatePositionDto.index;
+          step.fields.splice(j, 1);
+          step.fields.splice(index, 0, selectedField);
+        }
+      }
+    }
+    return step.fields;
   }
 }

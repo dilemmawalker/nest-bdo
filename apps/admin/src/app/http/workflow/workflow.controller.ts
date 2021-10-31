@@ -21,6 +21,7 @@ import { AssignFieldRequest } from './requests/assign-field.request';
 import { CreateWorkflowRequest } from './requests/create-workflow.request';
 import { WorkflowResponse } from './responses/workflow.response';
 import { WorkflowService } from '../../../../../../libs/core/workflow/workflow.service';
+import { UpdatePositionRequest } from './requests/update-position.request';
 
 @ApiTags('Workflows')
 @Controller('workflows')
@@ -40,6 +41,17 @@ export class WorkflowController {
   async getWorkflow(@Param('key') key: string): Promise<any> {
     const workflow = await this.workflowService.findOne(key);
     return ResponseUtils.success(WorkflowResponse.fromWorkflow(workflow));
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('update/position')
+  async updatePosition(
+    @Body() updatePositionRequest: UpdatePositionRequest,
+  ): Promise<any> {
+    const workflow = await this.workflowService.updatePosition(
+      UpdatePositionRequest.updatePositionDto(updatePositionRequest),
+    );
+    return ResponseUtils.success(workflow);
   }
 
   @UseGuards(JwtAuthGuard)
