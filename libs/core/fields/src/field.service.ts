@@ -34,6 +34,7 @@ export class FieldService {
         {
           status: HttpStatus.FORBIDDEN,
           error: 'Field already exist',
+          message: 'Field already exist',
         },
         HttpStatus.FORBIDDEN,
       );
