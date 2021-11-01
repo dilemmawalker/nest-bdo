@@ -26,6 +26,9 @@ export class StoreResponse {
   @ApiProperty()
   status: string;
 
+  @ApiProperty()
+  workflow: string;
+
   static fromStore(store: Store, status: string) {
     const entity = new StoreResponse();
     entity.name = store.name;
@@ -34,6 +37,7 @@ export class StoreResponse {
     entity.updatedAt = moment(store.updatedAt).format('MM/DD/YYYY');
     entity.address = store.address;
     entity.status = status;
+    entity.workflow = store.workflowKey;
     entity.currentWorkflowUrl = generateWorkflowUrl(
       store.workflowKey,
       store.currentStepId,

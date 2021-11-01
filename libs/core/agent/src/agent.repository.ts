@@ -9,7 +9,7 @@ export class AgentRepository {
   constructor(
     @InjectModel(Agent.name) private agentModel: Model<Agent>,
     @InjectModel(Cluster.name) private clusterModel: Model<Cluster>,
-  ) { }
+  ) {}
 
   async findOne(agentFilterQuery: FilterQuery<Agent>): Promise<Agent> {
     return await this.agentModel.findOne({
