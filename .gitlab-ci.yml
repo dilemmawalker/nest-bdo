@@ -5,28 +5,15 @@ before_script:
   - npm install
 
 stages:
-  - test
   - deploy
 
 # lint and test are two different jobs in the same stage.
 # This allows us to run these two in parallel and making build faster
-
-lint:
-  stage: test
-  script:
-    - npm run lint
-
-test:
-  stage: test
-  script:
-    - npm run build admin
-  only:
-    - admin
 
 deploy:dev:
   stage: deploy
   script:
     - bash deploy/deploy.sh
   only:
-    - admin
+    - testing
 
