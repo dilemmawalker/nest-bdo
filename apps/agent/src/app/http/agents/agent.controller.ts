@@ -21,6 +21,7 @@ import { Logger } from 'winston';
 @ApiTags('Agents')
 @Controller('agent')
 @ApiBearerAuth()
+@UseInterceptors(TransformInterceptor)
 export class AgentController {
   constructor(
     private readonly agentService: AgentService,
