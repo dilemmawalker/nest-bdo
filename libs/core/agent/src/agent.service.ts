@@ -14,6 +14,10 @@ export class AgentService {
     return await this.agentRepository.getStores(agentId);
   }
 
+  async getAgents(): Promise<Agent[]> {
+    return await this.agentRepository.getAll();
+  }
+
   async findAgent(userId: string): Promise<Agent> {
     const agentDto = new AgentDto();
     agentDto.userId = userId;
