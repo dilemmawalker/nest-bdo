@@ -11,10 +11,14 @@ export class AddStepRequest {
   @ApiProperty()
   workflowKey: string;
 
+  @ApiProperty({ required: false })
+  stepId?: string;
+
   static getStepDto(addStepsRequest: AddStepRequest) {
     const stepDto = new StepDto();
     stepDto.name = addStepsRequest.name;
     stepDto.workflowKey = addStepsRequest.workflowKey;
+    stepDto.stepId = addStepsRequest.stepId;
     return stepDto;
   }
 }

@@ -21,6 +21,7 @@ import { Logger } from 'winston';
 @ApiTags('Agents')
 @Controller('agent')
 @ApiBearerAuth()
+@UseInterceptors(TransformInterceptor)
 export class AgentController {
   constructor(
     private readonly agentService: AgentService,
@@ -39,6 +40,9 @@ export class AgentController {
   ): Promise<any> {
     const json = await this.jwtUtil.decode(auth);
     const stores = await this.agentService.getStores(json.agentId);
-    return ResponseUtils.success(StoreResponse.fromStoreArray(stores, status));
+    return ResponseUtils.success(
+      StoreResponse.fromStoreArray(stores, status),
+      status,
+    );
   }
 }

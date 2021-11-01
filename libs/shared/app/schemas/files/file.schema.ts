@@ -10,7 +10,7 @@ export class File {
   _id: string;
 
   @ApiProperty()
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true })
   keyName: string;
 
   @ApiProperty()

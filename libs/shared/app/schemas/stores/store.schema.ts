@@ -8,7 +8,7 @@ import * as mongoose from 'mongoose';
 
 export type StoreDocument = Store & Document;
 
-@Schema({ strict: false })
+@Schema({ strict: false, versionKey: false })
 export class Store {
   @Prop({ required: true })
   name: string;
@@ -51,7 +51,7 @@ export class FieldInputData extends BaseItemSchema {
   inputValue: any = '';
 
   @ApiProperty()
-  keyName: any;
+  keyName: string;
 
   @ApiProperty()
   group: FieldInputData[] = [];

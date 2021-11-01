@@ -9,7 +9,7 @@ export class AgentRepository {
   constructor(
     @InjectModel(Agent.name) private agentModel: Model<Agent>,
     @InjectModel(Cluster.name) private clusterModel: Model<Cluster>,
-  ) {}
+  ) { }
 
   async findOne(agentFilterQuery: FilterQuery<Agent>): Promise<Agent> {
     return await this.agentModel.findOne({
@@ -24,12 +24,33 @@ export class AgentRepository {
     });
   }
 
+  async updateObj(obj: any, agentId: string) {
+    return this.agentModel.findOneAndUpdate({ agentId }, obj);
+  }
+
+  async getAgent(agentId: string): Promise<Agent> {
+    return await this.agentModel.findOne({ agentId }).populate({
+      path: 'cluster',
+      model: 'Cluster',
+      populate: {
+        path: 'onboarding',
+        model: 'Workflow',
+      },
+    });
+  }
+
+  async getAll(): Promise<Agent[]> {
+    return await this.agentModel.find({}).populate({
+      path: 'cluster',
+      model: 'Cluster',
+    });
+  }
+
   async getStores(agentId: string): Promise<any> {
     const agent = await this.agentModel.findOne({ agentId: agentId }).populate({
       path: 'stores',
       model: 'Store',
     });
-    console.log(agent);
     return agent['stores'];
   }
 

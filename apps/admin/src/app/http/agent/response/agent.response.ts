@@ -10,4 +10,12 @@ export class AgentResponse extends AgentDto {
     agentResponse.agentId = agent.agentId;
     return agentResponse;
   }
+
+  static fromAgentArray(agents: Agent[]): AgentResponse[] {
+    const entities = [];
+    agents.forEach((agent) => {
+      entities.push(this.fromAgent(agent));
+    });
+    return entities;
+  }
 }

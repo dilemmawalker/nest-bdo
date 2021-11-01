@@ -23,13 +23,17 @@ export class StoreResponse {
   @ApiProperty()
   updatedAt: string;
 
-  static fromStore(store: Store) {
+  @ApiProperty()
+  status: string;
+
+  static fromStore(store: Store, status: string) {
     const entity = new StoreResponse();
     entity.name = store.name;
     entity.mobile = store.mobile;
     entity.createdAt = moment(store.createdAt).format('MM/DD/YYYY');
     entity.updatedAt = moment(store.updatedAt).format('MM/DD/YYYY');
     entity.address = store.address;
+    entity.status = status;
     entity.currentWorkflowUrl = generateWorkflowUrl(
       store.workflowKey,
       store.currentStepId,
@@ -43,7 +47,7 @@ export class StoreResponse {
     stores.forEach((store) => {
       // entities.push(this.fromStore(store));
       if (store.status === status) {
-        entities.push(this.fromStore(store));
+        entities.push(this.fromStore(store, status));
       }
     });
     return entities;

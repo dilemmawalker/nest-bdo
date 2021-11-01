@@ -23,4 +23,12 @@ export class ValidationResponse {
     response.type = validation.type;
     return response;
   }
+
+  static fromValidationArray(validations: Validation[]): ValidationResponse[] {
+    const entities = [];
+    validations.forEach((validation) => {
+      entities.push(this.fromValidation(validation));
+    });
+    return entities;
+  }
 }

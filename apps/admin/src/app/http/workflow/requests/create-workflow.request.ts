@@ -8,9 +8,13 @@ export class CreateWorkflowRequest {
   @IsNotEmpty()
   name: string;
 
+  @ApiProperty()
+  key: string;
+
   static getWorkFlowDto(createWorkflowRequest: CreateWorkflowRequest) {
     const workflowDto = new WorkflowDto();
     workflowDto.name = createWorkflowRequest.name;
+    workflowDto.key = createWorkflowRequest.key;
     return workflowDto;
   }
 }
