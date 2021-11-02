@@ -69,6 +69,11 @@ export class WorkflowService {
     return await this.storeRepository.update(storeDto);
   }
 
+  async getSteps(workflowKey: string) {
+    const workflow = await this.findOne(workflowKey);
+    return workflow.steps;
+  }
+
   async get(workflowKey: string, storeId: string, stepId: string) {
     const workflow = await this.findOne(workflowKey);
     const store = await this.storeRepository.findOne(storeId);

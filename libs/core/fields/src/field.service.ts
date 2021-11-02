@@ -14,7 +14,7 @@ import { FieldGroupDto } from './dtos/field-group.dto';
 
 @Injectable()
 export class FieldService {
-  constructor(private readonly fieldRepository: FieldRepository) { }
+  constructor(private readonly fieldRepository: FieldRepository) {}
 
   async findOne(keyName: string): Promise<Field> {
     const Role = await this.fieldRepository.findOne({ keyName });
