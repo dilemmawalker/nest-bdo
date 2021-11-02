@@ -54,6 +54,9 @@ export class FieldInputData extends BaseItemSchema {
   keyName: string;
 
   @ApiProperty()
+  options: any;
+
+  @ApiProperty()
   group: FieldInputData[] = [];
 
   @ApiProperty()
@@ -67,6 +70,7 @@ export class FieldInputData extends BaseItemSchema {
     entity.label = field.label;
     entity.keyName = field.keyName;
     entity.type = field.type;
+    entity.options = field.options;
 
     if (field.groups.length != 0) {
       entity.group = this.fromFieldArray(field.groups);
