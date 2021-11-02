@@ -11,7 +11,7 @@ export type StoreDocument = Store & Document;
 @Schema({ strict: false, versionKey: false })
 export class Store {
   @Prop({ required: true })
-  name: string;
+  store_name: string;
 
   @Prop({ required: true, unique: true })
   storeId: string;
@@ -20,7 +20,7 @@ export class Store {
   status: string;
 
   @Prop({ required: true })
-  address: string;
+  owner_name: string;
 
   mobile: string;
 

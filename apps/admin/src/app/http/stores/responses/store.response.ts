@@ -6,13 +6,13 @@ import * as moment from 'moment';
 
 export class StoreResponse {
   @ApiProperty()
-  name: string;
+  store_name: string;
 
   @ApiProperty()
   mobile: string;
 
   @ApiProperty()
-  address: string;
+  owner_name: string;
 
   @ApiProperty()
   currentWorkflowUrl: string;
@@ -31,11 +31,11 @@ export class StoreResponse {
 
   static fromStore(store: Store, status: string) {
     const entity = new StoreResponse();
-    entity.name = store.name;
+    entity.store_name = store.store_name;
     entity.mobile = store.mobile;
     entity.createdAt = moment(store.createdAt).format('MM/DD/YYYY');
     entity.updatedAt = moment(store.updatedAt).format('MM/DD/YYYY');
-    entity.address = store.address;
+    entity.owner_name = store.owner_name;
     entity.status = status;
     entity.workflow = store.workflowKey;
     entity.currentWorkflowUrl = generateWorkflowUrl(

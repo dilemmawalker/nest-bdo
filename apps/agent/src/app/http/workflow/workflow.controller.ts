@@ -35,6 +35,30 @@ export class WorkflowController {
     private readonly validationService: ValidationService,
   ) {}
 
+  @Get(':workflowKey/:storeId/steps')
+  @UseInterceptors(TransformInterceptor)
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: [WorkflowStepResponse],
+  })
+  @ApiParam({
+    name: 'workflowKey',
+    type: String,
+    required: true,
+  })
+  @ApiParam({
+    name: 'storeId',
+    type: String,
+    required: true,
+  })
+  async getWorkflowSteps(
+    @Param('workflowKey') workflowKey: string,
+    @Param('storeId') storeId: string,
+  ): Promise<any> {
+    const steps = await this.workflowService.getSteps(workflowKey);
+    return ResponseUtils.success(WorkflowStepResponse.fromStepsArray(steps));
+  }
+
   @Get(':workflowKey/:stepId/:storeId')
   @UseInterceptors(TransformInterceptor)
   @ApiResponse({
@@ -57,24 +81,6 @@ export class WorkflowController {
       stepId,
     );
     return ResponseUtils.success(workflowGet);
-  }
-
-  @Get(':workflowKey/steps')
-  @UseInterceptors(TransformInterceptor)
-  @ApiResponse({
-    status: HttpStatus.OK,
-    type: [WorkflowStepResponse],
-  })
-  @ApiParam({
-    name: 'workflowKey',
-    type: String,
-    required: true,
-  })
-  async getWorkflowSteps(
-    @Param('workflowKey') workflowKey: string,
-  ): Promise<any> {
-    const steps = await this.workflowService.getSteps(workflowKey);
-    return ResponseUtils.success(WorkflowStepResponse.fromStepsArray(steps));
   }
 
   @Post(':workflowKey/:stepId/:storeId')
