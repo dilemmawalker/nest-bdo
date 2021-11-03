@@ -29,4 +29,4 @@ import { WorkflowService } from './workflow.service';
   providers: [WorkflowService, WorkflowRepository, StoreRepository],
   exports: [WorkflowService, WorkflowRepository],
 })
-export class CoreWorkflowModule { }
+export class CoreWorkflowModule {}
