@@ -30,7 +30,7 @@ export class WorkflowController {
   constructor(
     private readonly workflowService: WorkflowService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
-  ) { }
+  ) {}
 
   @Get(':key')
   @UseInterceptors(TransformInterceptor)
