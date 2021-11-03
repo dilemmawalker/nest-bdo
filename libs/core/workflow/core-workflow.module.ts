@@ -23,7 +23,7 @@ import { WorkflowService } from './workflow.service';
     ]),
     MongooseModule.forFeature([{ name: Field.name, schema: FieldSchema }]),
     MongooseModule.forFeature([{ name: Step.name, schema: StepSchema }]),
-    // MongooseModule.forFeature([{ name: Store.name, schema: StoreSchema }]),
+    MongooseModule.forFeature([{ name: Store.name, schema: StoreSchema }]),
     MongooseModule.forFeature([{ name: Agent.name, schema: AgentSchema }]),
   ],
   providers: [WorkflowService, WorkflowRepository, StoreRepository],
