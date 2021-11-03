@@ -22,6 +22,7 @@ import {
   WorkflowRequest,
   WorkflowRequestField,
 } from './requests/workflow.request';
+import { WorkflowStepResponse } from './response/workflow-steps.response';
 
 @ApiTags('Workflows')
 @Controller('workflows')
@@ -33,6 +34,30 @@ export class WorkflowController {
     private readonly fieldService: FieldService,
     private readonly validationService: ValidationService,
   ) {}
+
+  @Get(':workflowKey/:storeId/steps')
+  @UseInterceptors(TransformInterceptor)
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: [WorkflowStepResponse],
+  })
+  @ApiParam({
+    name: 'workflowKey',
+    type: String,
+    required: true,
+  })
+  @ApiParam({
+    name: 'storeId',
+    type: String,
+    required: true,
+  })
+  async getWorkflowSteps(
+    @Param('workflowKey') workflowKey: string,
+    @Param('storeId') storeId: string,
+  ): Promise<any> {
+    const steps = await this.workflowService.getSteps(workflowKey);
+    return ResponseUtils.success(WorkflowStepResponse.fromStepsArray(steps));
+  }
 
   @Get(':workflowKey/:stepId/:storeId')
   @UseInterceptors(TransformInterceptor)

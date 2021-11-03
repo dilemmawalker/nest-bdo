@@ -15,5 +15,4 @@ deploy:dev:
   script:
     - bash deploy/deploy.sh
   only:
-    - testing
-
+    - development
