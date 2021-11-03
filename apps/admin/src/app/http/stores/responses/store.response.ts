@@ -36,11 +36,11 @@ export class StoreResponse {
 
   static fromStore(store: Store, status: string) {
     const entity = new StoreResponse();
-    entity.store_name = store.storeName;
+    entity.store_name = store.store_name;
     entity.mobile = store.mobile;
     entity.createdAt = moment(store.createdAt).format('MM/DD/YYYY');
     entity.updatedAt = moment(store.updatedAt).format('MM/DD/YYYY');
-    entity.owner_name = store.ownerName;
+    entity.owner_name = store.owner_name;
     entity.status = status;
     entity.storeId = store.storeId;
     entity.address = store.address;

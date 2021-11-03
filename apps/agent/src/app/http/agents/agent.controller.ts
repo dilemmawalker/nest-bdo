@@ -1,12 +1,10 @@
 import {
-  Body,
   Controller,
   Get,
   Headers,
   HttpStatus,
   Inject,
   Param,
-  Post,
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
