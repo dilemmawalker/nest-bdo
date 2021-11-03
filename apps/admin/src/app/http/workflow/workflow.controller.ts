@@ -20,8 +20,8 @@ import { AddStepRequest } from './requests/add-steps.request';
 import { AssignFieldRequest } from './requests/assign-field.request';
 import { CreateWorkflowRequest } from './requests/create-workflow.request';
 import { WorkflowResponse } from './responses/workflow.response';
-import { WorkflowService } from '../../../../../../libs/core/workflow/workflow.service';
 import { UpdatePositionRequest } from './requests/update-position.request';
+import { WorkflowService } from 'libs/core/workflow/workflow.service';
 
 @ApiTags('Workflows')
 @Controller('workflows')
@@ -30,7 +30,7 @@ export class WorkflowController {
   constructor(
     private readonly workflowService: WorkflowService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
-  ) {}
+  ) { }
 
   @Get(':key')
   @UseInterceptors(TransformInterceptor)
