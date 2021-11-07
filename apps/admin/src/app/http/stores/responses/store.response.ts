@@ -43,7 +43,7 @@ export class StoreResponse {
     entity.owner_name = store.owner_name;
     entity.status = status;
     entity.storeId = store.storeId;
-    entity.address = store.address;
+    entity.address = store.address || '';
     entity.workflow = store.workflowKey;
     entity.currentWorkflowUrl = generateWorkflowUrl(
       store.workflowKey,
