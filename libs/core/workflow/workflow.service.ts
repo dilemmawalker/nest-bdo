@@ -20,7 +20,7 @@ export class WorkflowService {
     private readonly storeRepository: StoreRepository,
     private readonly agentRepository: AgentRepository,
     private readonly fieldRepository: FieldRepository,
-  ) { }
+  ) {}
 
   async findOne(key: string): Promise<Workflow> {
     const workflow = await this.workflowRepository.findOne(key);
