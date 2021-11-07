@@ -26,7 +26,7 @@ export class StoreResponse {
   updatedAt: string;
 
   @ApiProperty()
-  address: string;
+  address = '';
 
   @ApiProperty()
   status: string;
