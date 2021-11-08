@@ -25,6 +25,7 @@ export class ClusterManagerDto {
   active: boolean;
   clusterManagerId: string;
   clusters: Types.ObjectId[];
+  clusterNames: string[];
 }
 export const ClusterManagerSchema =
   SchemaFactory.createForClass(ClusterManager);

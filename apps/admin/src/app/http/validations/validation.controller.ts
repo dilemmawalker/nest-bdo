@@ -5,7 +5,7 @@ import {
   Post,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { TransformInterceptor } from '@shared/app/interceptors/transform.interceptor';
 import { ResponseUtils } from '@shared/app/utils/class/response.utils';
 import { ValidationService } from 'libs/core/validations/src/validation.service';
@@ -15,6 +15,7 @@ import { ValidationResponse } from './responses/validation.reponse';
 
 @ApiTags('Validation')
 @Controller('validation')
+@ApiBearerAuth()
 export class ValidationController {
   constructor(private readonly validationService: ValidationService) {}
 
