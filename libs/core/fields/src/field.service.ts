@@ -47,7 +47,7 @@ export class FieldService {
     return await this.fieldRepository.createFieldGroup(fieldGroupDto);
   }
 
-  async getFields(): Promise<Field[]> {
+  async getFields(): Promise<any[]> {
     return await this.fieldRepository.find({});
   }
 

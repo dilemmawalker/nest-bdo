@@ -22,7 +22,7 @@ export class FieldResponse {
   validations: Types.ObjectId[] = [];
 
   @ApiProperty()
-  groups: Types.ObjectId[] = [];
+  groups: any[];
 
   static fromField(field: Field) {
     const entity = new FieldResponse();
