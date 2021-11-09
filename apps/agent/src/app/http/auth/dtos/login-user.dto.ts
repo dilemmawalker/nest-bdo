@@ -11,4 +11,5 @@ export class LoginUserDto {
   otp: string;
   agentId: string;
   leadUrl: string;
+  clusterManagerId: string;
 }

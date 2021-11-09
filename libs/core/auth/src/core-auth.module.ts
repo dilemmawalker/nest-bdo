@@ -5,6 +5,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { jwtConfig } from '@shared/config/auth.config';
 import { CoreAgentModule } from 'libs/core/agent/src/core-agent.module';
+import { CoreClusterManagerModule } from 'libs/core/clusterManager/src/core-cluster.manager.module';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
 import { LocalStrategy } from './local.strategy';
@@ -17,6 +18,7 @@ import { OtpStrategy } from './otp.strategy';
     CoreClusterModule,
     PassportModule,
     JwtModule.register(jwtConfig),
+    CoreClusterManagerModule,
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy, OtpStrategy],
   exports: [AuthService, LocalStrategy, JwtStrategy, OtpStrategy],

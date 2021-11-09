@@ -13,6 +13,7 @@ import { JWTUtil } from '@shared/app/utils/class/jwt.utils';
 import { ResponseUtils } from '@shared/app/utils/class/response.utils';
 import { StoreResponse } from 'apps/admin/src/app/http/stores/responses/store.response';
 import { AgentService } from 'libs/core/agent/src/agent.service';
+import { ClusterManagerService } from 'libs/core/clusterManager/src/cluster.manager.service';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
 
@@ -25,6 +26,7 @@ export class AgentController {
     private readonly agentService: AgentService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
     private readonly jwtUtil: JWTUtil,
+    private readonly clusterManagerService: ClusterManagerService,
   ) {}
 
   @Get('stores/:status')
@@ -36,8 +38,10 @@ export class AgentController {
     @Headers('Authorization') auth: string,
     @Param('status') status: string,
   ): Promise<any> {
-    const json = await this.jwtUtil.decode(auth);
-    const stores = await this.agentService.getStores(json.agentId);
+    const json = this.jwtUtil.decode(auth);
+    const stores = json.clusterManagerId
+      ? await this.clusterManagerService.getStores(json.clusterManagerId)
+      : await this.agentService.getStores(json.agentId);
     return ResponseUtils.success(
       StoreResponse.fromStoreArray(stores, status),
       status,

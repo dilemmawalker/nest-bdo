@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { Store } from '@shared/app/schemas/stores/store.schema';
+import { Agent } from '@shared/app/schemas/users/agent.schema';
 import {
   ClusterManager,
   ClusterManagerDto,
@@ -14,6 +16,8 @@ export class ClusterManagerRepository {
     private clusterManagerModel: Model<ClusterManager>,
     @InjectModel(Cluster.name)
     private clusterModel: Model<Cluster>,
+    @InjectModel(Agent.name)
+    private agentModel: Model<Agent>,
   ) {}
 
   async findOneAndUpdate(
@@ -39,5 +43,39 @@ export class ClusterManagerRepository {
         new: true,
       },
     );
+  }
+
+  async findOne(
+    clusterManagerFilterQuery: FilterQuery<ClusterManager>,
+  ): Promise<ClusterManager> {
+    return await this.clusterManagerModel.findOne({
+      $or: [
+        {
+          userId: clusterManagerFilterQuery.userId,
+        },
+        {
+          clusterManagerId: clusterManagerFilterQuery.clusterManagerId,
+        },
+      ],
+    });
+  }
+
+  async getStores(
+    clusterManagerFilterQuery: FilterQuery<ClusterManager>,
+  ): Promise<any> {
+    const clusterManager = await this.clusterManagerModel.findOne({
+      clusterManagerId: clusterManagerFilterQuery.clusterManagerId,
+    });
+    const agents = await this.agentModel
+      .find({
+        cluster: { $in: clusterManager.clusters },
+      })
+      .populate({
+        path: 'stores',
+        model: 'Store',
+      });
+    return agents.flatMap((agent) => {
+      return agent.stores;
+    });
   }
 }

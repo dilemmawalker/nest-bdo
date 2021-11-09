@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { Agent, AgentSchema } from '@shared/app/schemas/users/agent.schema';
 import {
   ClusterManager,
   ClusterManagerSchema,
@@ -16,6 +17,7 @@ import { ClusterManagerService } from './cluster.manager.service';
     MongooseModule.forFeature([
       { name: ClusterManager.name, schema: ClusterManagerSchema },
       { name: Cluster.name, schema: ClusterSchema },
+      { name: Agent.name, schema: AgentSchema },
     ]),
   ],
   providers: [ClusterManagerService, ClusterManagerRepository],
