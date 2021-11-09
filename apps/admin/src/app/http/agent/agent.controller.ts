@@ -21,7 +21,7 @@ import { AgentResponse } from './response/agent.response';
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
 export class AgentController {
-  constructor(private readonly agentService: AgentService) {}
+  constructor(private readonly agentService: AgentService) { }
 
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(TransformInterceptor)
@@ -31,8 +31,9 @@ export class AgentController {
   })
   @Get()
   async getUsers(): Promise<any> {
-    const agent = await this.agentService.getAgents();
-    return ResponseUtils.success(AgentResponse.fromAgentArray(agent));
+    const obj = await this.agentService.getAgents();
+    // return ResponseUtils.success(obj);
+    return ResponseUtils.success(AgentResponse.fromAgentArray(obj));
   }
 
   @UseGuards(JwtAuthGuard)
@@ -45,10 +46,10 @@ export class AgentController {
   async updateAgent(
     @Body() updateAgentRequest: UpdateAgentRequest,
   ): Promise<any> {
-    const updatedAgent = await this.agentService.updateAgent(
+    const obj = await this.agentService.updateAgent(
       updateAgentRequest.agentId,
       UpdateAgentRequest.getAgentDto(updateAgentRequest),
     );
-    return ResponseUtils.success(AgentResponse.fromAgent(updatedAgent));
+    return ResponseUtils.success(AgentResponse.fromAgent(obj));
   }
 }

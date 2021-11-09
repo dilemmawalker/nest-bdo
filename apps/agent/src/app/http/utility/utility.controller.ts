@@ -9,7 +9,6 @@ import { UtilitiesService } from '@utility/utilities/utilities.service';
 @UseInterceptors(TransformInterceptor)
 export class UtilityController {
   constructor(private utilitiesService: UtilitiesService) {}
-
   @ApiResponse({
     status: 200,
   })

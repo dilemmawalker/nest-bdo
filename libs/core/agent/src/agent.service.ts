@@ -6,7 +6,7 @@ import { AgentRepository } from './agent.repository';
 export class AgentService {
   constructor(private readonly agentRepository: AgentRepository) {}
 
-  async updateAgent(agentId: string, agentDto: AgentDto): Promise<Agent> {
+  async updateAgent(agentId: string, agentDto: AgentDto): Promise<any> {
     return await this.agentRepository.findOneAndUpdate({ agentId }, agentDto);
   }
 
@@ -14,7 +14,7 @@ export class AgentService {
     return await this.agentRepository.getStores(agentId);
   }
 
-  async getAgents(): Promise<Agent[]> {
+  async getAgents(): Promise<any[]> {
     return await this.agentRepository.getAll();
   }
 

@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Agent, AgentDto } from '@shared/app/schemas/users/agent.schema';
 import { Cluster } from '@shared/app/schemas/users/cluster.schema';
+import { User } from '@shared/app/schemas/users/user.schema';
 import { FilterQuery, Model } from 'mongoose';
 
 @Injectable()
@@ -39,11 +40,17 @@ export class AgentRepository {
     });
   }
 
-  async getAll(): Promise<Agent[]> {
-    return await this.agentModel.find({}).populate({
-      path: 'cluster',
-      model: 'Cluster',
-    });
+  async getAll(): Promise<any[]> {
+    return await this.agentModel
+      .find({})
+      .populate({
+        path: 'cluster',
+        model: 'Cluster',
+      })
+      .populate({
+        path: 'user',
+        model: 'User',
+      });
   }
 
   async getStores(agentId: string): Promise<any> {
@@ -65,12 +72,21 @@ export class AgentRepository {
       throw new NotFoundException();
     }
     agentDto.cluster = cluster._id;
-    return await this.agentModel.findOneAndUpdate(
+    const agent = await this.agentModel.findOneAndUpdate(
       { agentId: agentFilterQuery.agentId },
       agentDto,
       {
         new: true,
       },
     );
+    return (
+      await agent.populate({
+        path: 'cluster',
+        model: 'Cluster',
+      })
+    ).populate({
+      path: 'user',
+      model: 'User',
+    });
   }
 }

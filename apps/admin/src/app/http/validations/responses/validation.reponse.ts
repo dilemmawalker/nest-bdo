@@ -10,7 +10,7 @@ export class ValidationResponse {
   options: any[];
 
   @ApiProperty()
-  type: string;
+  type = '';
 
   @ApiProperty()
   status: boolean;
