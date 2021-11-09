@@ -10,7 +10,7 @@ export class DataType {
   _id: string;
 
   @ApiProperty()
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true })
   name: string;
 
   @ApiProperty()
