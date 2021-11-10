@@ -81,6 +81,7 @@ export class WorkflowService {
       this.getStepsFields(workflow, stepId),
       store,
     );
+    console.log(fields);
     if (store) {
       await this.storeRepository.updateObj({ currentStepId: stepId }, storeId);
     }
@@ -140,7 +141,7 @@ export class WorkflowService {
     return [];
   }
 
-  getInputFields(fields: any[], store: Store) {
+  getInputFields(fields: any[], store: any) {
     const inputFields = FieldInputData.fromFieldArray(fields);
     console.log(fields);
     if (!store) {
@@ -149,11 +150,12 @@ export class WorkflowService {
     for (const i in inputFields) {
       const inputField = inputFields[i];
       if (inputField.group.length == 0) {
-        inputField.inputValue = store[inputField.keyName];
+        inputField.inputValue = store.get(inputField.keyName) || '';
       } else {
         inputField.group.forEach((field) => {
           if (store[inputField.keyName]) {
-            inputField.inputValue = store[inputField.keyName][field.keyName];
+            inputField.inputValue =
+              store.get(inputField.keyName).get(field.keyName) || '';
           }
         });
       }
