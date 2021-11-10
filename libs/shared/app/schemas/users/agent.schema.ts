@@ -21,6 +21,9 @@ export class Agent extends BaseItemSchema {
 
   @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'Store' })
   stores: Types.ObjectId[];
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  user: Types.ObjectId;
 }
 
 export class AgentDto {
@@ -29,5 +32,6 @@ export class AgentDto {
   agentId: string;
   clusterName: string;
   cluster: Types.ObjectId;
+  user: Types.ObjectId;
 }
 export const AgentSchema = SchemaFactory.createForClass(Agent);

@@ -97,6 +97,7 @@ export class UserRepository {
     entity.agentId = uuidv4();
     entity.userId = user.userId;
     entity.active = true;
+    entity.user = user._id;
     return entity;
   }
 
@@ -105,6 +106,7 @@ export class UserRepository {
     entity.clusterManagerId = uuidv4();
     entity.userId = user.userId;
     entity.active = true;
+    entity.user = user._id;
     return entity;
   }
 }

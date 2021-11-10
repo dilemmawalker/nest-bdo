@@ -8,6 +8,7 @@ export type UserDocument = User & Document;
 
 @Schema()
 export class User extends BaseItemSchema {
+  _id: mongoose.Types.ObjectId;
   @Prop()
   userId: string;
 

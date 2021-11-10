@@ -18,6 +18,9 @@ export class ClusterManager extends BaseItemSchema {
 
   @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'Cluster' })
   clusters: Types.ObjectId[];
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  user: Types.ObjectId;
 }
 
 export class ClusterManagerDto {
@@ -26,6 +29,7 @@ export class ClusterManagerDto {
   clusterManagerId: string;
   clusters: Types.ObjectId[];
   clusterNames: string[];
+  user: Types.ObjectId;
 }
 export const ClusterManagerSchema =
   SchemaFactory.createForClass(ClusterManager);
