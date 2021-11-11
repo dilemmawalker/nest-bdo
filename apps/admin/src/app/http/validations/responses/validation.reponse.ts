@@ -4,6 +4,9 @@ import { Validation } from '@shared/app/schemas/validation/validation.schema';
 @ApiTags('Validation')
 export class ValidationResponse {
   @ApiProperty()
+  _id: any;
+
+  @ApiProperty()
   name: string;
 
   @ApiProperty()
@@ -17,6 +20,7 @@ export class ValidationResponse {
 
   static fromValidation(validation: Validation): ValidationResponse {
     const response = new ValidationResponse();
+    response._id = validation._id;
     response.name = validation.name;
     response.options = validation.options;
     response.status = validation.status;
