@@ -42,19 +42,29 @@ export class FieldService {
     return await this.fieldRepository.create(fieldDto);
   }
 
-  async createFieldGroup(fieldGroupDto: FieldGroupDto): Promise<FieldGroup> {
-    fieldGroupDto.groupKey = slugify(fieldGroupDto.label, slugifyConfig);
-    return await this.fieldRepository.createFieldGroup(fieldGroupDto);
+  async update(fieldDto: FieldDto): Promise<Field> {
+    const field = await this.fieldRepository.findOne({
+      keyName: fieldDto.keyName,
+    });
+    if (!field) {
+      throw new HttpException(
+        {
+          status: HttpStatus.FORBIDDEN,
+          error: 'Field not exist with this keyName',
+          message: 'Field not exist with this keyName',
+        },
+        HttpStatus.FORBIDDEN,
+      );
+    }
+    return await this.fieldRepository.findOneAndUpdate(
+      { keyName: fieldDto.keyName },
+      fieldDto,
+    );
   }
 
   async getFields(): Promise<any[]> {
     return await this.fieldRepository.find({});
   }
-
-  async getGroupFields(): Promise<FieldGroup[]> {
-    return await this.fieldRepository.findFieldGroup({});
-  }
-
   async createField(fieldDto: FieldDto): Promise<Field> {
     return await this.fieldRepository.create(fieldDto);
   }

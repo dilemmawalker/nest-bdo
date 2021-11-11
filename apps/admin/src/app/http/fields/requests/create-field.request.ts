@@ -10,6 +10,9 @@ export class CreateFieldRequest {
   @ApiProperty()
   options: any;
 
+  @ApiProperty()
+  keyName: any;
+
   position: number;
 
   @ApiProperty()
