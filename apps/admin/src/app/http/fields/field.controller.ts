@@ -28,7 +28,7 @@ export class FieldController {
   constructor(
     private readonly fieldService: FieldService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
-  ) {}
+  ) { }
 
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(TransformInterceptor)
@@ -41,7 +41,6 @@ export class FieldController {
     const fields = await this.fieldService.getFields();
     return ResponseUtils.success(FieldResponse.fromFieldArray(fields));
   }
-
 
   @Get(':keyName')
   @UseInterceptors(TransformInterceptor)
@@ -61,7 +60,8 @@ export class FieldController {
     type: FieldResponse,
   })
   async create(@Body() createFieldRequest: CreateFieldRequest): Promise<any> {
-    const field = await this.fieldService.create(
+    console.log(CreateFieldRequest.getFieldDto(createFieldRequest));
+    const field = await this.fieldService.createOrUpdate(
       CreateFieldRequest.getFieldDto(createFieldRequest),
     );
     return ResponseUtils.success(FieldResponse.fromField(field));

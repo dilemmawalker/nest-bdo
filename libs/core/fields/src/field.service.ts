@@ -6,11 +6,9 @@ import {
 } from '@nestjs/common';
 import { slugifyConfig } from 'apps/admin/src/config/slugify.config';
 import slugify from 'slugify';
-import { FieldGroup } from '@shared/app/schemas/fields/field-group.schema';
 import { Field } from '@shared/app/schemas/fields/field.schema';
 import { FieldRepository } from './field.repository';
 import { FieldDto } from './dtos/field.dto';
-import { FieldGroupDto } from './dtos/field-group.dto';
 
 @Injectable()
 export class FieldService {
@@ -24,8 +22,15 @@ export class FieldService {
     throw new NotFoundException();
   }
 
+  async createOrUpdate(fieldDto: FieldDto): Promise<Field> {
+    if (!fieldDto.keyName) {
+      return await this.create(fieldDto);
+    }
+    return await this.update(fieldDto);
+  }
+
   async create(fieldDto: FieldDto): Promise<Field> {
-    fieldDto.keyName = slugify(fieldDto.label, slugifyConfig);
+    fieldDto.keyName = slugify(fieldDto.label + fieldDto.type, slugifyConfig);
     const field = await this.fieldRepository.findOne({
       keyName: fieldDto.keyName,
     });
@@ -43,9 +48,11 @@ export class FieldService {
   }
 
   async update(fieldDto: FieldDto): Promise<Field> {
+    console.log('Updating field');
     const field = await this.fieldRepository.findOne({
       keyName: fieldDto.keyName,
     });
+    console.log(fieldDto.keyName);
     if (!field) {
       throw new HttpException(
         {
@@ -56,10 +63,7 @@ export class FieldService {
         HttpStatus.FORBIDDEN,
       );
     }
-    return await this.fieldRepository.findOneAndUpdate(
-      { keyName: fieldDto.keyName },
-      fieldDto,
-    );
+    return await this.fieldRepository.updateObj(fieldDto, fieldDto.keyName);
   }
 
   async getFields(): Promise<any[]> {
