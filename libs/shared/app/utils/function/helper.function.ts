@@ -15,5 +15,5 @@ export function generateWorkflowUrl(
   stepId: string,
   storeId: string,
 ) {
-  return `agent/api/workflow/${workflowKey}/${stepId}/${storeId}`;
+  return `agent/api/workflows/${workflowKey}/${stepId}/${storeId}`;
 }
