@@ -28,7 +28,7 @@ export class FieldController {
   constructor(
     private readonly fieldService: FieldService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
-  ) { }
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(TransformInterceptor)

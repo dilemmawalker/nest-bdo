@@ -11,7 +11,7 @@ export class FieldRepository {
   constructor(
     @InjectModel(Field.name) private fieldModel: Model<Field>,
     @InjectModel(FieldGroup.name) private fieldGroupModel: Model<FieldGroup>,
-  ) { }
+  ) {}
 
   async findOne(userFilterQuery: FilterQuery<Field>): Promise<any> {
     return await this.fieldModel

@@ -46,4 +46,8 @@ export class StoreRepository {
   async findOne(storeId: string): Promise<any> {
     return await this.storeModel.findOne({ storeId });
   }
+
+  async getStores(): Promise<Store[]> {
+    return await this.storeModel.find({});
+  }
 }

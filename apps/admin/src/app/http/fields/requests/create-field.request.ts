@@ -19,9 +19,6 @@ export class CreateFieldRequest {
   type: string;
 
   @ApiProperty()
-  isGroup: boolean;
-
-  @ApiProperty()
   groups: string[];
 
   @ApiProperty()
