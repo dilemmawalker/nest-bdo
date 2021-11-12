@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { RouterModule } from '@nestjs/core';
 import { appRoutes } from '../app.route';
+import { ActivityModule } from './activity/activity.module';
 import { AgentModule } from './agents/agent.module';
 import { AuthModule } from './auth/auth.module';
 import { FileModule } from './files/file.module';
@@ -15,6 +16,7 @@ import { WorkflowModule } from './workflow/workflow.module';
     AgentModule,
     FileModule,
     UtilityModule,
+    ActivityModule,
   ],
   providers: [],
 })

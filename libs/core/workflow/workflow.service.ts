@@ -13,7 +13,7 @@ import { Step } from '@shared/app/schemas/steps/steps.schema';
 import { AgentRepository } from '../agent/src/agent.repository';
 import { FieldRepository } from '../fields/src/field.repository';
 import { UpdatePositionDto } from './dtos/update-positions.dto';
-import { ActivityService } from '../Activity/Activity.service';
+import { ActivityService } from '../activity/activity.service';
 @Injectable()
 export class WorkflowService {
   constructor(
@@ -53,14 +53,14 @@ export class WorkflowService {
       storeDto.agentId,
     );
     //call Activity function
-    const activity = await this.activityService.activity(
+    await this.activityService.activity(
       'Store',
       'Created',
       'Store',
       store.storeId,
       'Agent',
       store.agentId,
-      '',
+      '{}',
     );
     //where to return activity???
     //return activity;
@@ -82,14 +82,14 @@ export class WorkflowService {
     storeDto.updatedAt = new Date();
     const updated = await this.storeRepository.update(storeDto);
     //call Activity function
-    const activity = await this.activityService.activity(
+    await this.activityService.activity(
       'Store',
       'Updated',
       'Store',
       storeDto.storeId,
       'Agent',
       storeDto.agentId,
-      '',
+      storeDto.stepId, //step id
     );
     //where to return activity???
     //return activity;

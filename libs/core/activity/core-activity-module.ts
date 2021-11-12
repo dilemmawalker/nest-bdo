@@ -4,6 +4,7 @@ import {
   Activity,
   ActivitySchema,
 } from '@shared/app/schemas/activity/activity.schema';
+import { ActivityRepository } from './activity.repository';
 import { ActivityService } from './activity.service';
 
 @Module({
@@ -12,7 +13,7 @@ import { ActivityService } from './activity.service';
       { name: Activity.name, schema: ActivitySchema },
     ]),
   ],
-  providers: [ActivityService],
-  exports: [ActivityService],
+  providers: [ActivityService, ActivityRepository],
+  exports: [ActivityService, ActivityRepository],
 })
-export class CoreUserModule {}
+export class CoreActivityModule {}
