@@ -8,6 +8,7 @@ import {
   WorkflowSchema,
 } from '@shared/app/schemas/workflows/workflow.schema';
 import { JWTUtil } from '@shared/app/utils/class/jwt.utils';
+import { ValidationUtils } from '@shared/app/utils/class/validation.utils';
 import { jwtConfig } from '@shared/config/auth.config';
 import { CoreFieldModule } from 'libs/core/fields/src/core-field.module';
 import { CoreValidationModule } from 'libs/core/validations/src/core-validation.module';
@@ -27,6 +28,6 @@ import { WorkflowController } from './workflow.controller';
     CoreFieldModule,
   ],
   controllers: [WorkflowController],
-  providers: [JWTUtil],
+  providers: [JWTUtil, ValidationUtils],
 })
 export class WorkflowModule {}

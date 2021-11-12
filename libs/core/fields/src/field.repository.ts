@@ -14,7 +14,13 @@ export class FieldRepository {
   ) {}
 
   async findOne(userFilterQuery: FilterQuery<Field>): Promise<any> {
-    return await this.fieldModel.findOne({ keyName: userFilterQuery.keyName });
+    return await this.fieldModel
+      .findOne({ keyName: userFilterQuery.keyName })
+      .populate({
+        model: 'validations',
+        path: 'Validation',
+        strictPopulate: false,
+      });
   }
 
   async find(fieldFilterQuery: FilterQuery<Field>): Promise<Field[]> {

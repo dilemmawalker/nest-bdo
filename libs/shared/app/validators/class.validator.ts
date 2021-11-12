@@ -1,25 +1,32 @@
-import { WorkflowRequestField } from 'apps/agent/src/app/http/workflow/requests/workflow.request';
 import { Field } from '../schemas/fields/field.schema';
 import { Validation } from '../schemas/validation/validation.schema';
 import { Validator } from './main.validator';
 
 export class ClassValidator {
-  static typeValidation(field: WorkflowRequestField): boolean {
-    const value: string = field.inputValue;
+  static typeValidation(field: Field, value: string): boolean {
     switch (field.type) {
-      case 'number':
-        return Validator.isNumber(value);
+      case 'integer':
+        return Validator.isInteger(value);
+      case 'float':
+        return Validator.isFloat(value);
       case 'string':
         return Validator.isString(value);
       case 'array':
         return Validator.isArray(value);
       case 'boolean':
         return Validator.isBoolean(value);
+      case 'select':
+        return Validator.isPresent(field.options, value);
+      case 'mobile':
+        return (
+          Validator.isInteger(value) && Validator.isMobile(parseInt(value))
+        );
     }
-    return false;
+    return true;
   }
 
   static dynamicValidation(value: string, validations: Validation[]): boolean {
+    if (validations.length === 0) return true;
     return validations.every((validation) =>
       this.validateField(value, validation),
     );
@@ -29,11 +36,11 @@ export class ClassValidator {
     switch (validation.type) {
       case 'range':
         return (
-          Validator.isNumber(value) &&
+          Validator.isFloat(value) &&
           Validator.inRange(
             parseFloat(value),
-            validation.options[0],
-            validation.options[1],
+            validation.options[0].value,
+            validation.options[1].value,
           )
         );
       case 'active':
@@ -44,7 +51,9 @@ export class ClassValidator {
         return Validator.isImageUrl(value);
       case 'url':
         return Validator.isUrl(value);
+      case 'required':
+        return Validator.isRequired(value);
     }
-    return false;
+    return true;
   }
 }
