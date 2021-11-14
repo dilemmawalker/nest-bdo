@@ -2,6 +2,10 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Agent, AgentSchema } from '@shared/app/schemas/users/agent.schema';
 import {
+  ClusterManager,
+  ClusterManagerSchema,
+} from '@shared/app/schemas/users/cluster.manager.schema';
+import {
   Permission,
   PermissionSchema,
 } from '@shared/app/schemas/users/permission.schema';
@@ -18,6 +22,9 @@ import { UserService } from './user.service';
     ]),
     MongooseModule.forFeature([{ name: Role.name, schema: RoleSchema }]),
     MongooseModule.forFeature([{ name: Agent.name, schema: AgentSchema }]),
+    MongooseModule.forFeature([
+      { name: ClusterManager.name, schema: ClusterManagerSchema },
+    ]),
   ],
   providers: [UserService, UserRepository],
   exports: [UserService, UserRepository],

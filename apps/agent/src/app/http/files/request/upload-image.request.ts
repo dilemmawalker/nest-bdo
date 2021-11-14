@@ -20,13 +20,13 @@ export class UploadImageRequest {
 }
 
 export const ApiUploadImageRequest =
-  (fileName = 'file'): MethodDecorator =>
+  (file = 'file'): MethodDecorator =>
   (target: any, propertyKey, descriptor: PropertyDescriptor) => {
     ApiBody({
       schema: {
         type: 'object',
         properties: {
-          [fileName]: {
+          [file]: {
             type: 'string',
             format: 'binary',
           },

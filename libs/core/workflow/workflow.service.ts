@@ -123,7 +123,10 @@ export class WorkflowService {
     let current_step_name = '';
     let next_step_url = '';
     let prev_step_url = '';
+
     const storeId = Boolean(store) ? store.storeId : 'new';
+
+    const current_step_url = generateWorkflowUrl(workflow.key, stepId, storeId);
 
     for (let i = 0; i < workflow.steps.length; i++) {
       const step = workflow.steps[i];
@@ -156,6 +159,7 @@ export class WorkflowService {
       current_step_name,
       next_step_url,
       prev_step_url,
+      current_step_url,
     };
   }
 

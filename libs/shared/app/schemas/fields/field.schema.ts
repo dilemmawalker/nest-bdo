@@ -26,9 +26,6 @@ export class Field {
   position = 0;
 
   @ApiProperty()
-  isGroup: boolean;
-
-  @ApiProperty()
   @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'Field' })
   groups: Types.ObjectId[] = [];
 

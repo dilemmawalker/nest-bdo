@@ -13,15 +13,20 @@ export class AgentResponse {
 
   name: string;
 
-  clusterName: string;
+  clusterName = '';
 
   static fromAgent(agent: any): AgentResponse {
     console.log(agent);
     const agentResponse = new AgentResponse();
     agentResponse.active = agent.active;
     agentResponse.agentId = agent.agentId;
+    if (agent.get('user')) {
+      agentResponse.name = agent.get('user').name;
+    }
     agentResponse.name = agent.get('user').name;
-    agentResponse.clusterName = agent.get('cluster').name;
+    if (agent.get('cluster')) {
+      agentResponse.clusterName = agent.get('cluster').name;
+    }
     return agentResponse;
   }
 

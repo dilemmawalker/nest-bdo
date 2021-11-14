@@ -50,6 +50,10 @@ export class StoreService {
     return stepInputMapping;
   }
 
+  async getAllStores(): Promise<any> {
+    return await this.storeRepository.getStores();
+  }
+
   getStepsFields(workflow: Workflow) {
     const stepFieldMapping = [];
     for (const i in workflow.steps) {

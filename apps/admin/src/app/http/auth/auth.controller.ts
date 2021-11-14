@@ -10,7 +10,7 @@ import {
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { TransformInterceptor } from '@shared/app/interceptors/transform.interceptor';
 import { ResponseUtils } from '@shared/app/utils/class/response.utils';
-import { Role } from 'apps/admin/src/constant/auth/roles.constant';
+import { RoleConst } from 'apps/admin/src/constant/auth/roles.constant';
 import { Roles } from '../../decorators/auth/roles.decorators';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { LocalAuthGuard } from '../../guards/local-auth.guard';
@@ -47,7 +47,7 @@ export class AuthController {
     return ResponseUtils.success('yeah ok');
   }
 
-  @Roles(Role.Admin)
+  @Roles(RoleConst.Admin)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @ApiBearerAuth()
   @ApiResponse({
@@ -59,7 +59,7 @@ export class AuthController {
     return ResponseUtils.success('yeah, you have admin access');
   }
 
-  @Roles(Role.User)
+  @Roles(RoleConst.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @ApiBearerAuth()
   @ApiResponse({

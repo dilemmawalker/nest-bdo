@@ -10,13 +10,13 @@ export class CreateFieldRequest {
   @ApiProperty()
   options: any;
 
+  @ApiProperty()
+  keyName: any = '';
+
   position: number;
 
   @ApiProperty()
   type: string;
-
-  @ApiProperty()
-  isGroup: boolean;
 
   @ApiProperty()
   groups: string[];
@@ -29,6 +29,7 @@ export class CreateFieldRequest {
     fieldDto.label = createFieldRequest.label;
     fieldDto.options = createFieldRequest.options;
     fieldDto.type = createFieldRequest.type;
+    fieldDto.keyName = createFieldRequest.keyName;
     createFieldRequest.groups.forEach((group) => {
       const groupObj = new Types.ObjectId(group);
       fieldDto.groups.push(groupObj);

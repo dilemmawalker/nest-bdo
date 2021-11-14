@@ -32,5 +32,6 @@ export class AgentDto {
   agentId: string;
   clusterName: string;
   cluster: Types.ObjectId;
+  user: Types.ObjectId;
 }
 export const AgentSchema = SchemaFactory.createForClass(Agent);
