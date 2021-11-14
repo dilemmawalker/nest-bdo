@@ -9,6 +9,7 @@ import {
   Cluster,
   ClusterSchema,
 } from '@shared/app/schemas/users/cluster.schema';
+import { StoreModule } from 'apps/admin/src/app/http/stores/store.module';
 import { ClusterManagerRepository } from './cluster.manager.repository';
 import { ClusterManagerService } from './cluster.manager.service';
 
@@ -19,6 +20,7 @@ import { ClusterManagerService } from './cluster.manager.service';
       { name: Cluster.name, schema: ClusterSchema },
       { name: Agent.name, schema: AgentSchema },
     ]),
+    StoreModule,
   ],
   providers: [ClusterManagerService, ClusterManagerRepository],
   exports: [ClusterManagerRepository, ClusterManagerService],

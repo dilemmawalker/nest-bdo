@@ -60,6 +60,14 @@ export class ClusterManagerRepository {
     });
   }
 
+  async updateObj(obj: any, clusterManagerId: string): Promise<any> {
+    const clusterManager = await this.clusterManagerModel.findOneAndUpdate(
+      { clusterManagerId },
+      obj,
+    );
+    return await this.findOne({ clusterManagerId });
+  }
+
   async getStores(
     clusterManagerFilterQuery: FilterQuery<ClusterManager>,
   ): Promise<any> {

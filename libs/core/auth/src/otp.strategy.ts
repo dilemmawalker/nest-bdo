@@ -65,6 +65,7 @@ export class OtpStrategy extends PassportStrategy(Strategy) {
     const roles = user.roles;
     return { access_token, roles, userBody: userPayload };
   }
+
   static getUserDto(otp: string): UserDto {
     const entity = new UserDto();
     entity.otp = otp;
