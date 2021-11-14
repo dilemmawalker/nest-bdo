@@ -17,8 +17,10 @@ export class ActivityRepository {
   }
 
   async findAll(subject_id: string): Promise<any> {
-    return await this.activityModel.find({
-      subject_id: subject_id,
-    });
+    return await this.activityModel
+      .find({
+        subject_id: subject_id,
+      })
+      .sort({ created_at: -1 });
   }
 }

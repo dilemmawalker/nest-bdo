@@ -52,6 +52,7 @@ export class WorkflowService {
       { stores: agent.stores },
       storeDto.agentId,
     );
+
     //call Activity function
     await this.activityService.activity(
       'Store',
