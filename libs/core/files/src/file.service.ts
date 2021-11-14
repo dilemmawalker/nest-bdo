@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { S3 } from 'aws-sdk';
 import { FileDto } from './dtos/file.dto';
 import { FileRepository } from './file.repository';
@@ -30,6 +30,17 @@ export class FileService {
     await this.checkExistingFile(fileDto);
     this.storeService.updateStore(storeObj, fileDto.refId);
     return await this.addFileEntry(fileDto);
+  }
+
+  public async deleFileObj(fileDto: FileDto) {
+    const store: any = await this.storeService.findOne(fileDto.refId);
+    if (!store) {
+      throw new NotFoundException('Store not found');
+    }
+    const storeObj: any = {};
+    storeObj[fileDto.keyName] = '';
+    await this.storeService.updateStore(storeObj, fileDto.refId);
+    await this.markFileAsTemp(fileDto.url);
   }
 
   public async checkExistingFile(fileDto: FileDto) {

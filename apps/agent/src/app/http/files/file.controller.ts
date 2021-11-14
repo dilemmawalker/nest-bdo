@@ -3,7 +3,9 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
+  HttpStatus,
   Post,
   Req,
   UploadedFile,
@@ -15,20 +17,20 @@ import {
   ApiBearerAuth,
   ApiConsumes,
   ApiProperty,
+  ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { TransformInterceptor } from '@shared/app/interceptors/transform.interceptor';
 import { FileUploadingUtils } from '@shared/app/utils/class/file-uploading.utils';
 import { ResponseUtils } from '@shared/app/utils/class/response.utils';
+import { BasicResponse } from '@shared/app/utils/request/basic.response';
+import { DeleteFileRequest } from './request/delete-file.request';
 import {
   ApiUploadImageRequest,
   UploadImageRequest,
 } from './request/upload-image.request';
 import { FileResponse } from './response/file.response';
 
-class testUpload {
-  @ApiProperty({ type: 'string', format: 'binary' })
-  file: File;
-}
 @ApiTags('Files')
 @Controller('files')
 @ApiBearerAuth()
@@ -56,7 +58,6 @@ export class FileController {
       FileUploadingUtils.getImageFilename(file.originalname),
       UploadImageRequest.getFileDto(uploadImageRequest),
     );
-    console.log(uploadImageRequest);
     return ResponseUtils.success(FileResponse.fromFile(fileObj));
   }
 
@@ -82,6 +83,19 @@ export class FileController {
       UploadImageRequest.getFileDto(uploadImageRequest),
     );
     return ResponseUtils.success(FileResponse.fromFile(fileObj));
+  }
+
+  @Post('/delete')
+  @UseInterceptors(TransformInterceptor)
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: BasicResponse,
+  })
+  public async deleteFile(@Body() deleteFileRequest: DeleteFileRequest) {
+    await this.fileService.deleFileObj(
+      DeleteFileRequest.getFileDto(deleteFileRequest),
+    );
+    return ResponseUtils.success(BasicResponse.success());
   }
 
   // @Post('/multiple-upload')
