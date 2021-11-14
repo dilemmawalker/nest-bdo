@@ -13,6 +13,7 @@ import { Step } from '@shared/app/schemas/steps/steps.schema';
 import { AgentRepository } from '../agent/src/agent.repository';
 import { FieldRepository } from '../fields/src/field.repository';
 import { UpdatePositionDto } from './dtos/update-positions.dto';
+import { ActivityService } from '../activity/activity.service';
 @Injectable()
 export class WorkflowService {
   constructor(
@@ -20,6 +21,7 @@ export class WorkflowService {
     private readonly storeRepository: StoreRepository,
     private readonly agentRepository: AgentRepository,
     private readonly fieldRepository: FieldRepository,
+    private readonly activityService: ActivityService,
   ) {}
 
   async findOne(key: string): Promise<Workflow> {
@@ -50,6 +52,19 @@ export class WorkflowService {
       { stores: agent.stores },
       storeDto.agentId,
     );
+
+    //call Activity function
+    await this.activityService.activity(
+      'Store',
+      'Created',
+      'Store',
+      store.storeId,
+      'Agent',
+      store.agentId,
+      '{}',
+    );
+    //where to return activity???
+    //return activity;
     return store;
   }
 
@@ -66,7 +81,20 @@ export class WorkflowService {
 
   async updateStore(storeDto: StoreDto): Promise<Store> {
     storeDto.updatedAt = new Date();
-    return await this.storeRepository.update(storeDto);
+    const updated = await this.storeRepository.update(storeDto);
+    //call Activity function
+    await this.activityService.activity(
+      'Store',
+      'Updated',
+      'Store',
+      storeDto.storeId,
+      'Agent',
+      storeDto.agentId,
+      storeDto.stepId, //step id
+    );
+    //where to return activity???
+    //return activity;
+    return updated;
   }
 
   async getSteps(workflowKey: string) {

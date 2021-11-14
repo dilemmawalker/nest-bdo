@@ -37,7 +37,7 @@ export class ActivityController {
         '/' +
         date.getFullYear().toString().substring(2);
 
-        s3 += date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+      s3 += date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
 
       const store_name = await this.storeRepository.findOne(d.subject_id);
       // const agent_name = await this.agentRepository.getAgent(d.causer_id);
