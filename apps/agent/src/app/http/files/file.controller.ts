@@ -37,9 +37,9 @@ export class FileController {
 
   @Post('/upload/image')
   @ApiConsumes('multipart/form-data')
-  @ApiUploadImageRequest('filename')
+  @ApiUploadImageRequest('file')
   @UseInterceptors(
-    FileInterceptor('filename', {
+    FileInterceptor('file', {
       fileFilter: FileUploadingUtils.imageFileFilter,
     }),
   )
@@ -62,9 +62,9 @@ export class FileController {
 
   @Post('/upload/document')
   @ApiConsumes('multipart/form-data')
-  @ApiUploadImageRequest('filename')
+  @ApiUploadImageRequest('file')
   @UseInterceptors(
-    FileInterceptor('filename', {
+    FileInterceptor('file', {
       fileFilter: FileUploadingUtils.docFileFilter,
     }),
   )
