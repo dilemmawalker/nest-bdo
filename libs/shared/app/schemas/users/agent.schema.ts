@@ -24,9 +24,6 @@ export class Agent extends BaseItemSchema {
 
   @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'Store' })
   stores: Types.ObjectId[];
-
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  user: Types.ObjectId;
 }
 
 export class AgentDto {
