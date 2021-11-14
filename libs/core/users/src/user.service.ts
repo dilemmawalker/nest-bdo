@@ -1,6 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { User } from '@shared/app/schemas/users/user.schema';
-import { Role } from 'apps/admin/src/constant/auth/roles.constant';
 import { RoleDto } from 'libs/core/roles/src/dtos/role.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { UserDto } from './dtos/user.dto';
