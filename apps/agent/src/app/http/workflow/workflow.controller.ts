@@ -53,7 +53,9 @@ export class WorkflowController {
     @Param('storeId') storeId: string,
   ): Promise<any> {
     const steps = await this.workflowService.getSteps(workflowKey);
-    return ResponseUtils.success(WorkflowStepResponse.fromStepsArray(steps));
+    return ResponseUtils.success(
+      WorkflowStepResponse.fromStepsArray(steps, workflowKey, storeId),
+    );
   }
 
   @Get(':workflowKey/:stepId/:storeId')

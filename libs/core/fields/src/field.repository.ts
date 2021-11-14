@@ -17,14 +17,26 @@ export class FieldRepository {
     return await this.fieldModel
       .findOne({ keyName: userFilterQuery.keyName })
       .populate({
-        model: 'validations',
-        path: 'Validation',
-        strictPopulate: false,
+        path: 'groups',
+        model: 'Field',
+      })
+      .populate({
+        path: 'validations',
+        model: 'Validation',
       });
   }
 
-  async find(fieldFilterQuery: FilterQuery<Field>): Promise<Field[]> {
-    return await this.fieldModel.find({});
+  async find(fieldFilterQuery: FilterQuery<Field>): Promise<any[]> {
+    return await this.fieldModel
+      .find({})
+      .populate({
+        path: 'groups',
+        model: 'Field',
+      })
+      .populate({
+        path: 'validations',
+        model: 'Validation',
+      });
   }
 
   async create(fieldDto: FieldDto): Promise<Field> {
@@ -43,21 +55,35 @@ export class FieldRepository {
     return await this.fieldGroupModel.find({});
   }
 
+  async updateObj(obj: any, keyName: string): Promise<any> {
+    const field = await this.fieldModel.findOneAndUpdate({ keyName }, obj);
+    return await this.findOne({ keyName: field.keyName });
+  }
+
   async findOneAndUpdate(
     fieldFilterQuery: FilterQuery<Field>,
     field: Partial<Field>,
   ): Promise<Field> {
-    return await this.fieldModel.findOneAndUpdate(
-      {
-        $or: [
-          { label: fieldFilterQuery.label },
-          { options: fieldFilterQuery.options },
-        ],
-      },
-      field,
-      {
-        new: true,
-      },
-    );
+    return await this.fieldModel
+      .findOneAndUpdate(
+        {
+          $or: [
+            { label: fieldFilterQuery.label },
+            { options: fieldFilterQuery.options },
+          ],
+        },
+        field,
+        {
+          new: true,
+        },
+      )
+      .populate({
+        path: 'groups',
+        model: 'Field',
+      })
+      .populate({
+        path: 'validations',
+        model: 'Validation',
+      });
   }
 }

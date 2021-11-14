@@ -58,7 +58,9 @@ export class StoreResponse {
     const entities = [];
     stores.forEach((store) => {
       // entities.push(this.fromStore(store));
-      if (store.status === status) {
+      if (status == 'any') {
+        entities.push(this.fromStore(store, store.status));
+      } else if (store.status === status) {
         entities.push(this.fromStore(store, status));
       }
     });

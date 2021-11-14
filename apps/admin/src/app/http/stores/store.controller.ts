@@ -13,6 +13,7 @@ import { ResponseUtils } from '@shared/app/utils/class/response.utils';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
 import { StoreLeadResponse } from '../workflow/responses/store-lead.response';
+import { StoreResponse } from './responses/store.response';
 import { StoreService } from './store.service';
 
 @ApiTags('Stores')
@@ -23,6 +24,13 @@ export class StoreController {
     private readonly storeService: StoreService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
   ) {}
+
+  @Get()
+  @UseInterceptors(TransformInterceptor)
+  async getAllStores(): Promise<any> {
+    const stores = await this.storeService.getAllStores();
+    return ResponseUtils.success(StoreResponse.fromStoreArray(stores, 'any'));
+  }
 
   @Get('/lead-flow')
   @UseInterceptors(TransformInterceptor)

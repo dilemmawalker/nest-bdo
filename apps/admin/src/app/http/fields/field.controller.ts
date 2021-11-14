@@ -42,20 +42,6 @@ export class FieldController {
     return ResponseUtils.success(FieldResponse.fromFieldArray(fields));
   }
 
-  @Get('group')
-  @UseGuards(JwtAuthGuard)
-  @UseInterceptors(TransformInterceptor)
-  @ApiResponse({
-    status: HttpStatus.OK,
-    type: [FieldGroupResponse],
-  })
-  async getGroupFields(): Promise<any> {
-    const fieldGroups = await this.fieldService.getGroupFields();
-    return ResponseUtils.success(
-      FieldGroupResponse.fromFieldGroupArray(fieldGroups),
-    );
-  }
-
   @Get(':keyName')
   @UseInterceptors(TransformInterceptor)
   @ApiResponse({
@@ -74,25 +60,10 @@ export class FieldController {
     type: FieldResponse,
   })
   async create(@Body() createFieldRequest: CreateFieldRequest): Promise<any> {
-    const field = await this.fieldService.create(
+    console.log(CreateFieldRequest.getFieldDto(createFieldRequest));
+    const field = await this.fieldService.createOrUpdate(
       CreateFieldRequest.getFieldDto(createFieldRequest),
     );
     return ResponseUtils.success(FieldResponse.fromField(field));
-  }
-
-  @Post('group')
-  @UseGuards(JwtAuthGuard)
-  @UseInterceptors(TransformInterceptor)
-  @ApiResponse({
-    status: HttpStatus.OK,
-    type: FieldGroupResponse,
-  })
-  async createFieldGroup(
-    @Body() createFieldGroupRequest: CreateFieldGroupRequest,
-  ): Promise<any> {
-    const fieldGroup = await this.fieldService.createFieldGroup(
-      CreateFieldGroupRequest.getFieldGroupDto(createFieldGroupRequest),
-    );
-    return ResponseUtils.success(FieldGroupResponse.fromFieldGroup(fieldGroup));
   }
 }

@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Step } from '@shared/app/schemas/steps/steps.schema';
+import { generateWorkflowUrl } from '@shared/app/utils/function/helper.function';
 import { User } from 'libs/shared/app/schemas/users/user.schema';
 
 export class WorkflowStepResponse {
@@ -7,22 +8,30 @@ export class WorkflowStepResponse {
   name: string;
 
   @ApiProperty()
-  stepId: string;
+  current_step_url: string;
 
   @ApiProperty()
   completed = false;
 
-  static fromStep(step: Step) {
+  static fromStep(step: Step, workflowKey: string, storeId: string) {
     const entity = new WorkflowStepResponse();
     entity.name = step.name;
-    entity.stepId = step.stepId;
+    entity.current_step_url = generateWorkflowUrl(
+      workflowKey,
+      step.stepId,
+      storeId,
+    );
     return entity;
   }
 
-  static fromStepsArray(steps: Step[]): WorkflowStepResponse[] {
+  static fromStepsArray(
+    steps: Step[],
+    workflowKey: string,
+    stepId: string,
+  ): WorkflowStepResponse[] {
     const entities = [];
     steps.forEach((step) => {
-      entities.push(this.fromStep(step));
+      entities.push(this.fromStep(step, workflowKey, stepId));
     });
     return entities;
   }

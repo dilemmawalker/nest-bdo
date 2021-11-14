@@ -38,7 +38,6 @@ export class FileService {
     const prevUrl = store.get(fileDto.keyName);
     console.log(prevUrl);
     if (hasStore && prevUrl) {
-      console.log('i am here');
       await this.markFileAsTemp(prevUrl);
     }
   }

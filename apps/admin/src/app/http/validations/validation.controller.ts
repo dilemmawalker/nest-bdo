@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpStatus,
   Post,
   UseInterceptors,
@@ -17,7 +18,7 @@ import { ValidationResponse } from './responses/validation.reponse';
 @Controller('validation')
 @ApiBearerAuth()
 export class ValidationController {
-  constructor(private readonly validationService: ValidationService) {}
+  constructor(private readonly validationService: ValidationService) { }
 
   @Post('create')
   @UseInterceptors(TransformInterceptor)
@@ -34,15 +35,13 @@ export class ValidationController {
     return ResponseUtils.success(ValidationResponse.fromValidation(validation));
   }
 
-  @Post('all')
+  @Get('all')
   @UseInterceptors(TransformInterceptor)
   @ApiResponse({
     status: HttpStatus.OK,
     type: [ValidationResponse],
   })
-  async getAll(
-    @Body() createValidationRequest: CreateValidationRequest,
-  ): Promise<any> {
+  async getAll(): Promise<any> {
     const validation = await this.validationService.getAll();
     return ResponseUtils.success(
       ValidationResponse.fromValidationArray(validation),

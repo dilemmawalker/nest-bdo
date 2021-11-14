@@ -7,6 +7,7 @@ import { FieldModule } from './http/fields/field.module';
 import { RoleModule } from './http/roles/role.module';
 import { StoreModule } from './http/stores/store.module';
 import { UserModule } from './http/users/user.module';
+import { UtilityModule } from './http/utility/utility.module';
 import { ValidationModule } from './http/validations/validation.module';
 import { WorkflowModule } from './http/workflow/workflow.module';
 
@@ -24,6 +25,7 @@ const appRoutes: Routes = [
       { path: '/', module: AgentModule },
       { path: '/', module: ValidationModule },
       { path: '/', module: ClusterManagerModule },
+      { path: '/', module: UtilityModule },
     ],
   },
 ];

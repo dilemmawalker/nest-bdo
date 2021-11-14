@@ -47,6 +47,18 @@
       ],
       "@file/file/*": [
         "libs/core/files/src/*"
+      ],
+      "@utility/utilities": [
+        "libs/core/utilities/src"
+      ],
+      "@utility/utilities/*": [
+        "libs/core/utilities/src/*"
+      ],
+      "@dataTypes/data-types": [
+        "libs/core/data-types/src"
+      ],
+      "@dataTypes/data-types/*": [
+        "libs/core/data-types/src/*"
       ]
     }
   },
