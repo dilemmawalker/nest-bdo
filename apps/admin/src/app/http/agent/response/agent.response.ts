@@ -23,7 +23,6 @@ export class AgentResponse {
     if (agent.get('user')) {
       agentResponse.name = agent.get('user').name;
     }
-    agentResponse.name = agent.get('user').name;
     if (agent.get('cluster')) {
       agentResponse.clusterName = agent.get('cluster').name;
     }
