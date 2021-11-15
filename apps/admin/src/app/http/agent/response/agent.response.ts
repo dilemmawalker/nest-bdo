@@ -13,6 +13,8 @@ export class AgentResponse {
 
   name: string;
 
+  username: string;
+
   clusterName = '';
 
   static fromAgent(agent: any): AgentResponse {
@@ -22,6 +24,7 @@ export class AgentResponse {
     agentResponse.agentId = agent.agentId;
     if (agent.get('user')) {
       agentResponse.name = agent.get('user').name;
+      agentResponse.username = agent.get('user').username;
     }
     if (agent.get('cluster')) {
       agentResponse.clusterName = agent.get('cluster').name;
