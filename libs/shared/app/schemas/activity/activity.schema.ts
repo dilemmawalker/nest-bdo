@@ -6,9 +6,6 @@ export type ActivityDocument = Activity & Document;
 
 @Schema()
 export class Activity {
-  // @ApiProperty()
-  // refId: string;
-
   @ApiProperty()
   @Prop({ required: true })
   log_name: string;

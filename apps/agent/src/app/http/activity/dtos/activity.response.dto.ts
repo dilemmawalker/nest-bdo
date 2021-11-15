@@ -1,5 +1,6 @@
 export class ActivityResponseDto {
-  Activity: string;
-  Date: string;
-  Time: string;
+  _id: string;
+  activity: string;
+  date: string;
+  time: string;
 }

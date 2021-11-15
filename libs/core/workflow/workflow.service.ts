@@ -14,6 +14,7 @@ import { AgentRepository } from '../agent/src/agent.repository';
 import { FieldRepository } from '../fields/src/field.repository';
 import { UpdatePositionDto } from './dtos/update-positions.dto';
 import { ActivityService } from '../activity/activity.service';
+import { ActivityDto } from '../activity/dtos/activity.dto';
 @Injectable()
 export class WorkflowService {
   constructor(
@@ -53,18 +54,18 @@ export class WorkflowService {
       storeDto.agentId,
     );
 
-    //call Activity function
-    await this.activityService.activity(
-      'Store',
-      'Created',
-      'Store',
-      store.storeId,
-      'Agent',
-      store.agentId,
-      '{}',
+    await this.activityService.push(
+      new ActivityDto(
+        'Store',
+        'Created',
+        'Store',
+        store.storeId,
+        'Agent',
+        storeDto.agentId,
+        '{}',
+        new Date(Date.now()),
+      ),
     );
-    //where to return activity???
-    //return activity;
     return store;
   }
 
@@ -81,20 +82,20 @@ export class WorkflowService {
 
   async updateStore(storeDto: StoreDto): Promise<Store> {
     storeDto.updatedAt = new Date();
-    const updated = await this.storeRepository.update(storeDto);
-    //call Activity function
-    await this.activityService.activity(
-      'Store',
-      'Updated',
-      'Store',
-      storeDto.storeId,
-      'Agent',
-      storeDto.agentId,
-      storeDto.stepId, //step id
+    const store = await this.storeRepository.update(storeDto);
+    await this.activityService.push(
+      new ActivityDto(
+        'Store',
+        'Created',
+        'Store',
+        store.storeId,
+        'Agent',
+        storeDto.agentId,
+        '{}',
+        new Date(Date.now()),
+      ),
     );
-    //where to return activity???
-    //return activity;
-    return updated;
+    return store;
   }
 
   async getSteps(workflowKey: string) {

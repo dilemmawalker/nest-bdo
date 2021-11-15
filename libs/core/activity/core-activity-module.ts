@@ -4,6 +4,7 @@ import {
   Activity,
   ActivitySchema,
 } from '@shared/app/schemas/activity/activity.schema';
+import { StoreRepository } from 'apps/admin/src/app/http/stores/store.repository';
 import { ActivityRepository } from './activity.repository';
 import { ActivityService } from './activity.service';
 

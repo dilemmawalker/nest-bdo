@@ -43,7 +43,7 @@ export class StoreRepository {
     return await store;
   }
 
-  async findOne(storeId: string): Promise<any> {
+  async findOne(storeId: string): Promise<Store> {
     return await this.storeModel.findOne({ storeId });
   }
 
