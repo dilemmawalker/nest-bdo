@@ -18,12 +18,13 @@ import {
   Activity,
   ActivitySchema,
 } from '@shared/app/schemas/activity/activity.schema';
+import { ActivityService } from '../activity/activity.service';
+import { ActivityRepository } from '../activity/activity.repository';
 
 @Module({
   imports: [
     CoreAgentModule,
     CoreFieldModule,
-    CoreActivityModule,
     MongooseModule.forFeature([
       { name: Workflow.name, schema: WorkflowSchema },
     ]),
@@ -35,7 +36,13 @@ import {
       { name: Activity.name, schema: ActivitySchema },
     ]),
   ],
-  providers: [WorkflowService, WorkflowRepository, StoreRepository],
+  providers: [
+    WorkflowService,
+    WorkflowRepository,
+    StoreRepository,
+    ActivityService,
+    ActivityRepository,
+  ],
   exports: [WorkflowService, WorkflowRepository],
 })
 export class CoreWorkflowModule {}

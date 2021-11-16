@@ -12,7 +12,7 @@ import { ActivityService } from 'libs/core/activity/activity.service';
 import { ResponseUtils } from '@shared/app/utils/class/response.utils';
 import { ActivityResponse } from './response/activity.response';
 
-ApiTags('Activity Logs');
+@ApiTags('Activity Logs')
 @Controller('activity-log')
 @ApiBearerAuth()
 export class ActivityController {
