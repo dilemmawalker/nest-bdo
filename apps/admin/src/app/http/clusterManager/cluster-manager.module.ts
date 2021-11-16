@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CoreClusterManagerModule } from 'libs/core/clusterManager/src/core-cluster.manager.module';
-import { ClusterManagerController } from './cluster.manager.controller';
+import { ClusterManagerController } from './cluster-manager.controller';
 
 @Module({
   imports: [CoreClusterManagerModule],

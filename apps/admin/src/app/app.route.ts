@@ -1,7 +1,7 @@
 import { Routes } from '@nestjs/core';
 import { AgentModule } from './http/agent/agent.module';
 import { AuthModule } from './http/auth/auth.module';
-import { ClusterManagerModule } from './http/clusterManager/cluster.manager.module';
+import { ClusterManagerModule } from './http/clusterManager/cluster-manager.module';
 import { ClusterModule } from './http/clusters/cluster.module';
 import { FieldModule } from './http/fields/field.module';
 import { RoleModule } from './http/roles/role.module';
