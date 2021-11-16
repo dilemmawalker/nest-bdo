@@ -98,6 +98,17 @@ export class FileController {
     return ResponseUtils.success(BasicResponse.success());
   }
 
+  @Post('/deletePermanent')
+  @UseInterceptors(TransformInterceptor)
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: BasicResponse,
+  })
+  public async deleteFilePermanent() {
+    await this.fileService.deleFilePermanent();
+    return ResponseUtils.success(BasicResponse.success());
+  }
+
   // @Post('/multiple-upload')
   // @ApiConsumes('multipart/form-data')
   // @ApiUploadImageRequest('filename')

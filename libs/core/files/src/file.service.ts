@@ -62,6 +62,14 @@ export class FileService {
     console.log(file);
   }
 
+  public async deleFilePermanent(): Promise<any> {
+    const filesToDelete = await this.fileRepository.getAllTrueStatusFiles();
+    await this.fileRepository.deleteAllTrueStatusFiles(filesToDelete);
+    filesToDelete.foreach(async (file) => {
+      await this.deleteFile(file.keyName);
+    });
+  }
+
   public async deleteFile(key: string) {
     const s3 = new S3();
     return await s3
