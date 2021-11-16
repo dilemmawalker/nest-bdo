@@ -30,7 +30,7 @@ export class FieldService {
   }
 
   async create(fieldDto: FieldDto): Promise<Field> {
-    fieldDto.keyName = slugify(fieldDto.label + fieldDto.type, slugifyConfig);
+    fieldDto.keyName = slugify(fieldDto.label, slugifyConfig);
     const field = await this.fieldRepository.findOne({
       keyName: fieldDto.keyName,
     });
