@@ -25,8 +25,12 @@ export class ClusterManagerService {
     return await this.clusterManagerRepository.findOne({ userId });
   }
 
-  async updateStatus(status: string, storeId: string): Promise<any> {
-    return await this.storeRepository.updateObj({ status }, storeId);
+  async updateStatus(
+    status: string,
+    remark: string,
+    storeId: string,
+  ): Promise<any> {
+    return await this.storeRepository.updateObj({ status, remark }, storeId);
   }
 
   async getStores(clusterManagerId: string): Promise<Store[]> {

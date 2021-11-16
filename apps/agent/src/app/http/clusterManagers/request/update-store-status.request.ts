@@ -9,4 +9,10 @@ export class UpdateStoreStatusRequest {
   })
   @IsNotEmpty()
   status: string;
+
+  @ApiProperty({
+    required: true,
+  })
+  @IsNotEmpty()
+  remark: string;
 }
