@@ -77,7 +77,7 @@ export class FieldInputData extends BaseItemSchema {
     entity.options = field.options;
     entity.inputValue = 'test';
 
-    if (field.groups.length != 0) {
+    if (field.groups && field.groups.length != 0) {
       entity.group = this.fromFieldArray(field.groups);
     }
     return entity;
