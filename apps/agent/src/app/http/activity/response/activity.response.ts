@@ -5,7 +5,7 @@ import {
 } from '@shared/app/utils/function/helper.function';
 
 export class ActivityResponse {
-  _id: string;
+  id: string;
   activity: string;
   date: string;
   time: string;
@@ -13,6 +13,7 @@ export class ActivityResponse {
   static fromActivity(activity: Activity, storeName: string) {
     const entity = new ActivityResponse();
     const date = new Date(activity.created_at.getTime());
+    entity.id = activity._id.toString();
     entity.date = getFormattedDate(date);
     entity.time = getFormattedTime(date);
     entity.activity = `${storeName} - Lead ${activity.description.toLowerCase()} by agent`;
