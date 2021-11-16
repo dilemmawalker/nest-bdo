@@ -25,6 +25,9 @@ export class Store {
   mobile: string;
 
   @Prop()
+  remark: string;
+
+  @Prop()
   address: string;
 
   @Prop({ required: true })

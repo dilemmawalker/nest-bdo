@@ -17,4 +17,13 @@ export class UtilityController {
     const dataTypes = await this.utilitiesService.getDataTypes();
     return ResponseUtils.success({ types: dataTypes });
   }
+  @ApiResponse({
+    status: 200,
+  })
+  @Get('rejection-reasons')
+  async rejectionReasons() {
+    const rejectionReasonsArray =
+      this.utilitiesService.getReasonForRejectionArray();
+    return ResponseUtils.success({ reasons: rejectionReasonsArray });
+  }
 }
