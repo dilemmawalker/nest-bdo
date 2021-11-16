@@ -65,8 +65,10 @@ export class FileService {
   public async deleFilePermanent(): Promise<any> {
     const filesToDelete = await this.fileRepository.getAllTrueStatusFiles();
     await this.fileRepository.deleteAllTrueStatusFiles(filesToDelete);
+    const storeObj = {};
     filesToDelete.foreach(async (file) => {
       await this.deleteFile(file.keyName);
+      await this.storeService.updateStore(storeObj, file.refId);
     });
   }
 
