@@ -18,7 +18,7 @@ import { ValidationResponse } from './responses/validation.reponse';
 @Controller('validation')
 @ApiBearerAuth()
 export class ValidationController {
-  constructor(private readonly validationService: ValidationService) { }
+  constructor(private readonly validationService: ValidationService) {}
 
   @Post('create')
   @UseInterceptors(TransformInterceptor)

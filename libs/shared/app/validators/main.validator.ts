@@ -48,7 +48,7 @@ export class Validator {
   }
 
   static isPresent(options: any, value: any): boolean {
-    const array = options.map((option) => option.value);
+    const array = options.map((option) => option.key);
     return array.some((item) => item === value);
   }
 

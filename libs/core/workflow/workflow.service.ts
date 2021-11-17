@@ -33,12 +33,22 @@ export class WorkflowService {
     throw new NotFoundException();
   }
 
-  async post(storeDto: StoreDto): Promise<Store> {
+  async post(storeDto: StoreDto): Promise<any> {
     const store = await this.storeRepository.findOne(storeDto.storeId);
     if (!store) {
-      return await this.createStore(storeDto);
+      const storeObj = await this.createStore(storeDto);
+      return await this.get(
+        storeDto.workflowKey,
+        storeDto.stepId,
+        storeObj.storeId,
+      );
     } else {
-      return await this.updateStore(storeDto);
+      const storeObj = await this.updateStore(storeDto);
+      return await this.get(
+        storeDto.workflowKey,
+        storeDto.stepId,
+        storeObj.storeId,
+      );
     }
   }
   async createStore(storeDto: StoreDto): Promise<Store> {
