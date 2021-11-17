@@ -4,6 +4,8 @@ import { ValidationDto } from 'libs/core/validations/src/dtos/validation.dto';
 @ApiTags('Validation')
 export class UpdateValidationRequest {
   @ApiProperty({ required: true })
+  _id: string;
+  @ApiProperty({ required: true })
   name: string;
 
   @ApiProperty()
@@ -23,6 +25,7 @@ export class UpdateValidationRequest {
     validationDto.options = updateValidationRequest.options;
     validationDto.status = updateValidationRequest.status;
     validationDto.type = updateValidationRequest.type;
+    validationDto._id = updateValidationRequest._id;
     return validationDto;
   }
 }

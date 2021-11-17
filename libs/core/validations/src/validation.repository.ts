@@ -19,9 +19,7 @@ export class ValidationRepository {
   async findOne(
     validationFilterQuery: FilterQuery<Validation>,
   ): Promise<Validation> {
-    return await this.validationModel.findOne({
-      name: validationFilterQuery.name,
-    });
+    return await this.validationModel.findOne(validationFilterQuery);
   }
 
   async findOneAndUpdate(
@@ -29,9 +27,7 @@ export class ValidationRepository {
     validationDto: ValidationDto,
   ): Promise<Validation> {
     return await this.validationModel.findOneAndUpdate(
-      {
-        name: validationFilterQuery.name,
-      },
+      validationFilterQuery,
       validationDto,
       {
         new: true,
