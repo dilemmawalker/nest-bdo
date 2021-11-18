@@ -56,7 +56,7 @@ export class ClusterManagerController {
       storeId,
     );
     return ResponseUtils.success(
-      BasicResponse.success(),
+      BasicResponse.success(updateStoreStatusRequest.status),
       STATUS_UPDATE_SUCCESS,
     );
   }

@@ -37,7 +37,7 @@ export class OtpStrategy extends PassportStrategy(Strategy) {
     if (!agent && !clusterManager) {
       throw new UnauthorizedException();
     }
-    let agentPayload = null;
+    const agentPayload = {};
     let clusterManagerPayload = null;
     // If user is a cluster manager
     if (clusterManager) {
@@ -47,14 +47,13 @@ export class OtpStrategy extends PassportStrategy(Strategy) {
     }
     // If user is an agent
     if (agent) {
-      const cluster = await this.clusterService.findOneById(agent.cluster);
-      const workflow: any = cluster.onboarding;
-      const agentId = agent.agentId;
-      agentPayload = {
-        agentId,
-        workflowKey: workflow['key'],
-        stepId: workflow['steps'][0]['stepId'],
-      };
+      agentPayload['agentId'] = agent.agentId;
+      if (agent.cluster) {
+        const cluster = await this.clusterService.findOneById(agent.cluster);
+        const workflow: any = cluster.onboarding;
+        agentPayload['workflowKey'] = workflow['key'];
+        agentPayload['stepId'] = workflow['steps'][0]['stepId'];
+      }
     }
     const userPayload = {
       user: user,

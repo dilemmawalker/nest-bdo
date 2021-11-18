@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   HttpStatus,
+  Param,
   Post,
   UseInterceptors,
 } from '@nestjs/common';
@@ -63,5 +64,14 @@ export class ValidationController {
     return ResponseUtils.success(
       ValidationResponse.fromValidation(updatedValidation),
     );
+  }
+
+  @Get(':validationId')
+  @UseInterceptors(TransformInterceptor)
+  async getStoreInfo(
+    @Param('validationId') validationId: string,
+  ): Promise<any> {
+    const obj = await this.validationService.getValidation(validationId);
+    return ResponseUtils.success(obj);
   }
 }
