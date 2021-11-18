@@ -33,3 +33,16 @@ export function generateWorkflowUrl(
 ): string {
   return `agent/api/workflows/${workflowKey}/${stepId}/${storeId}`;
 }
+
+export function generateNextPageUrl(page: number, limit: number): string {
+  if (page == null || page < 1 || limit < page) return ''; //no of entities on page???
+  return `agent/api/pagination/page=${page + 1}`; //check entity for url
+}
+
+export function generatePreviousPageUrl(page: number, limit: number): string {
+  if (page == null || page <= 1 || limit < page) return '';
+  return `agent/api/agent/stores/open?page=${page - 1}&${limit}=limit`;
+}
+
+//Workflows/WorkflowController_getWorkflowSteps
+//Agents/AgentController_get
