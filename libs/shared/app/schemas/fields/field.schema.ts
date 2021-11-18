@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { Document, Mixed, Types } from 'mongoose';
 import * as mongoose from 'mongoose';
-
+import { Expression } from './expression.schema';
 export type FieldDocument = Field & Document;
 
 @Schema()
@@ -21,6 +21,12 @@ export class Field {
   @ApiProperty()
   @Prop({ required: true })
   options: Mixed;
+
+  @Prop({ required: true })
+  isEditable: boolean;
+
+  @Prop({ required: true })
+  expression: Expression;
 
   @ApiProperty()
   position = 0;

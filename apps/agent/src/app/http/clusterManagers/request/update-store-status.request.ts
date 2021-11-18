@@ -7,12 +7,10 @@ export class UpdateStoreStatusRequest {
   @ApiProperty({
     required: true,
   })
+
   @IsNotEmpty()
   status: string;
 
-  @ApiProperty({
-    required: true,
-  })
-  @IsNotEmpty()
-  remark: string;
+  @ApiProperty()
+  reason: string;
 }

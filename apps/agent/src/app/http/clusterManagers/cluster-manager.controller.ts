@@ -52,7 +52,7 @@ export class ClusterManagerController {
     const json = this.jwtUtil.decode(auth);
     await this.clusterManagerService.updateStatus(
       updateStoreStatusRequest.status,
-      updateStoreStatusRequest.remark,
+      updateStoreStatusRequest.reason,
       storeId,
     );
     return ResponseUtils.success(
