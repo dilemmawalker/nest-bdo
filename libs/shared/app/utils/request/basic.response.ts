@@ -4,9 +4,9 @@ export class BasicResponse {
   @ApiProperty()
   status: string;
 
-  static success() {
+  static success(status = 'success') {
     const entity = new BasicResponse();
-    entity.status = 'success';
+    entity.status = status;
     return entity;
   }
 }
