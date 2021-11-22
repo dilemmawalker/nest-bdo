@@ -91,11 +91,9 @@ export class WorkflowController {
     @Param('stepId') stepId: string,
     @Param('storeId') storeId?: string,
   ): Promise<any> {
-    if (workflowRequest.isValidate) {
-      await this.validationUtil.validateWorkFlowRequestFields(
-        workflowRequest.fields,
-      );
-    }
+    await this.validationUtil.validateWorkFlowRequestFields(
+      workflowRequest.fields,
+    );
     const workflowGet = await this.workflowService.get(
       workflowKey,
       storeId,

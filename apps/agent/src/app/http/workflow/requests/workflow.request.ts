@@ -13,15 +13,11 @@ export class WorkflowRequestField {
 
   @ApiProperty()
   type: string;
-
 }
 
 export class WorkflowRequest {
   @ApiProperty({ type: [WorkflowRequestField] })
   fields: WorkflowRequestField[] = [];
-
-  @ApiProperty()
-  isValidate = true;
 
   static getStoreDto(
     createStoreRequest: WorkflowRequest,
