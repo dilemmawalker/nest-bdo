@@ -15,6 +15,10 @@ import { FieldRepository } from '../fields/src/field.repository';
 import { UpdatePositionDto } from './dtos/update-positions.dto';
 import { ActivityService } from '../activity/activity.service';
 import { ActivityDto } from '../activity/dtos/activity.dto';
+import {
+  Expression,
+  ExpressionVariable,
+} from '@shared/app/schemas/fields/expression.schema';
 @Injectable()
 export class WorkflowService {
   constructor(
@@ -116,7 +120,7 @@ export class WorkflowService {
   async get(workflowKey: string, storeId: string, stepId: string) {
     const workflow = await this.findOne(workflowKey);
     const store = await this.storeRepository.findOne(storeId);
-    const fields: FieldInputData[] = this.getInputFields(
+    const fields: FieldInputData[] = await this.getInputFields(
       this.getStepsFields(workflow, stepId),
       store,
     );
@@ -184,7 +188,7 @@ export class WorkflowService {
     return [];
   }
 
-  getInputFields(fields: any[], store: any) {
+  async getInputFields(fields: any[], store: any) {
     const inputFields = FieldInputData.fromFieldArray(fields);
     console.log(fields);
     if (!store) {
@@ -192,13 +196,32 @@ export class WorkflowService {
     }
     for (const i in inputFields) {
       const inputField = inputFields[i];
-      if (inputField.group.length == 0) {
+      console.log(inputField.expression);
+      if (inputField.expression) {
+        console.log('In Expression');
+        inputField.inputValue = await this.calculateFieldExpression(
+          inputField.expression,
+          store,
+        );
+      } else if (inputField.group.length == 0) {
+        console.log('In Normal');
         inputField.inputValue = store.get(inputField.keyName) || '';
       } else {
-        inputField.group.forEach((field) => {
-          if (store[inputField.keyName]) {
-            inputField.inputValue =
-              store.get(inputField.keyName).get(field.keyName) || '';
+        console.log('In Group');
+        inputField.group.forEach(async (field, index) => {
+          console.log(field.expression);
+          if (field.expression) {
+            const val = await this.calculateFieldExpression(
+              field.expression,
+              store,
+            );
+            console.log('calculating expression', index);
+            inputFields[i].group[index].inputValue = val;
+          } else {
+            if (store.get(inputField.keyName)) {
+              inputField.inputValue =
+                store.get(inputField.keyName)[field.keyName] || '';
+            }
           }
         });
       }
@@ -206,6 +229,44 @@ export class WorkflowService {
     return inputFields;
   }
 
+  async calculateFieldExpression(
+    expression: Expression,
+    store: any,
+  ): Promise<number> {
+    let value = 0;
+    if (expression.operator == 'multiply') {
+      value = 1;
+    }
+    expression.variables.forEach((val: ExpressionVariable) => {
+      if (val.type == 'custom') {
+        if (expression.operator == 'add') {
+          value += parseFloat(val.value);
+        }
+        if (expression.operator == 'multiply') {
+          value *= parseFloat(val.value);
+        }
+      }
+      if (val.type == 'field') {
+        const keyArr = val.value.split('#');
+        console.log(keyArr);
+        let fieldValue = '0';
+        console.log('test');
+        console.log(store.get(keyArr[0])['refrigerator_price']);
+        if (store.get(keyArr[0])) {
+          console.log(store.get(keyArr[0])[keyArr[1]]);
+          fieldValue = store.get(keyArr[0])[keyArr[1]] || '0';
+        }
+        console.log('dynamic multiplication is going on');
+        if (expression.operator == 'add') {
+          value += parseFloat(fieldValue);
+        }
+        if (expression.operator == 'multiply') {
+          value *= parseFloat(fieldValue);
+        }
+      }
+    });
+    return value;
+  }
   async getWorkflows(): Promise<Workflow[]> {
     return await this.workflowRepository.find({});
   }

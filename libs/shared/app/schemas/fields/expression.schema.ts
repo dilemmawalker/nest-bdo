@@ -9,7 +9,7 @@ export class ExpressionVariable {
   @ApiProperty()
   type: string; //constant  -> fieldType
   @ApiProperty()
-  value: string | Expression | Field;
+  value: string;
 }
 @Schema()
 export class Expression {
