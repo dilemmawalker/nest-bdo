@@ -7,7 +7,6 @@ export class UpdateStoreStatusRequest {
   @ApiProperty({
     required: true,
   })
-
   @IsNotEmpty()
   status: string;
 

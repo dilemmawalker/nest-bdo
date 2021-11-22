@@ -25,7 +25,7 @@ export class Field {
   @Prop({ required: true })
   isEditable: boolean;
 
-  @Prop({ required: true })
+  @Prop()
   expression: Expression;
 
   @ApiProperty()
