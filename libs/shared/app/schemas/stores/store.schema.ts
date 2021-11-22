@@ -67,6 +67,9 @@ export class FieldInputData extends BaseItemSchema {
   group: FieldInputData[] = [];
 
   @ApiProperty()
+  isEditable: boolean;
+
+  @ApiProperty()
   type: string;
 
   @ApiProperty()
@@ -79,6 +82,7 @@ export class FieldInputData extends BaseItemSchema {
     entity.type = field.type;
     entity.options = field.options;
     entity.inputValue = '';
+    entity.isEditable = field.isEditable;
 
     if (field.groups && field.groups.length != 0) {
       entity.group = this.fromFieldArray(field.groups);

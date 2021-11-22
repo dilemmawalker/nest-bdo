@@ -22,7 +22,7 @@ export class Field {
   @Prop({ required: true })
   options: Mixed;
 
-  @Prop({ required: true })
+  @Prop()
   isEditable: boolean;
 
   @Prop()
