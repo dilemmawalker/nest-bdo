@@ -8,7 +8,7 @@ export class UploadImageRequest {
   @ApiProperty()
   keyName: string;
 
-  @ApiProperty({ type: uploadType })
+  @ApiProperty({ enum: uploadType })
   type: uploadType;
 
   static getFileDto(uploadImageRequest: UploadImageRequest) {

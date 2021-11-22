@@ -12,7 +12,7 @@ import {
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import {
   ApiBearerAuth,
   ApiConsumes,
@@ -96,6 +96,34 @@ export class FileController {
       DeleteFileRequest.getFileDto(deleteFileRequest),
     );
     return ResponseUtils.success(BasicResponse.success());
+  }
+
+  @Post('/upload/images')
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(
+    FilesInterceptor('files', 20, {
+      fileFilter: FileUploadingUtils.imageFileFilter,
+    }),
+  )
+  public async uploadMultipleFiles(
+    @Req() req: any,
+    @Body() uploadImageRequest: UploadImageRequest,
+    @UploadedFiles() files: Array<Express.Multer.File>,
+  ) {
+    if (!files || req.fileValidationError || files.length === 0) {
+      throw new BadRequestException('invalid file');
+    }
+    console.log(files);
+    const fileObjs = [];
+    for (const file of files) {
+      const fileObj = await this.fileService.uploadFile(
+        file.buffer,
+        FileUploadingUtils.getImageFilename(file.originalname),
+        UploadImageRequest.getFileDto(uploadImageRequest),
+      );
+      fileObjs.push(fileObj);
+    }
+    return ResponseUtils.success(FileResponse.fromFileArray(fileObjs));
   }
 
   // @Post('/multiple-upload')
