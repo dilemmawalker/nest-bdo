@@ -15,7 +15,7 @@ export class CreateFieldRequest {
   keyName: any = '';
 
   @ApiProperty()
-  isEditable = true;
+  isEditable: boolean;
 
   @ApiProperty({ type: Expression })
   expression: Expression;
@@ -38,7 +38,7 @@ export class CreateFieldRequest {
     fieldDto.type = createFieldRequest.type;
     fieldDto.keyName = createFieldRequest.keyName;
     fieldDto.expression = createFieldRequest.expression;
-    fieldDto.isEditable = createFieldRequest.isEditable;
+    fieldDto.isEditable = createFieldRequest.isEditable || true;
     createFieldRequest.groups.forEach((group) => {
       const groupObj = new Types.ObjectId(group);
       fieldDto.groups.push(groupObj);

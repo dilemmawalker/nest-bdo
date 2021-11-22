@@ -12,5 +12,4 @@ export class FieldDto {
   groups: Types.ObjectId[] = [];
   validations: Types.ObjectId[] = [];
   type: string;
-  isEditable: boolean;
 }
