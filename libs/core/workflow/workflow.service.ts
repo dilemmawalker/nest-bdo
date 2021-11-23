@@ -204,7 +204,8 @@ export class WorkflowService {
           store,
         );
       } else if (inputField.group.length == 0) {
-        inputField.inputValue = store.get(inputField.keyName) || '';
+        inputField.inputValue =
+          store.get(inputField.keyName) || inputField.inputValue;
       } else {
         inputField.group.forEach(async (field, index) => {
           if (field.expression) {
