@@ -86,13 +86,25 @@ export class FieldInputData extends BaseItemSchema {
     entity.keyName = field.keyName;
     entity.type = field.type;
     entity.options = field.options;
-    entity.inputValue = '';
+    entity.inputValue = this.getDefaultInputValue(field.options);
     entity.isEditable = field.isEditable;
 
     if (field.groups && field.groups.length != 0) {
       entity.group = this.fromFieldArray(field.groups);
     }
     return entity;
+  }
+
+  static getDefaultInputValue(options) {
+    let value = '';
+    if (options) {
+      options.forEach((option) => {
+        if (option['key'] == 'defaultValue') {
+          value = option['value'];
+        }
+      });
+    }
+    return value;
   }
 
   static fromFieldArray(fields: any[]): FieldInputData[] {
