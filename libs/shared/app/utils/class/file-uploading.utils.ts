@@ -9,7 +9,7 @@ export class FileUploadingUtils {
   };
 
   public static docFileFilter = (req: any, file: any, callback: any) => {
-    if (!file.originalname.match(/\.(doc|docx|txt)$/)) {
+    if (!file.originalname.match(/\.(doc|docx|txt|pdf)$/)) {
       req.fileValidationError = 'only image files allowed';
       return callback(null, false);
     }

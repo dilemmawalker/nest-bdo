@@ -100,7 +100,11 @@ export class FileController {
 
   @Post('/upload/images')
   @ApiConsumes('multipart/form-data')
-  @UseInterceptors(FilesInterceptor('files', 20))
+  @UseInterceptors(
+    FilesInterceptor('files', 10, {
+      fileFilter: FileUploadingUtils.imageFileFilter,
+    }),
+  )
   public async uploadMultipleFiles(
     @Req() req: any,
     @Body() uploadImageRequest: UploadImageRequest,
