@@ -10,8 +10,9 @@ export class AgentService {
     return await this.agentRepository.findOneAndUpdate({ agentId }, agentDto);
   }
 
-  async getStores(agentId: string): Promise<any> {
-    return await this.agentRepository.getStores(agentId);
+  async getStores(agentId: string, page: number, limit: number): Promise<any> {
+    const skip = (page - 1) * limit;
+    return await this.agentRepository.getStores(agentId, skip, limit);
   }
 
   async getAgents(): Promise<any[]> {

@@ -52,22 +52,35 @@ export class AgentController {
   async get(
     @Headers('Authorization') auth: string,
     @Param('status') status: string,
-    @Param('stepId') page?: number,
-    @Param('stepId') limit?: number,
+    @Param('page') page?: number,
+    @Param('limit') limit?: number,
   ): Promise<any> {
     const json = this.jwtUtil.decode(auth);
+    const page_number = page != null ? page : 1;
+    const limit_count = limit != null ? limit : 20;
     const stores = json.clusterManagerId
-      ? await this.clusterManagerService.getStores(json.clusterManagerId)
-      : await this.agentService.getStores(json.agentId);
+      ? await this.clusterManagerService.getStores(
+          json.clusterManagerId,
+          page_number,
+          limit_count,
+        )
+      : await this.agentService.getStores(
+          json.agentId,
+          page_number,
+          limit_count,
+        );
     const metaValue = new Map();
-    metaValue.set('current_page', page != null ? page : 1);
-    metaValue.set('limit', limit != null ? limit : 20);
-    metaValue.set('next_page', generateNextPageUrl(page, limit));
-    metaValue.set('prev_page', generatePreviousPageUrl(page, limit));
+    metaValue.set('current_page', page_number);
+    metaValue.set('limit', limit_count);
+    metaValue.set('next_page', generateNextPageUrl(page_number, limit_count));
+    metaValue.set(
+      'prev_page',
+      generatePreviousPageUrl(page_number, limit_count),
+    );
     return ResponseUtils.success(
       StoreResponse.fromStoreArray(stores, status),
       status,
-      metaValue,
+      // metaValue,
     );
   }
 }

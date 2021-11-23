@@ -70,6 +70,8 @@ export class ClusterManagerRepository {
 
   async getStores(
     clusterManagerFilterQuery: FilterQuery<ClusterManager>,
+    skip: number,
+    limit: number,
   ): Promise<any> {
     const clusterManager = await this.clusterManagerModel.findOne({
       clusterManagerId: clusterManagerFilterQuery.clusterManagerId,
@@ -78,6 +80,8 @@ export class ClusterManagerRepository {
       .find({
         cluster: { $in: clusterManager.clusters },
       })
+      // .skip(skip)
+      // .limit(limit)
       .populate({
         path: 'stores',
         model: 'Store',

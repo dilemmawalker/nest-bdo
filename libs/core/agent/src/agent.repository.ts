@@ -53,11 +53,15 @@ export class AgentRepository {
       });
   }
 
-  async getStores(agentId: string): Promise<any> {
-    const agent = await this.agentModel.findOne({ agentId: agentId }).populate({
-      path: 'stores',
-      model: 'Store',
-    });
+  async getStores(agentId: string, skip: number, limit: number): Promise<any> {
+    const agent = await this.agentModel
+      .findOne({ agentId: agentId })
+      // .skip(skip)
+      // .limit(limit)
+      .populate({
+        path: 'stores',
+        model: 'Store',
+      });
     return agent['stores'];
   }
 
