@@ -5,6 +5,7 @@
         "dtos",
         "inteface",
         "ipolicy",
+        "isRefreshable",
         "maxlength",
         "maxsize",
         "nestjs",

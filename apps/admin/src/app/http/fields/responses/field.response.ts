@@ -22,7 +22,10 @@ export class FieldResponse {
   @ApiProperty()
   isEditable: boolean;
 
-  @ApiProperty({ type: Expression})
+  @ApiProperty()
+  isRefreshable: boolean;
+
+  @ApiProperty({ type: Expression })
   expression: Expression;
 
   @ApiProperty()
@@ -38,6 +41,7 @@ export class FieldResponse {
     entity.label = field.label;
     entity.options = field.options;
     entity.type = field.type;
+    entity.isRefreshable = field.isRefreshable;
     entity.isEditable = field.isEditable || true;
     entity.expression = field.expression || null;
     entity.validations = field.validations;

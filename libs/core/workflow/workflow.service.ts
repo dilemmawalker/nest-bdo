@@ -43,15 +43,16 @@ export class WorkflowService {
       const storeObj = await this.createStore(storeDto);
       return await this.get(
         storeDto.workflowKey,
-        storeDto.stepId,
         storeObj.storeId,
+        storeDto.stepId,
       );
     } else {
       const storeObj = await this.updateStore(storeDto);
+      console.log(storeDto.workflowKey, storeDto.stepId, storeObj.storeId);
       return await this.get(
         storeDto.workflowKey,
-        storeDto.stepId,
         storeObj.storeId,
+        storeDto.stepId,
       );
     }
   }
@@ -118,17 +119,19 @@ export class WorkflowService {
   }
 
   async get(workflowKey: string, storeId: string, stepId: string) {
+    console.log('Getting Store');
     const workflow = await this.findOne(workflowKey);
     const store = await this.storeRepository.findOne(storeId);
+    console.log(store);
     const fields: FieldInputData[] = await this.getInputFields(
       this.getStepsFields(workflow, stepId),
       store,
     );
-    console.log(fields);
     if (store) {
       await this.storeRepository.updateObj({ currentStepId: stepId }, storeId);
     }
     const meta = this.getStoreMeta(workflow, store, stepId);
+    console.log(fields);
     return { fields, meta };
   }
 
@@ -190,36 +193,29 @@ export class WorkflowService {
 
   async getInputFields(fields: any[], store: any) {
     const inputFields = FieldInputData.fromFieldArray(fields);
-    console.log(fields);
     if (!store) {
       return inputFields;
     }
     for (const i in inputFields) {
       const inputField = inputFields[i];
-      console.log(inputField.expression);
       if (inputField.expression) {
-        console.log('In Expression');
         inputField.inputValue = await this.calculateFieldExpression(
           inputField.expression,
           store,
         );
       } else if (inputField.group.length == 0) {
-        console.log('In Normal');
         inputField.inputValue = store.get(inputField.keyName) || '';
       } else {
-        console.log('In Group');
         inputField.group.forEach(async (field, index) => {
-          console.log(field.expression);
           if (field.expression) {
             const val = await this.calculateFieldExpression(
               field.expression,
               store,
             );
-            console.log('calculating expression', index);
             inputFields[i].group[index].inputValue = val;
           } else {
             if (store.get(inputField.keyName)) {
-              inputField.inputValue =
+              inputFields[i].group[index].inputValue =
                 store.get(inputField.keyName)[field.keyName] || '';
             }
           }
@@ -248,15 +244,15 @@ export class WorkflowService {
       }
       if (val.type == 'field') {
         const keyArr = val.value.split('#');
-        console.log(keyArr);
         let fieldValue = '0';
-        console.log('test');
-        console.log(store.get(keyArr[0])['refrigerator_price']);
         if (store.get(keyArr[0])) {
-          console.log(store.get(keyArr[0])[keyArr[1]]);
-          fieldValue = store.get(keyArr[0])[keyArr[1]] || '0';
+          if (keyArr.length == 2) {
+            fieldValue = store.get(keyArr[0])[keyArr[1]] || '0';
+          }
+          if (keyArr.length == 1) {
+            fieldValue = store.get(keyArr[0]) || '0';
+          }
         }
-        console.log('dynamic multiplication is going on');
         if (expression.operator == 'add') {
           value += parseFloat(fieldValue);
         }
@@ -343,8 +339,6 @@ export class WorkflowService {
       const stepIndex = workflow.steps.findIndex(function (e) {
         return e.stepId == stepDto.stepId;
       });
-      console.log(stepIndex);
-      console.log(workflow.steps[stepIndex]);
       workflow.steps[stepIndex].name = stepDto.name;
     }
     return await this.workflowRepository.updateObj(
@@ -385,15 +379,10 @@ export class WorkflowService {
 
       if (step.stepId == updatePositionDto.stepId) {
         if (!updatePositionDto.fieldId) {
-          console.log('step update');
-          console.log(workflow.steps);
           workflow.steps.splice(i, 1);
-          console.log(workflow.steps);
           workflow.steps.splice(updatePositionDto.index, 0, step);
-          console.log(workflow.steps);
           break;
         }
-        console.log('field update');
         workflow.steps[i].fields = this.changeFieldPosition(
           step,
           updatePositionDto,

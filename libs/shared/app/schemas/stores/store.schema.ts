@@ -91,7 +91,7 @@ export class FieldInputData extends BaseItemSchema {
     entity.options = field.options;
     entity.inputValue = '';
     entity.isEditable = field.isEditable;
-    entity.isRefreshable = Boolean(entity.expression);
+    entity.isRefreshable = field.isRefreshable || false;
 
     if (field.groups && field.groups.length != 0) {
       entity.group = this.fromFieldArray(field.groups);
