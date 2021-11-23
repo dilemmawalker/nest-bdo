@@ -17,9 +17,6 @@ export class CreateFieldRequest {
   @ApiProperty()
   isEditable: boolean;
 
-  @ApiProperty()
-  isRefreshable: boolean;
-
   @ApiProperty({ type: Expression })
   expression: Expression;
 
@@ -39,7 +36,6 @@ export class CreateFieldRequest {
     fieldDto.label = createFieldRequest.label;
     fieldDto.options = createFieldRequest.options;
     fieldDto.type = createFieldRequest.type;
-    fieldDto.isRefreshable = createFieldRequest.isRefreshable;
     fieldDto.keyName = createFieldRequest.keyName;
     fieldDto.expression = createFieldRequest.expression;
     fieldDto.isEditable = createFieldRequest.isEditable || true;

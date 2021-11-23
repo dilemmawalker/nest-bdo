@@ -26,9 +26,6 @@ export class Field {
   isEditable: boolean;
 
   @Prop()
-  isRefreshable: boolean;
-
-  @Prop()
   expression: Expression;
 
   @ApiProperty()
