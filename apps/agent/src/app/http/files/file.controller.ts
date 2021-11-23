@@ -123,7 +123,41 @@ export class FileController {
       );
       fileObjs.push(fileObj);
     }
-    return ResponseUtils.success(FileResponse.fromFileArray(fileObjs));
+    return ResponseUtils.success(
+      FileResponse.fromFileArray(fileObjs),
+      'File uploaded successfully',
+    );
+  }
+
+  @Post('/upload/documents')
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(
+    FilesInterceptor('files', 20, {
+      fileFilter: FileUploadingUtils.docFileFilter,
+    }),
+  )
+  public async uploadMultipleDocs(
+    @Req() req: any,
+    @Body() uploadImageRequest: UploadImageRequest,
+    @UploadedFiles() files: Array<Express.Multer.File>,
+  ) {
+    if (!files || req.fileValidationError || files.length === 0) {
+      throw new BadRequestException('invalid file');
+    }
+    console.log(files);
+    const fileObjs = [];
+    for (const file of files) {
+      const fileObj = await this.fileService.uploadFile(
+        file.buffer,
+        FileUploadingUtils.getDocFilename(file.originalname),
+        UploadImageRequest.getFileDto(uploadImageRequest, true),
+      );
+      fileObjs.push(fileObj);
+    }
+    return ResponseUtils.success(
+      FileResponse.fromFileArray(fileObjs),
+      'File uploaded successfully',
+    );
   }
 
   // @Post('/multiple-upload')
