@@ -135,8 +135,7 @@ export class WorkflowService {
     const is_step_completed = this.checkStepCompleted(fields);
     const meta = this.getStoreMeta(workflow, store, stepId);
     meta['is_step_completed'] = is_step_completed;
-
-    console.log(fields);
+    meta['ref_id'] = storeId;
     return { fields, meta };
   }
 

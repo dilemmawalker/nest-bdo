@@ -11,10 +11,14 @@ export class UploadImageRequest {
   @ApiProperty({ enum: uploadType })
   type: uploadType;
 
-  static getFileDto(uploadImageRequest: UploadImageRequest) {
+  static getFileDto(
+    uploadImageRequest: UploadImageRequest,
+    isMultiple = false,
+  ) {
     const fileDto = new FileDto();
     fileDto.keyName = uploadImageRequest.keyName;
     fileDto.refId = uploadImageRequest.refId;
+    fileDto.isMultiple = isMultiple;
     return fileDto;
   }
 }

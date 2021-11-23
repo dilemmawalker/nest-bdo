@@ -4,6 +4,7 @@ import { FileDto } from './dtos/file.dto';
 import { FileRepository } from './file.repository';
 import { File } from '@shared/app/schemas/files/file.schema';
 import { StoreService } from 'apps/admin/src/app/http/stores/store.service';
+import { empty } from '@shared/app/utils/function/helper.function';
 
 @Injectable()
 export class FileService {
@@ -16,7 +17,9 @@ export class FileService {
     fileName: string,
     fileDto: FileDto,
   ) {
+    console.log('upload file');
     const s3 = new S3();
+    console.log(fileName);
     const s3Obj = await s3
       .upload({
         Bucket: process.env.AWS_BUCKET_KEY,
@@ -24,11 +27,29 @@ export class FileService {
         Key: fileName,
       })
       .promise();
+    console.log('uploaded file', s3Obj.Location);
     fileDto.url = s3Obj.Location;
     const storeObj = {};
     storeObj[fileDto.keyName] = fileDto.url;
-    await this.checkExistingFile(fileDto);
-    this.storeService.updateStore(storeObj, fileDto.refId);
+    if (!fileDto.isMultiple) {
+      await this.checkExistingFile(fileDto);
+      this.storeService.updateStore(storeObj, fileDto.refId);
+    }
+    if (fileDto.isMultiple) {
+      const store = await this.storeService.findOne(fileDto.refId);
+      if (store) {
+        let fileUrlArray = store.get(fileDto.keyName);
+        if (typeof fileUrlArray != 'object') {
+          fileUrlArray = [];
+        }
+        console.log(fileUrlArray);
+        fileUrlArray.push(fileDto.url);
+        const storeObj = {};
+        storeObj[fileDto.keyName] = fileUrlArray;
+        this.storeService.updateStore(storeObj, fileDto.refId);
+      }
+    }
+
     return await this.addFileEntry(fileDto);
   }
 

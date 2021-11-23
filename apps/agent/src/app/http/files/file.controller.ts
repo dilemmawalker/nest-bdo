@@ -119,7 +119,7 @@ export class FileController {
       const fileObj = await this.fileService.uploadFile(
         file.buffer,
         FileUploadingUtils.getImageFilename(file.originalname),
-        UploadImageRequest.getFileDto(uploadImageRequest),
+        UploadImageRequest.getFileDto(uploadImageRequest, true),
       );
       fileObjs.push(fileObj);
     }
