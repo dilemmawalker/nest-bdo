@@ -33,3 +33,14 @@ export function generateWorkflowUrl(
 ): string {
   return `agent/api/workflows/${workflowKey}/${stepId}/${storeId}`;
 }
+
+export function empty(e) {
+  switch (e) {
+    case '':
+    case null:
+    case typeof e == 'undefined':
+      return true;
+    default:
+      return false;
+  }
+}

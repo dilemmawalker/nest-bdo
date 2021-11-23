@@ -1,9 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { BaseItemSchema } from '@shared/app/schemas/base/base-Item.schema';
-import { Document, Types } from 'mongoose';
+import { Document } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
-import { Field } from '@shared/app/schemas/fields/field.schema';
-import * as mongoose from 'mongoose';
 import { Expression } from '../fields/expression.schema';
 
 export type StoreDocument = Store & Document;
@@ -71,7 +69,7 @@ export class FieldInputData extends BaseItemSchema {
   group: FieldInputData[] = [];
 
   @ApiProperty()
-  isEditable: boolean;
+  isEditable = true;
 
   @ApiProperty()
   type: string;

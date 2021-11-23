@@ -8,7 +8,10 @@ import { StoreDto } from 'apps/admin/src/app/http/stores/dtos/store.dtos';
 import { WorkflowDto } from './dtos/workflow.dto';
 import { AssignFieldDto } from './dtos/assign-field.dto';
 import { StepDto } from './dtos/step.dto';
-import { generateWorkflowUrl } from '@shared/app/utils/function/helper.function';
+import {
+  empty,
+  generateWorkflowUrl,
+} from '@shared/app/utils/function/helper.function';
 import { Step } from '@shared/app/schemas/steps/steps.schema';
 import { AgentRepository } from '../agent/src/agent.repository';
 import { FieldRepository } from '../fields/src/field.repository';
@@ -119,10 +122,8 @@ export class WorkflowService {
   }
 
   async get(workflowKey: string, storeId: string, stepId: string) {
-    console.log('Getting Store');
     const workflow = await this.findOne(workflowKey);
     const store = await this.storeRepository.findOne(storeId);
-    console.log(store);
     const fields: FieldInputData[] = await this.getInputFields(
       this.getStepsFields(workflow, stepId),
       store,
@@ -130,12 +131,16 @@ export class WorkflowService {
     if (store) {
       await this.storeRepository.updateObj({ currentStepId: stepId }, storeId);
     }
+
+    const is_step_completed = this.checkStepCompleted(fields);
     const meta = this.getStoreMeta(workflow, store, stepId);
+    meta['is_step_completed'] = is_step_completed;
+
     console.log(fields);
     return { fields, meta };
   }
 
-  getStoreMeta(workflow: Workflow, store: Store, stepId: string) {
+  getStoreMeta(workflow: Workflow, store: any, stepId: string) {
     let current_step = 1;
     const total_step = workflow.steps.length;
     let current_step_name = '';
@@ -161,7 +166,6 @@ export class WorkflowService {
             storeId,
           );
         }
-
         if (prev_step) {
           prev_step_url = generateWorkflowUrl(
             workflow.key,
@@ -180,7 +184,17 @@ export class WorkflowService {
       current_step_url,
     };
   }
-
+  checkStepCompleted(fields: FieldInputData[]) {
+    let is_step_completed = true;
+    fields.forEach((field) => {
+      if (field.isEditable) {
+        if (empty(field.inputValue)) {
+          is_step_completed = false;
+        }
+      }
+    });
+    return is_step_completed;
+  }
   getStepsFields(workflow: Workflow, stepId: string) {
     for (const i in workflow.steps) {
       const step = workflow.steps[i];
