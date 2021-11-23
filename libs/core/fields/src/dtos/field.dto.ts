@@ -1,3 +1,4 @@
+import { Expression } from '@shared/app/schemas/fields/expression.schema';
 import { Mixed, Types } from 'mongoose';
 
 export class FieldDto {
@@ -6,8 +7,9 @@ export class FieldDto {
   options: Mixed;
   groupKey: string;
   position = 0;
+  expression: Expression;
+  isEditable = true;
   groups: Types.ObjectId[] = [];
   validations: Types.ObjectId[] = [];
   type: string;
-  isEditable: boolean;
 }

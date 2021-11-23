@@ -5,20 +5,21 @@ import { Field } from './field.schema';
 
 export type ExpressionDocument = Expression & Document;
 
+export class ExpressionVariable {
+  @ApiProperty()
+  type: string; //constant  -> fieldType
+  @ApiProperty()
+  value: string;
+}
 @Schema()
 export class Expression {
-  @ApiProperty()
+  @ApiProperty({ type: ExpressionVariable })
   @Prop({ required: true })
   variables: ExpressionVariable[];
 
   @ApiProperty()
   @Prop({ required: true })
   operator: string;
-}
-
-export class ExpressionVariable {
-  type: string; //constant  -> fieldType
-  value: string | Expression | Field;
 }
 
 export const ExpressionSchema = SchemaFactory.createForClass(Expression);

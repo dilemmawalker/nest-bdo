@@ -15,6 +15,10 @@ import { FieldRepository } from '../fields/src/field.repository';
 import { UpdatePositionDto } from './dtos/update-positions.dto';
 import { ActivityService } from '../activity/activity.service';
 import { ActivityDto } from '../activity/dtos/activity.dto';
+import {
+  Expression,
+  ExpressionVariable,
+} from '@shared/app/schemas/fields/expression.schema';
 @Injectable()
 export class WorkflowService {
   constructor(
@@ -39,15 +43,16 @@ export class WorkflowService {
       const storeObj = await this.createStore(storeDto);
       return await this.get(
         storeDto.workflowKey,
-        storeDto.stepId,
         storeObj.storeId,
+        storeDto.stepId,
       );
     } else {
       const storeObj = await this.updateStore(storeDto);
+      console.log(storeDto.workflowKey, storeDto.stepId, storeObj.storeId);
       return await this.get(
         storeDto.workflowKey,
-        storeDto.stepId,
         storeObj.storeId,
+        storeDto.stepId,
       );
     }
   }
@@ -114,17 +119,19 @@ export class WorkflowService {
   }
 
   async get(workflowKey: string, storeId: string, stepId: string) {
+    console.log('Getting Store');
     const workflow = await this.findOne(workflowKey);
     const store = await this.storeRepository.findOne(storeId);
-    const fields: FieldInputData[] = this.getInputFields(
+    console.log(store);
+    const fields: FieldInputData[] = await this.getInputFields(
       this.getStepsFields(workflow, stepId),
       store,
     );
-    console.log(fields);
     if (store) {
       await this.storeRepository.updateObj({ currentStepId: stepId }, storeId);
     }
     const meta = this.getStoreMeta(workflow, store, stepId);
+    console.log(fields);
     return { fields, meta };
   }
 
@@ -184,21 +191,33 @@ export class WorkflowService {
     return [];
   }
 
-  getInputFields(fields: any[], store: any) {
+  async getInputFields(fields: any[], store: any) {
     const inputFields = FieldInputData.fromFieldArray(fields);
-    console.log(fields);
     if (!store) {
       return inputFields;
     }
     for (const i in inputFields) {
       const inputField = inputFields[i];
-      if (inputField.group.length == 0) {
+      if (inputField.expression) {
+        inputField.inputValue = await this.calculateFieldExpression(
+          inputField.expression,
+          store,
+        );
+      } else if (inputField.group.length == 0) {
         inputField.inputValue = store.get(inputField.keyName) || '';
       } else {
-        inputField.group.forEach((field) => {
-          if (store[inputField.keyName]) {
-            inputField.inputValue =
-              store.get(inputField.keyName).get(field.keyName) || '';
+        inputField.group.forEach(async (field, index) => {
+          if (field.expression) {
+            const val = await this.calculateFieldExpression(
+              field.expression,
+              store,
+            );
+            inputFields[i].group[index].inputValue = val;
+          } else {
+            if (store.get(inputField.keyName)) {
+              inputFields[i].group[index].inputValue =
+                store.get(inputField.keyName)[field.keyName] || '';
+            }
           }
         });
       }
@@ -206,6 +225,44 @@ export class WorkflowService {
     return inputFields;
   }
 
+  async calculateFieldExpression(
+    expression: Expression,
+    store: any,
+  ): Promise<number> {
+    let value = 0;
+    if (expression.operator == 'multiply') {
+      value = 1;
+    }
+    expression.variables.forEach((val: ExpressionVariable) => {
+      if (val.type == 'custom') {
+        if (expression.operator == 'add') {
+          value += parseFloat(val.value);
+        }
+        if (expression.operator == 'multiply') {
+          value *= parseFloat(val.value);
+        }
+      }
+      if (val.type == 'field') {
+        const keyArr = val.value.split('#');
+        let fieldValue = '0';
+        if (store.get(keyArr[0])) {
+          if (keyArr.length == 2) {
+            fieldValue = store.get(keyArr[0])[keyArr[1]] || '0';
+          }
+          if (keyArr.length == 1) {
+            fieldValue = store.get(keyArr[0]) || '0';
+          }
+        }
+        if (expression.operator == 'add') {
+          value += parseFloat(fieldValue);
+        }
+        if (expression.operator == 'multiply') {
+          value *= parseFloat(fieldValue);
+        }
+      }
+    });
+    return value;
+  }
   async getWorkflows(): Promise<Workflow[]> {
     return await this.workflowRepository.find({});
   }
@@ -282,8 +339,6 @@ export class WorkflowService {
       const stepIndex = workflow.steps.findIndex(function (e) {
         return e.stepId == stepDto.stepId;
       });
-      console.log(stepIndex);
-      console.log(workflow.steps[stepIndex]);
       workflow.steps[stepIndex].name = stepDto.name;
     }
     return await this.workflowRepository.updateObj(
@@ -324,15 +379,10 @@ export class WorkflowService {
 
       if (step.stepId == updatePositionDto.stepId) {
         if (!updatePositionDto.fieldId) {
-          console.log('step update');
-          console.log(workflow.steps);
           workflow.steps.splice(i, 1);
-          console.log(workflow.steps);
           workflow.steps.splice(updatePositionDto.index, 0, step);
-          console.log(workflow.steps);
           break;
         }
-        console.log('field update');
         workflow.steps[i].fields = this.changeFieldPosition(
           step,
           updatePositionDto,

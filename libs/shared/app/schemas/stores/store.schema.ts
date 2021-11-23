@@ -4,6 +4,7 @@ import { Document, Types } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { Field } from '@shared/app/schemas/fields/field.schema';
 import * as mongoose from 'mongoose';
+import { Expression } from '../fields/expression.schema';
 
 export type StoreDocument = Store & Document;
 
@@ -64,6 +65,9 @@ export class FieldInputData extends BaseItemSchema {
   options: any;
 
   @ApiProperty()
+  expression: Expression;
+
+  @ApiProperty()
   group: FieldInputData[] = [];
 
   @ApiProperty()
@@ -75,9 +79,10 @@ export class FieldInputData extends BaseItemSchema {
   @ApiProperty()
   position: number;
 
-  static fromField(field: Field) {
+  static fromField(field: any) {
     const entity = new FieldInputData();
     entity.label = field.label;
+    entity.expression = field.get('expression') || null;
     entity.keyName = field.keyName;
     entity.type = field.type;
     entity.options = field.options;
