@@ -5,9 +5,10 @@ import {
   HttpStatus,
   Inject,
   Param,
+  Query,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { TransformInterceptor } from '@shared/app/interceptors/transform.interceptor';
 import { JWTUtil } from '@shared/app/utils/class/jwt.utils';
 import { ResponseUtils } from '@shared/app/utils/class/response.utils';
@@ -34,17 +35,16 @@ export class AgentController {
   ) {}
 
   @Get('stores/:status')
-  @UseInterceptors(TransformInterceptor)
   @ApiResponse({
     status: HttpStatus.OK,
     type: [StoreResponse],
   })
-  @ApiParam({
+  @ApiQuery({
     name: 'page',
     type: Number,
     required: false,
   })
-  @ApiParam({
+  @ApiQuery({
     name: 'limit',
     type: Number,
     required: false,
@@ -52,12 +52,12 @@ export class AgentController {
   async get(
     @Headers('Authorization') auth: string,
     @Param('status') status: string,
-    @Param('page') page?: number,
-    @Param('limit') limit?: number,
+    @Query('page') page: number,
+    @Query('limit') limit: number,
   ): Promise<any> {
     const json = this.jwtUtil.decode(auth);
-    const page_number = page != null ? page : 1;
-    const limit_count = limit != null ? limit : 20;
+    const page_number = Number.isInteger(page) ? page : 1;
+    const limit_count = Number.isInteger(limit) ? limit : 20;
     const stores = json.clusterManagerId
       ? await this.clusterManagerService.getStores(
           json.clusterManagerId,
@@ -69,18 +69,22 @@ export class AgentController {
           page_number,
           limit_count,
         );
-    const metaValue = new Map();
-    metaValue.set('current_page', page_number);
-    metaValue.set('limit', limit_count);
-    metaValue.set('next_page', generateNextPageUrl(page_number, limit_count));
-    metaValue.set(
-      'prev_page',
-      generatePreviousPageUrl(page_number, limit_count),
-    );
+    const metaValue = [
+      {
+        current_page: page_number,
+        limit: limit_count,
+        next_page: generateNextPageUrl(page_number, limit_count, status),
+        previous_page: generatePreviousPageUrl(
+          page_number,
+          limit_count,
+          status,
+        ),
+      },
+    ];
     return ResponseUtils.success(
       StoreResponse.fromStoreArray(stores, status),
       status,
-      // metaValue,
+      metaValue,
     );
   }
 }

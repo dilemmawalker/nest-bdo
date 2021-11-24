@@ -80,14 +80,13 @@ export class ClusterManagerRepository {
       .find({
         cluster: { $in: clusterManager.clusters },
       })
-      // .skip(skip)
-      // .limit(limit)
       .populate({
         path: 'stores',
         model: 'Store',
       });
-    return agents.flatMap((agent) => {
+    const stores = agents.flatMap((agent) => {
       return agent.stores;
     });
+    return stores.slice(skip, skip + limit);
   }
 }
