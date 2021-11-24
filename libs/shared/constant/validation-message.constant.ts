@@ -15,3 +15,16 @@ export function invalidRangeValidation(
 export function requiredValidation(fieldLabel: string): string {
   return `${fieldLabel} is required`;
 }
+
+export function invalidMinMaxValidation(
+  fieldLabel: string,
+  type: string,
+  bound: any,
+): string {
+  const slug = type.match('max*')
+    ? `lesser than ${bound + 1}`
+    : `greater than ${bound - 1}`;
+  let data = 'data';
+  if (type === 'maxlength' || type === 'minlength') data += ' length';
+  return `${fieldLabel} has invalid range, ` + data + ` must be ` + slug;
+}
