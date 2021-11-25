@@ -20,8 +20,10 @@ import { AddStepRequest } from './requests/add-steps.request';
 import { AssignFieldRequest } from './requests/assign-field.request';
 import { CreateWorkflowRequest } from './requests/create-workflow.request';
 import { WorkflowResponse } from './responses/workflow.response';
+
 import { UpdatePositionRequest } from './requests/update-position.request';
 import { WorkflowService } from 'libs/core/workflow/workflow.service';
+
 
 @ApiTags('Workflows')
 @Controller('workflows')
@@ -123,5 +125,15 @@ export class WorkflowController {
       AssignFieldRequest.getAssignFieldDto(assignField),
     );
     return ResponseUtils.success(WorkflowResponse.fromWorkflow(workflow));
+  }
+
+  @Post('step/fields/update')
+  async updatePosition(
+    @Body() updatePositionRequest: UpdatePositionRequest,
+  ): Promise<any> {
+    const workflow = await this.workflowService.updatePosition(
+      UpdatePositionRequest.updatePositionDto(updatePositionRequest),
+    );
+    return workflow;
   }
 }

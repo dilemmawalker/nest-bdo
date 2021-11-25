@@ -6,6 +6,9 @@ export type FileDocument = File & Document;
 
 @Schema()
 export class File {
+  static keyName(keyName: any) {
+    throw new Error('Method not implemented.');
+  }
   @ApiProperty()
   _id: string;
 

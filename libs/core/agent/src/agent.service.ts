@@ -23,4 +23,16 @@ export class AgentService {
     agentDto.userId = userId;
     return await this.agentRepository.findOne(agentDto);
   }
+
+  async storeCount(stores: any[], status: string): Promise<number> {
+    const entities = [];
+    stores.forEach((store) => {
+      if (status == 'any') {
+        entities.push(store);
+      } else if (store.status === status) {
+        entities.push(store);
+      }
+    });
+    return entities.length;
+  }
 }
