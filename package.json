@@ -37,6 +37,7 @@
     "class-validator": "^0.13.1",
     "dotenv": "^10.0.0",
     "express-basic-auth": "^1.2.0",
+    "html-pdf-chrome": "^0.7.1",
     "moment": "^2.29.1",
     "mongodb": "^4.1.2",
     "mongoose": "^6.0.6",

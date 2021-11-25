@@ -22,6 +22,7 @@ import {
   Expression,
   ExpressionVariable,
 } from '@shared/app/schemas/fields/expression.schema';
+import { generateAgreementCardHtml } from '@shared/app/utils/function/dynamic.function';
 @Injectable()
 export class WorkflowService {
   constructor(
@@ -254,6 +255,14 @@ export class WorkflowService {
         }
         if (expression.operator == 'multiply') {
           value *= parseFloat(val.value);
+        }
+        if (expression.operator == 'function') {
+          if (val.value == 'generateAgreementCardHtml') {
+            value = generateAgreementCardHtml(store);
+          }
+        }
+        if (expression.operator == 'equal') {
+          value = val.value;
         }
       }
       if (val.type == 'field') {
