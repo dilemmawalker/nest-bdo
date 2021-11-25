@@ -243,7 +243,7 @@ export class WorkflowService {
     expression: Expression,
     store: any,
   ): Promise<number> {
-    let value = 0;
+    let value: any = 0;
     if (expression.operator == 'multiply') {
       value = 1;
     }
@@ -272,6 +272,10 @@ export class WorkflowService {
         }
         if (expression.operator == 'multiply') {
           value *= parseFloat(fieldValue);
+        }
+
+        if (expression.operator == 'equal') {
+          value = fieldValue;
         }
       }
     });
