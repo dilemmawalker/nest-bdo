@@ -248,7 +248,7 @@ export class WorkflowService {
       value = 1;
     }
     expression.variables.forEach((val: ExpressionVariable) => {
-      if (val.type == 'custom') {
+      if (val.type == 'constant') {
         if (expression.operator == 'add') {
           value += parseFloat(val.value);
         }
