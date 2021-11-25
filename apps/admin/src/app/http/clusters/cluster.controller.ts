@@ -30,8 +30,6 @@ export class ClusterController {
     @Body()
     createClusterRequest: CreateClusterRequest,
   ): Promise<any> {
-    console.log(createClusterRequest);
-    console.log(CreateClusterRequest.getClusterDto(createClusterRequest));
     const cluster = await this.clusterService.createCluster(
       CreateClusterRequest.getClusterDto(createClusterRequest),
     );

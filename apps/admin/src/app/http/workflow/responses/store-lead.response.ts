@@ -14,8 +14,10 @@ export class StoreLeadResponse {
 
   static fromWorkflow(workflow: Workflow) {
     const entity = new StoreLeadResponse();
-    entity.fields = workflow.steps[0].fields;
-    entity.stepId = workflow.steps[0].stepId;
+    if (workflow && workflow.steps.length > 0) {
+      entity.fields = workflow.steps[0].fields;
+      entity.stepId = workflow.steps[0].stepId;
+    }
     return entity;
   }
 }

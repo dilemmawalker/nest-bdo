@@ -102,7 +102,9 @@
       "^@core/auth(|/.*)$": "<rootDir>/libs/core/auth/src/$1",
       "^@core/users(|/.*)$": "<rootDir>/libs/core/users/src/$1",
       "^@shared(|/.*)$": "<rootDir>/libs/shared/$1",
-      "^@file/file(|/.*)$": "<rootDir>/libs/file/src/$1"
+      "^@file/file(|/.*)$": "<rootDir>/libs/file/src/$1",
+      "^@utility/utilities(|/.*)$": "<rootDir>/libs/core/utilities/src/$1",
+      "^@dataTypes/data-types(|/.*)$": "<rootDir>/libs/data-types/src/$1"
     }
   }
 }

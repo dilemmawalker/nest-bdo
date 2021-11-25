@@ -20,7 +20,7 @@ export class StoreDto {
   updatedAt: Date;
   fields: StoreField[] = [];
 
-  static getStore(storeData: StoreDto) {
+  static getStoreObj(storeData: StoreDto) {
     const storeObj = {};
     storeObj['storeId'] = storeData.storeId;
     storeObj['status'] = storeData.status;

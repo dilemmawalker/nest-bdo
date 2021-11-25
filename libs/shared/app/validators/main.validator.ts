@@ -9,7 +9,7 @@ export class Validator {
     return typeof value === 'string' || value instanceof String;
   }
 
-  static isNumber(value: any): boolean {
+  static isFloat(value: any): boolean {
     return !isNaN(parseFloat(value)) && !isNaN(value - 0);
   }
 
@@ -47,7 +47,8 @@ export class Validator {
     return options >= lBound && options <= rBound;
   }
 
-  static isPresent(array: any[], value: any): boolean {
+  static isPresent(options: any, value: any): boolean {
+    const array = options.map((option) => option.key);
     return array.some((item) => item === value);
   }
 
@@ -66,5 +67,11 @@ export class Validator {
       'i',
     ); // fragment locator
     return !!pattern.test(url);
+  }
+
+  static isInteger(value: any): boolean {
+    return (
+      !isNaN(value) && parseInt(value) == value && !isNaN(parseInt(value, 10))
+    );
   }
 }

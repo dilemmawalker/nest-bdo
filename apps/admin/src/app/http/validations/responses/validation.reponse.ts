@@ -4,23 +4,35 @@ import { Validation } from '@shared/app/schemas/validation/validation.schema';
 @ApiTags('Validation')
 export class ValidationResponse {
   @ApiProperty()
+  _id: any;
+
+  @ApiProperty()
   name: string;
 
   @ApiProperty()
   options: any[];
 
   @ApiProperty()
-  type: string;
+  type = '';
 
   @ApiProperty()
   status: boolean;
 
   static fromValidation(validation: Validation): ValidationResponse {
     const response = new ValidationResponse();
+    response._id = validation._id;
     response.name = validation.name;
     response.options = validation.options;
     response.status = validation.status;
     response.type = validation.type;
     return response;
+  }
+
+  static fromValidationArray(validations: Validation[]): ValidationResponse[] {
+    const entities = [];
+    validations.forEach((validation) => {
+      entities.push(this.fromValidation(validation));
+    });
+    return entities;
   }
 }

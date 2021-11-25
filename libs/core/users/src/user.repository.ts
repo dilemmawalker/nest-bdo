@@ -11,6 +11,11 @@ import { RoleDto } from 'libs/core/roles/src/dtos/role.dto';
 import { FilterQuery, Model } from 'mongoose';
 import { UserDto } from './dtos/user.dto';
 import { v4 as uuidv4 } from 'uuid';
+import {
+  ClusterManager,
+  ClusterManagerDto,
+} from '@shared/app/schemas/users/cluster.manager.schema';
+import { RoleConst } from 'apps/admin/src/constant/auth/roles.constant';
 
 @Injectable()
 export class UserRepository {
@@ -20,6 +25,8 @@ export class UserRepository {
     private permissionModel: Model<Permission>,
     @InjectModel(Role.name) private roleModel: Model<Role>,
     @InjectModel(Agent.name) private agentModel: Model<Agent>,
+    @InjectModel(ClusterManager.name)
+    private clusterManagerModel: Model<ClusterManager>,
   ) {}
 
   async findOne(userFilterQuery: FilterQuery<User>): Promise<User> {
@@ -64,10 +71,16 @@ export class UserRepository {
       throw new NotFoundException();
     }
     const role = await this.roleModel.findOne({ roleId: roleDto.roleId });
-    if (role.name === 'agent') {
+    if (role.name === RoleConst.Agent) {
       const newAgent = new this.agentModel(this.getAgentDto(user));
       console.log(newAgent);
       await newAgent.save();
+    }
+    if (role.name === RoleConst.ClusterManager) {
+      const newClusterManager = new this.clusterManagerModel(
+        this.getClusterManagerDto(user),
+      );
+      await newClusterManager.save();
     }
     const userRoles = user.roles ? user.roles : [];
     if (userRoles.indexOf(role._id) != -1) {
@@ -84,6 +97,16 @@ export class UserRepository {
     entity.agentId = uuidv4();
     entity.userId = user.userId;
     entity.active = true;
+    entity.user = user._id;
+    return entity;
+  }
+
+  private getClusterManagerDto(user: User): ClusterManagerDto {
+    const entity = new ClusterManagerDto();
+    entity.clusterManagerId = uuidv4();
+    entity.userId = user.userId;
+    entity.active = true;
+    entity.user = user._id;
     return entity;
   }
 }

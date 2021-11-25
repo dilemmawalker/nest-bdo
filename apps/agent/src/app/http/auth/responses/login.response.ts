@@ -28,6 +28,7 @@ export class LoginResponse {
     entity.username = user.username;
     entity.userId = user.userId;
     entity.agentId = userData.agentId;
+    entity.clusterManagerId = userData.clusterManagerId;
     entity.leadUrl = generateWorkflowUrl(leadWorkflowKey, leadStepId, 'new');
     return entity;
   }

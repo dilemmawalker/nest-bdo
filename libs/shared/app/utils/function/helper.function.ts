@@ -1,5 +1,3 @@
-import { extname } from 'path';
-
 export function toUriPath(path: string): string {
   return `/${path}`;
 }
@@ -12,35 +10,65 @@ export function removeItem<T>(arr: Array<T>, value: T): Array<T> {
   return arr;
 }
 
+export function getFormattedDate(date: Date): string {
+  const dateString =
+    date.getDate() +
+    '/' +
+    (date.getMonth() + 1) +
+    '/' +
+    date.getFullYear().toString().substring(2);
+  return dateString;
+}
+
+export function getFormattedTime(date: Date): string {
+  const timeString =
+    date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+  return timeString;
+}
+
 export function generateWorkflowUrl(
   workflowKey: string,
   stepId: string,
   storeId: string,
-) {
-  return `agent/api/workflow/${workflowKey}/${stepId}/${storeId}`;
+): string {
+  return `agent/api/workflows/${workflowKey}/${stepId}/${storeId}`;
 }
 
-export const imageFileFilter = (req: any, file: any, callback: any) => {
-  if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
-    req.fileValidationError = 'only image files allowed';
-    return callback(null, false);
-  }
-  callback(null, true);
-};
+export function generateNextPageUrl(
+  page: number,
+  limit: number,
+  status: string,
+  storeCount: number,
+): string {
+  const skip = page * limit;
+  if (page == null || page < 1 || skip >= storeCount) return '';
+  return `agent/api/agent/stores/${status}?page=${page + 1}&limit=${limit}`;
+}
 
-export const docFileFilter = (req: any, file: any, callback: any) => {
-  if (!file.originalname.match(/\.(doc|docx|txt)$/)) {
-    req.fileValidationError = 'only image files allowed';
-    return callback(null, false);
+export function generatePreviousPageUrl(
+  page: number,
+  limit: number,
+  status: string,
+  storeCount: number,
+): string {
+  const skip = (page - 2) * limit;
+  const prevPage = Math.ceil(storeCount / limit);
+  if (page == null || page <= 1) return '';
+  if (skip >= storeCount)
+    return `agent/api/agent/stores/${status}?page=${prevPage}&limit=${limit}`;
+  return `agent/api/agent/stores/${status}?page=${page - 1}&limit=${limit}`;
+}
+
+export function empty(e) {
+  switch (e) {
+    case '':
+    case null:
+    case typeof e == 'undefined':
+      return true;
+    default:
+      return false;
   }
-  callback(null, true);
-};
-export const editFilename = (req, file, callback) => {
-  const name = file.originalname.split('.')[0];
-  const fileExtName = extname(file.originalname);
-  const randomName = Array(4)
-    .fill(null)
-    .map(() => Math.round(Math.random() * 16).toString(16))
-    .join('');
-  callback(null, `${name}-${randomName}-${fileExtName}`);
-};
+}
+
+//Workflows/WorkflowController_getWorkflowSteps
+//Agents/AgentController_get

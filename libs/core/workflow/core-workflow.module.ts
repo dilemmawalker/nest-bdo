@@ -1,4 +1,4 @@
-import { forwardRef, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Store, StoreSchema } from '@shared/app/schemas/stores/store.schema';
 import { StoreRepository } from 'apps/admin/src/app/http/stores/store.repository';
@@ -9,15 +9,29 @@ import {
   WorkflowSchema,
 } from '@shared/app/schemas/workflows/workflow.schema';
 import { WorkflowRepository } from './workflow.repository';
-import { WorkflowService } from './workflow.service';
 import { Agent, AgentSchema } from '@shared/app/schemas/users/agent.schema';
+
+import { CoreAgentModule } from '../agent/src/core-agent.module';
+import { CoreFieldModule } from '../fields/src/core-field.module';
+import { WorkflowService } from './workflow.service';
+import { CoreActivityModule } from '../activity/core-activity-module';
+import {
+  Activity,
+  ActivitySchema,
+} from '@shared/app/schemas/activity/activity.schema';
+import { ActivityService } from '../activity/activity.service';
+import { ActivityRepository } from '../activity/activity.repository';
+
 import {
   UpdateWorkflow,
   UpdateWorkflowSchema,
 } from '@shared/app/schemas/workflows/updateWorkflow.schema';
 
+
 @Module({
   imports: [
+    CoreAgentModule,
+    CoreFieldModule,
     MongooseModule.forFeature([
       { name: Workflow.name, schema: WorkflowSchema },
     ]),
@@ -26,10 +40,21 @@ import {
     MongooseModule.forFeature([{ name: Store.name, schema: StoreSchema }]),
     MongooseModule.forFeature([{ name: Agent.name, schema: AgentSchema }]),
     MongooseModule.forFeature([
-      { name: UpdateWorkflow.name, schema: UpdateWorkflowSchema },
+
+      { name: Activity.name, schema: ActivitySchema },
     ]),
   ],
-  providers: [WorkflowService, WorkflowRepository, StoreRepository],
+  providers: [
+    WorkflowService,
+    WorkflowRepository,
+    StoreRepository,
+    ActivityService,
+    ActivityRepository,
+
+      { name: UpdateWorkflow.name, schema: UpdateWorkflowSchema },
+    ]),
+
+  ],
   exports: [WorkflowService, WorkflowRepository],
 })
 export class CoreWorkflowModule {}

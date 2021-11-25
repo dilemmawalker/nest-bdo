@@ -13,33 +13,8 @@ export class StoreRepository {
     @InjectModel(Agent.name) private agentModel: Model<Agent>,
   ) {}
 
-  async create(storeDto: StoreDto): Promise<Store> {
-    const agent = await this.agentModel
-      .findOne({ agentId: storeDto.agentId })
-      .populate({
-        path: 'cluster',
-        model: 'Cluster',
-        populate: {
-          path: 'onboarding',
-          model: 'Workflow',
-        },
-      });
-    console.log(agent);
-    storeDto.workflowKey = agent['cluster']['onboarding']['key'];
-    storeDto.currentStepId =
-      agent['cluster']['onboarding']['steps'][0]['stepId'];
-    console.log(storeDto);
-    const newStore = await new this.storeModel(
-      StoreDto.getStore(storeDto),
-    ).save();
-    const stores = agent.stores || [];
-    stores.push(newStore._id);
-    console.log(agent);
-
-    await agent.updateOne({
-      stores: stores,
-    });
-    return await newStore;
+  async create(storeDto: StoreDto): Promise<any> {
+    return await new this.storeModel(StoreDto.getStoreObj(storeDto)).save();
   }
 
   async update(storeDto: StoreDto): Promise<Store> {
@@ -47,7 +22,7 @@ export class StoreRepository {
       {
         $or: [{ storeId: storeDto.storeId }],
       },
-      StoreDto.getStore(storeDto),
+      StoreDto.getStoreObj(storeDto),
       {
         new: true,
       },
@@ -70,5 +45,9 @@ export class StoreRepository {
 
   async findOne(storeId: string): Promise<Store> {
     return await this.storeModel.findOne({ storeId });
+  }
+
+  async getStores(): Promise<Store[]> {
+    return await this.storeModel.find({});
   }
 }

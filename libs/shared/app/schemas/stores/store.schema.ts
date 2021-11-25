@@ -2,16 +2,15 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { BaseItemSchema } from '@shared/app/schemas/base/base-Item.schema';
 import { Document, Types } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
-import { Workflow } from '@shared/app/schemas/workflows/workflow.schema';
 import { Field } from '@shared/app/schemas/fields/field.schema';
 import * as mongoose from 'mongoose';
 
 export type StoreDocument = Store & Document;
 
-@Schema({ strict: false })
+@Schema({ strict: false, versionKey: false })
 export class Store {
   @Prop({ required: true })
-  name: string;
+  store_name: string;
 
   @Prop({ required: true, unique: true })
   storeId: string;
@@ -20,9 +19,16 @@ export class Store {
   status: string;
 
   @Prop({ required: true })
-  address: string;
+  owner_name: string;
 
+  @Prop()
   mobile: string;
+
+  @Prop()
+  remark: string;
+
+  @Prop()
+  address: string;
 
   @Prop({ required: true })
   workflowKey: string;
@@ -37,6 +43,7 @@ export class Store {
   updatedAt: Date;
 }
 
+export const StoreSchema = SchemaFactory.createForClass(Store);
 export class StepData extends BaseItemSchema {
   data: FieldInputData[];
   stepId: string;
@@ -51,7 +58,10 @@ export class FieldInputData extends BaseItemSchema {
   inputValue: any = '';
 
   @ApiProperty()
-  keyName: any;
+  keyName: string;
+
+  @ApiProperty()
+  options: any;
 
   @ApiProperty()
   group: FieldInputData[] = [];
@@ -67,8 +77,10 @@ export class FieldInputData extends BaseItemSchema {
     entity.label = field.label;
     entity.keyName = field.keyName;
     entity.type = field.type;
+    entity.options = field.options;
+    entity.inputValue = '';
 
-    if (field.groups.length != 0) {
+    if (field.groups && field.groups.length != 0) {
       entity.group = this.fromFieldArray(field.groups);
     }
     return entity;
@@ -82,5 +94,3 @@ export class FieldInputData extends BaseItemSchema {
     return entities;
   }
 }
-
-export const StoreSchema = SchemaFactory.createForClass(Store);
