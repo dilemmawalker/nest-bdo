@@ -33,16 +33,7 @@ export class ClusterManagerService {
     return await this.storeRepository.updateObj({ status, remark }, storeId);
   }
 
-  async getStores(
-    clusterManagerId: string,
-    page: number,
-    limit: number,
-  ): Promise<Store[]> {
-    const skip = (page - 1) * limit;
-    return await this.clusterManagerRepository.getStores(
-      { clusterManagerId },
-      skip,
-      limit,
-    );
+  async getStores(clusterManagerId: string): Promise<Store[]> {
+    return await this.clusterManagerRepository.getStores({ clusterManagerId });
   }
 }

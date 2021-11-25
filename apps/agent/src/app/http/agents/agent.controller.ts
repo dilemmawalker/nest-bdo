@@ -59,30 +59,29 @@ export class AgentController {
     const page_number = Number.isInteger(page) ? page : 1;
     const limit_count = Number.isInteger(limit) ? limit : 20;
     const stores = json.clusterManagerId
-      ? await this.clusterManagerService.getStores(
-          json.clusterManagerId,
-          page_number,
-          limit_count,
-        )
-      : await this.agentService.getStores(
-          json.agentId,
-          page_number,
-          limit_count,
-        );
+      ? await this.clusterManagerService.getStores(json.clusterManagerId)
+      : await this.agentService.getStores(json.agentId);
+    const storeCount = await this.agentService.storeCount(stores, status);
     const metaValue = [
       {
         current_page: page_number,
         limit: limit_count,
-        next_page: generateNextPageUrl(page_number, limit_count, status),
+        next_page: generateNextPageUrl(
+          page_number,
+          limit_count,
+          status,
+          storeCount,
+        ),
         previous_page: generatePreviousPageUrl(
           page_number,
           limit_count,
           status,
+          storeCount,
         ),
       },
     ];
     return ResponseUtils.success(
-      StoreResponse.fromStoreArray(stores, status),
+      StoreResponse.fromStoreArray(stores, status, page_number, limit_count),
       status,
       metaValue,
     );

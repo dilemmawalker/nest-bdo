@@ -70,8 +70,6 @@ export class ClusterManagerRepository {
 
   async getStores(
     clusterManagerFilterQuery: FilterQuery<ClusterManager>,
-    skip: number,
-    limit: number,
   ): Promise<any> {
     const clusterManager = await this.clusterManagerModel.findOne({
       clusterManagerId: clusterManagerFilterQuery.clusterManagerId,
@@ -87,6 +85,6 @@ export class ClusterManagerRepository {
     const stores = agents.flatMap((agent) => {
       return agent.stores;
     });
-    return stores.slice(skip, skip + limit);
+    return stores;
   }
 }
