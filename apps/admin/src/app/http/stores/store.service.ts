@@ -64,16 +64,20 @@ export class StoreService {
   }
 
   getInputFields(fields: any[], store: any) {
-    const dataObject = {};
+    const dataArray = [];
     const inputFields = FieldInputData.fromFieldArray(fields);
     if (!store) {
       return inputFields;
     }
     for (const i in inputFields) {
+      const dataObj = {};
       const inputField = inputFields[i];
       inputField.inputValue = store.get(inputField.keyName);
-      dataObject[inputField.keyName] = inputField.inputValue;
+      dataObj[inputField.keyName] = inputField.inputValue;
+      if (inputField.inputValue) {
+        dataArray.push(dataObj);
+      }
     }
-    return dataObject;
+    return dataArray;
   }
 }

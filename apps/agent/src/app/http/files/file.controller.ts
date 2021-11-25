@@ -12,7 +12,7 @@ import {
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import {
   ApiBearerAuth,
   ApiConsumes,
@@ -98,6 +98,68 @@ export class FileController {
     return ResponseUtils.success(BasicResponse.success());
   }
 
+
+  @Post('/upload/images')
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(
+    FilesInterceptor('files', 10, {
+      fileFilter: FileUploadingUtils.imageFileFilter,
+    }),
+  )
+  public async uploadMultipleFiles(
+    @Req() req: any,
+    @Body() uploadImageRequest: UploadImageRequest,
+    @UploadedFiles() files: Array<Express.Multer.File>,
+  ) {
+    if (!files || req.fileValidationError || files.length === 0) {
+      throw new BadRequestException('invalid file');
+    }
+    console.log(files);
+    const fileObjs = [];
+    for (const file of files) {
+      const fileObj = await this.fileService.uploadFile(
+        file.buffer,
+        FileUploadingUtils.getImageFilename(file.originalname),
+        UploadImageRequest.getFileDto(uploadImageRequest, true),
+      );
+      fileObjs.push(fileObj);
+    }
+    return ResponseUtils.success(
+      FileResponse.fromFileArray(fileObjs),
+      'File uploaded successfully',
+    );
+  }
+
+  @Post('/upload/documents')
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(
+    FilesInterceptor('files', 20, {
+      fileFilter: FileUploadingUtils.docFileFilter,
+    }),
+  )
+  public async uploadMultipleDocs(
+    @Req() req: any,
+    @Body() uploadImageRequest: UploadImageRequest,
+    @UploadedFiles() files: Array<Express.Multer.File>,
+  ) {
+    if (!files || req.fileValidationError || files.length === 0) {
+      throw new BadRequestException('invalid file');
+    }
+    console.log(files);
+    const fileObjs = [];
+    for (const file of files) {
+      const fileObj = await this.fileService.uploadFile(
+        file.buffer,
+        FileUploadingUtils.getDocFilename(file.originalname),
+        UploadImageRequest.getFileDto(uploadImageRequest, true),
+      );
+      fileObjs.push(fileObj);
+    }
+    return ResponseUtils.success(
+      FileResponse.fromFileArray(fileObjs),
+      'File uploaded successfully',
+    );
+
   @Post('/deletePermanent')
   @UseInterceptors(TransformInterceptor)
   @ApiResponse({
@@ -107,6 +169,7 @@ export class FileController {
   public async deleteFilePermanent() {
     await this.fileService.deleFilePermanent();
     return ResponseUtils.success(BasicResponse.success());
+
   }
 
   // @Post('/multiple-upload')

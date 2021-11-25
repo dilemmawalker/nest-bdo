@@ -14,7 +14,7 @@ export class ValidationService {
 
   async update(validationDto: ValidationDto): Promise<Validation> {
     const response = await this.validationRepository.findOneAndUpdate(
-      { name: validationDto.name },
+      { _id: validationDto._id },
       validationDto,
     );
     if (response) return response;
@@ -27,5 +27,13 @@ export class ValidationService {
 
   async findMany(validationKeys: Types.ObjectId[]): Promise<Validation[]> {
     return await this.validationRepository.findMany(validationKeys);
+  }
+
+  async getValidation(validationId: string): Promise<Validation> {
+    const validation = await this.validationRepository.findOne({
+      _id: validationId,
+    });
+    if (validation) return validation;
+    throw new NotFoundException();
   }
 }

@@ -63,6 +63,9 @@ export class FieldService {
         HttpStatus.FORBIDDEN,
       );
     }
+    console.log('updating field');
+    console.log(fieldDto.expression);
+    console.log(fieldDto.expression);
     return await this.fieldRepository.updateObj(fieldDto, fieldDto.keyName);
   }
 
