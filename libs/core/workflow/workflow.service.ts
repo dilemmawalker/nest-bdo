@@ -8,6 +8,8 @@ import { StoreDto } from 'apps/admin/src/app/http/stores/dtos/store.dtos';
 import { WorkflowDto } from './dtos/workflow.dto';
 import { AssignFieldDto } from './dtos/assign-field.dto';
 import { StepDto } from './dtos/step.dto';
+import { FileDto } from '@file/file/dtos/file.dto';
+
 import {
   empty,
   generateWorkflowUrl,
@@ -22,7 +24,11 @@ import {
   Expression,
   ExpressionVariable,
 } from '@shared/app/schemas/fields/expression.schema';
-import { generateAgreementCardHtml } from '@shared/app/utils/function/dynamic.function';
+import {
+  generateAgreementCardHtml,
+  generateAgreementCardPdfHtml,
+} from '@shared/app/utils/function/dynamic.function';
+import { FileService } from '@file/file/file.service';
 @Injectable()
 export class WorkflowService {
   constructor(
@@ -31,6 +37,7 @@ export class WorkflowService {
     private readonly agentRepository: AgentRepository,
     private readonly fieldRepository: FieldRepository,
     private readonly activityService: ActivityService,
+    private readonly fileService: FileService,
   ) {}
 
   async findOne(key: string): Promise<Workflow> {
@@ -244,7 +251,7 @@ export class WorkflowService {
     if (expression.operator == 'multiply') {
       value = 1;
     }
-    expression.variables.forEach((val: ExpressionVariable) => {
+    expression.variables.forEach(async (val: ExpressionVariable) => {
       if (val.type == 'constant') {
         if (expression.operator == 'add') {
           value += parseFloat(val.value);
@@ -255,6 +262,20 @@ export class WorkflowService {
         if (expression.operator == 'function') {
           if (val.value == 'generateAgreementCardHtml') {
             value = generateAgreementCardHtml(store);
+            const pdfBuffer = await this.fileService.generatePDF(
+              generateAgreementCardPdfHtml(store),
+            );
+            const pdfFileName = `pdf/${store.get('storeId')}.pdf`;
+            const pdfFileDto = new FileDto();
+            pdfFileDto.keyName = 'agreement_pdf';
+            pdfFileDto.isMultiple = false;
+            pdfFileDto.refId = store.get('storeId');
+            pdfFileDto.fileName = pdfFileName;
+            await this.fileService.uploadFile(
+              pdfBuffer,
+              pdfFileName,
+              pdfFileDto,
+            );
           }
         }
         if (expression.operator == 'equal') {

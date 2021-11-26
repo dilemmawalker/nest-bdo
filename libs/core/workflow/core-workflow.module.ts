@@ -20,11 +20,13 @@ import {
 } from '@shared/app/schemas/activity/activity.schema';
 import { ActivityService } from '../activity/activity.service';
 import { ActivityRepository } from '../activity/activity.repository';
+import { CoreFileModule } from '@file/file/core-file.module';
 
 @Module({
   imports: [
     CoreAgentModule,
     CoreFieldModule,
+    CoreFileModule,
     MongooseModule.forFeature([
       { name: Workflow.name, schema: WorkflowSchema },
     ]),

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { File, FileSchema } from '@shared/app/schemas/files/file.schema';
 import { StoreModule } from 'apps/admin/src/app/http/stores/store.module';
@@ -7,7 +7,7 @@ import { FileService } from './file.service';
 
 @Module({
   imports: [
-    StoreModule,
+    forwardRef(() => StoreModule),
     MongooseModule.forFeature([{ name: File.name, schema: FileSchema }]),
   ],
   providers: [FileService, FileRepository],
