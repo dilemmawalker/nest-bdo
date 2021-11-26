@@ -66,7 +66,7 @@ export function generateAgreementCardHtml(store: any) {
       <b>Commercial Agreement</b>
   </p>
 
-   <p> To  <u> ${owner_name} </u>
+   <p> To  <u> ${owner_name} </u></p>
    <hr>
    1. Margins
    <ul>
@@ -87,12 +87,12 @@ export function generateAgreementCardHtml(store: any) {
     <hr>
     7. Sales and marketing will be done by 1K Kirana. (Online and offline both)
     <hr>   
-    <ul style='color: #FF8C00;'>
-   <b style='position: relative; right: 40px'> Note </b>
-    <li>After completion of investment only you will be available to avail credit limit.</li>
-   <li>Racks will be installed after completion of investment ( ₹300/sq. ft. as per requirement).</li>
-   </ul>
-   </p>
+    <div>
+        <b style='color: red;'>Note </b>
+        <li style='color: red;'>After completion of investment only you will be available to avail credit limit.</li>
+        <li style='color: red;'>Racks will be installed after completion of investment ( ₹300/sq. ft. as per requirement).</li> 
+    </div>
+
    </div>
      `;
   return submitHtml;
