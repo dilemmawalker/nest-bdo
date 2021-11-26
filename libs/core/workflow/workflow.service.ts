@@ -133,16 +133,6 @@ export class WorkflowService {
         store,
       );
       completedStatus[step.stepId] = this.isStepCompleted(fields);
-      console.log({
-        step: step.name,
-        fields: fields.flatMap((field) => {
-          return {
-            isEditable: field.isEditable,
-            inputValue: `${field.keyName}: ${field.inputValue}`,
-            group: field.group,
-          };
-        }),
-      });
     }
     return { steps: workflow.steps, completedStatus };
   }

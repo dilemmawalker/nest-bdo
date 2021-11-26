@@ -26,7 +26,6 @@ export class WorkflowStepResponse {
       step.stepId,
       storeId,
     );
-    console.log(completedStatus);
     entity.completed = completedStatus;
     return entity;
   }
