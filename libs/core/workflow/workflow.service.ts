@@ -49,10 +49,11 @@ export class WorkflowService {
   }
 
   async post(storeDto: StoreDto): Promise<any> {
+    const workflowKey = storeDto.workflowKey;
     const store = await this.storeRepository.findOne(storeDto.storeId);
     if (!store) {
       const storeObj = await this.createStore(storeDto);
-      return await this.get(storeDto.workflowKey, 'new', storeDto.stepId);
+      return await this.get(workflowKey, 'new', storeDto.stepId);
     } else {
       const storeObj = await this.updateStore(storeDto);
       console.log(storeDto.workflowKey, storeDto.stepId, storeObj.storeId);
