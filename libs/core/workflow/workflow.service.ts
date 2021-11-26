@@ -252,6 +252,7 @@ export class WorkflowService {
     if (expression.operator == 'multiply') {
       value = 1;
     }
+    console.log('In Test');
     expression.variables.forEach(async (val: ExpressionVariable) => {
       if (val.type == 'constant') {
         if (expression.operator == 'add') {
@@ -261,11 +262,13 @@ export class WorkflowService {
           value *= parseFloat(val.value);
         }
         if (expression.operator == 'function') {
+          console.log('In Function');
           if (val.value == 'generateAgreementCardHtml') {
             value = generateAgreementCardHtml(store);
             const pdfBuffer = await this.fileService.generatePDF(
               generateAgreementCardPdfHtml(store),
             );
+            console.log(pdfBuffer);
             const pdfFileName = `pdf/${store.get('storeId')}.pdf`;
             const pdfFileDto = new FileDto();
             pdfFileDto.keyName = 'agreement_pdf';
