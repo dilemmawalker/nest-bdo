@@ -18,7 +18,7 @@ export class DynamicValidator {
 
   static validateField(
     value: string,
-  validation: Validation,
+    validation: Validation,
   ): ValidationResponseUtils {
     switch (validation.type) {
       case 'range':
