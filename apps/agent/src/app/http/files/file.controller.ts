@@ -35,7 +35,7 @@ import { FileResponse } from './response/file.response';
 @Controller('files')
 @ApiBearerAuth()
 export class FileController {
-  constructor(private readonly fileService: FileService) { }
+  constructor(private readonly fileService: FileService) {}
 
   @Post('/upload/image')
   @ApiConsumes('multipart/form-data')
@@ -45,6 +45,7 @@ export class FileController {
       fileFilter: FileUploadingUtils.imageFileFilter,
     }),
   )
+  @UseInterceptors(TransformInterceptor)
   public async uploadImage(
     @Req() req: any,
     @Body() uploadImageRequest: UploadImageRequest,
@@ -72,6 +73,7 @@ export class FileController {
       fileFilter: FileUploadingUtils.docFileFilter,
     }),
   )
+  @UseInterceptors(TransformInterceptor)
   public async uploadDoc(
     @Req() req: any,
     @Body() uploadImageRequest: UploadImageRequest,
@@ -97,6 +99,7 @@ export class FileController {
     status: HttpStatus.OK,
     type: BasicResponse,
   })
+  @UseInterceptors(TransformInterceptor)
   public async deleteFile(@Body() deleteFileRequest: DeleteFileRequest) {
     await this.fileService.deleFileObj(
       DeleteFileRequest.getFileDto(deleteFileRequest),
@@ -114,6 +117,7 @@ export class FileController {
       fileFilter: FileUploadingUtils.imageFileFilter,
     }),
   )
+  @UseInterceptors(TransformInterceptor)
   public async uploadMultipleFiles(
     @Req() req: any,
     @Body() uploadImageRequest: UploadImageRequest,
@@ -145,6 +149,7 @@ export class FileController {
       fileFilter: FileUploadingUtils.docFileFilter,
     }),
   )
+  @UseInterceptors(TransformInterceptor)
   public async uploadMultipleDocs(
     @Req() req: any,
     @Body() uploadImageRequest: UploadImageRequest,
