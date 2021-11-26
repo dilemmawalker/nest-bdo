@@ -35,6 +35,7 @@ export class StoreResponse {
   workflow: string;
 
   static fromStore(store: Store, status: string) {
+    const { store_address } = store;
     const entity = new StoreResponse();
     entity.store_name = store.store_name;
     entity.mobile = store.mobile;
@@ -43,7 +44,9 @@ export class StoreResponse {
     entity.owner_name = store.owner_name;
     entity.status = status;
     entity.storeId = store.storeId;
-    entity.address = store.address || '';
+    entity.address = store.store_address
+      ? `address: ${store_address['address']}, town: ${store_address['town']}, tehsil: ${store_address['tehsil']}, landmark: ${store_address['landmark']}`
+      : '';
     entity.workflow = store.workflowKey;
     entity.currentWorkflowUrl = generateWorkflowUrl(
       store.workflowKey,

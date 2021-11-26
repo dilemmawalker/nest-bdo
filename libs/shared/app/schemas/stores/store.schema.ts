@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { BaseItemSchema } from '@shared/app/schemas/base/base-Item.schema';
-import { Document } from 'mongoose';
+import { Document, Mixed } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { Expression } from '../fields/expression.schema';
 
@@ -27,7 +27,7 @@ export class Store {
   remark: string;
 
   @Prop()
-  address: string;
+  store_address: Mixed;
 
   @Prop({ required: true })
   workflowKey: string;
