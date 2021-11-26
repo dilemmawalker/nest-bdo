@@ -35,7 +35,7 @@ import { FileResponse } from './response/file.response';
 @Controller('files')
 @ApiBearerAuth()
 export class FileController {
-  constructor(private readonly fileService: FileService) {}
+  constructor(private readonly fileService: FileService) { }
 
   @Post('/upload/image')
   @ApiConsumes('multipart/form-data')
@@ -58,7 +58,10 @@ export class FileController {
       FileUploadingUtils.getImageFilename(file.originalname),
       UploadImageRequest.getFileDto(uploadImageRequest),
     );
-    return ResponseUtils.success(FileResponse.fromFile(fileObj));
+    return ResponseUtils.success(
+      FileResponse.fromFile(fileObj),
+      'File uploaded successfully',
+    );
   }
 
   @Post('/upload/document')
@@ -82,7 +85,10 @@ export class FileController {
       FileUploadingUtils.getDocFilename(file.originalname),
       UploadImageRequest.getFileDto(uploadImageRequest),
     );
-    return ResponseUtils.success(FileResponse.fromFile(fileObj));
+    return ResponseUtils.success(
+      FileResponse.fromFile(fileObj),
+      'Document Uploaded successfully',
+    );
   }
 
   @Post('/delete')
@@ -95,7 +101,10 @@ export class FileController {
     await this.fileService.deleFileObj(
       DeleteFileRequest.getFileDto(deleteFileRequest),
     );
-    return ResponseUtils.success(BasicResponse.success());
+    return ResponseUtils.success(
+      BasicResponse.success(),
+      'File deleted successfully',
+    );
   }
 
   @Post('/upload/images')
