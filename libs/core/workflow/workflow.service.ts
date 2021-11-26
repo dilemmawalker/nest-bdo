@@ -49,11 +49,7 @@ export class WorkflowService {
     } else {
       const storeObj = await this.updateStore(storeDto);
       console.log(storeDto.workflowKey, storeDto.stepId, storeObj.storeId);
-      return await this.get(
-        storeDto.workflowKey,
-        storeObj.storeId,
-        storeDto.stepId,
-      );
+      return await this.get(storeDto.workflowKey, 'new', storeDto.stepId);
     }
   }
   async createStore(storeDto: StoreDto): Promise<Store> {
