@@ -263,6 +263,7 @@ export class WorkflowService {
         }
         if (expression.operator == 'function') {
           console.log('In Function');
+          console.log('In Function ', val.value);
           if (val.value == 'generateAgreementCardHtml') {
             value = generateAgreementCardHtml(store);
             const pdfBuffer = await this.fileService.generatePDF(
