@@ -377,9 +377,9 @@ export class WorkflowService {
         }
         if (expression.operator == 'subtract') {
           if (fieldValue == 0) {
-            fieldValue = parseFloat(val.value);
+            value = parseFloat(fieldValue);
           } else {
-            fieldValue -= parseFloat(val.value);
+            value -= parseFloat(fieldValue);
           }
         }
         if (expression.operator == 'add') {
