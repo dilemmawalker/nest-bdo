@@ -38,7 +38,7 @@ export class WorkflowService {
     private readonly fieldRepository: FieldRepository,
     private readonly activityService: ActivityService,
     private readonly fileService: FileService,
-  ) {}
+  ) { }
 
   async findOne(key: string): Promise<Workflow> {
     const workflow = await this.workflowRepository.findOne(key);
@@ -252,6 +252,9 @@ export class WorkflowService {
     if (expression.operator == 'multiply') {
       value = 1;
     }
+    if (expression.operator == 'equal') {
+      value = '';
+    }
     console.log('In Test');
     expression.variables.forEach(async (val: ExpressionVariable) => {
       if (val.type == 'constant') {
@@ -262,14 +265,11 @@ export class WorkflowService {
           value *= parseFloat(val.value);
         }
         if (expression.operator == 'function') {
-          console.log('In Function');
-          console.log('In Function ', val.value);
           if (val.value == 'generateAgreementCardHtml') {
             value = generateAgreementCardHtml(store);
             const pdfBuffer = await this.fileService.generatePDF(
               generateAgreementCardPdfHtml(store),
             );
-            console.log(pdfBuffer);
             const pdfFileName = `pdf/${store.get('storeId')}.pdf`;
             const pdfFileDto = new FileDto();
             pdfFileDto.keyName = 'agreement_pdf';
