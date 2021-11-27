@@ -1,4 +1,4 @@
-class StoreField {
+export class StoreField {
   inputValue: any = '';
   keyName: any;
   groupKey: any;

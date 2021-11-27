@@ -1,10 +1,17 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 import { Workflow } from '../../shared/app/schemas/workflows/workflow.schema';
 import { WorkflowRepository } from './workflow.repository';
 import { StoreRepository } from 'apps/admin/src/app/http/stores/store.repository';
 import { FieldInputData, Store } from '@shared/app/schemas/stores/store.schema';
-import { StoreDto } from 'apps/admin/src/app/http/stores/dtos/store.dtos';
+import {
+  StoreDto,
+  StoreField,
+} from 'apps/admin/src/app/http/stores/dtos/store.dtos';
 import { WorkflowDto } from './dtos/workflow.dto';
 import { AssignFieldDto } from './dtos/assign-field.dto';
 import { StepDto } from './dtos/step.dto';
@@ -66,11 +73,28 @@ export class WorkflowService {
       );
     }
   }
+  containField(keyName, label, fields: StoreField[]) {
+    let isContainKeyName = false;
+    fields.forEach((field) => {
+      if (field.keyName == keyName) {
+        isContainKeyName = true;
+      }
+    });
+    if (!isContainKeyName) {
+      throw new BadRequestException(keyName, label + ' is required');
+    }
+  }
   async createStore(storeDto: StoreDto): Promise<Store> {
     const agent = await this.agentRepository.getAgent(storeDto.agentId);
     if (!agent.stores) {
       agent.stores = [];
     }
+    if (storeDto.fields.length == 0) {
+      throw new BadRequestException('store_name', 'Please enter store name');
+    }
+    this.containField('store_name', 'Store Name', storeDto.fields);
+    this.containField('owner_name', 'Owner Name', storeDto.fields);
+
     storeDto = this.populateDataInStoreDto(storeDto, agent);
     const store = await this.storeRepository.create(storeDto);
     agent.stores.push(store._id);
