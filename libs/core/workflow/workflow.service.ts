@@ -20,6 +20,7 @@ import { FileDto } from '@file/file/dtos/file.dto';
 import {
   empty,
   generateWorkflowUrl,
+  getCurrentDate,
 } from '@shared/app/utils/function/helper.function';
 import { Step } from '@shared/app/schemas/steps/steps.schema';
 import { AgentRepository } from '../agent/src/agent.repository';
@@ -47,7 +48,7 @@ export class WorkflowService {
     private readonly fieldRepository: FieldRepository,
     private readonly activityService: ActivityService,
     private readonly fileService: FileService,
-  ) {}
+  ) { }
 
   async findOne(key: string): Promise<Workflow> {
     const workflow = await this.workflowRepository.findOne(key);
@@ -118,7 +119,7 @@ export class WorkflowService {
         'Agent',
         storeDto.agentId,
         '{}',
-        new Date(Date.now()),
+        getCurrentDate(),
       ),
     );
     return store;
