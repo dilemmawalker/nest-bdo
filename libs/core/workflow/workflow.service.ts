@@ -257,10 +257,13 @@ export class WorkflowService {
       } else {
         inputField.group.forEach(async (field, index) => {
           if (field.expression) {
+            console.log('field = ', inputFields[i].group[index].keyName);
+            console.log('ex = ', inputField.expression);
             const val = await this.calculateFieldExpression(
               field.expression,
               store,
             );
+            console.log('val = ', val);
             inputFields[i].group[index].inputValue = val;
           } else {
             if (store.get(inputField.keyName)) {
@@ -278,14 +281,16 @@ export class WorkflowService {
     expression: Expression,
     store: any,
   ): Promise<number> {
-    let value: any = 0;
+    let value: any = '';
+    if (expression.operator == 'add') {
+      value = 0;
+    }
     if (expression.operator == 'multiply') {
       value = 1;
     }
     if (expression.operator == 'equal') {
       value = '';
     }
-    console.log('In Test');
     expression.variables.forEach(async (val: ExpressionVariable) => {
       if (val.type == 'constant') {
         if (expression.operator == 'add') {
@@ -319,13 +324,16 @@ export class WorkflowService {
       }
       if (val.type == 'field') {
         const keyArr = val.value.split('#');
-        let fieldValue = '0';
+        let fieldValue: any = 0;
+        if (expression.operator == 'equal') {
+          fieldValue = '';
+        }
         if (store.get(keyArr[0])) {
           if (keyArr.length == 2) {
-            fieldValue = store.get(keyArr[0])[keyArr[1]] || '0';
+            fieldValue = store.get(keyArr[0])[keyArr[1]] || 0;
           }
           if (keyArr.length == 1) {
-            fieldValue = store.get(keyArr[0]) || '0';
+            fieldValue = store.get(keyArr[0]) || 0;
           }
         }
         if (expression.operator == 'add') {
