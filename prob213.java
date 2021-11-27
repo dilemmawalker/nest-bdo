@@ -31,8 +31,8 @@ class Solution {
         for(int i=0;i<n;i++){
             arr[i]=temparr[i];
             // System.out.print(arr[i]+" ");
-            
         }
+        //shifted all houses one index forward.
         
         for(int i=0;i<n;i++)
             dp[i]=0;
