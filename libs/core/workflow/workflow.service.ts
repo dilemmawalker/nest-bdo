@@ -29,6 +29,8 @@ import {
   generateAgreementCardPdfHtml,
 } from '@shared/app/utils/function/dynamic.function';
 import { FileService } from '@file/file/file.service';
+import { isContext } from 'vm';
+import { Validator } from '@shared/app/validators/main.validator';
 @Injectable()
 export class WorkflowService {
   constructor(
@@ -121,11 +123,39 @@ export class WorkflowService {
     return store;
   }
 
-  async getSteps(workflowKey: string) {
+  async getSteps(workflowKey: string, storeId: string) {
     const workflow = await this.findOne(workflowKey);
-    return workflow.steps;
+    const store = await this.storeRepository.findOne(storeId);
+    const completedStatus = {};
+    for (const step of workflow.steps) {
+      const fields: FieldInputData[] = await this.getInputFields(
+        this.getStepsFields(workflow, step.stepId),
+        store,
+      );
+      completedStatus[step.stepId] = this.isStepCompleted(fields);
+    }
+    return { steps: workflow.steps, completedStatus };
   }
 
+  isStepCompleted(fields: FieldInputData[]): boolean {
+    return fields.every((field) => {
+      if (field.group.length === 0) return this.isStepFieldCompleted(field);
+
+      return (
+        !field.isEditable ||
+        field.group.every((fieldGroupField) =>
+          this.isStepFieldCompleted(fieldGroupField),
+        )
+      );
+    });
+  }
+  isStepFieldCompleted(field: FieldInputData): boolean {
+    return !field.isEditable || !this.isFieldNullOrEmpty(field.inputValue);
+  }
+
+  isFieldNullOrEmpty(value: string): boolean {
+    return value === null || value.length === 0;
+  }
   async get(workflowKey: string, storeId: string, stepId: string) {
     const workflow = await this.findOne(workflowKey);
     const store = await this.storeRepository.findOne(storeId);
