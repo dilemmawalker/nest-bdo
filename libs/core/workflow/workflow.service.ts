@@ -47,7 +47,7 @@ export class WorkflowService {
     private readonly fieldRepository: FieldRepository,
     private readonly activityService: ActivityService,
     private readonly fileService: FileService,
-  ) {}
+  ) { }
 
   async findOne(key: string): Promise<Workflow> {
     const workflow = await this.workflowRepository.findOne(key);
@@ -81,7 +81,10 @@ export class WorkflowService {
       }
     });
     if (!isContainKeyName) {
-      throw new BadRequestException(keyName, label + ' is required');
+      throw new BadRequestException(
+        label + ' is required',
+        label + ' is required',
+      );
     }
   }
   async createStore(storeDto: StoreDto): Promise<Store> {
@@ -90,7 +93,10 @@ export class WorkflowService {
       agent.stores = [];
     }
     if (storeDto.fields.length == 0) {
-      throw new BadRequestException('store_name', 'Please enter store name');
+      throw new BadRequestException(
+        'Please enter store name',
+        'Please enter store name',
+      );
     }
     this.containField('store_name', 'Store Name', storeDto.fields);
     this.containField('owner_name', 'Owner Name', storeDto.fields);
