@@ -47,7 +47,7 @@ export class WorkflowService {
     private readonly fieldRepository: FieldRepository,
     private readonly activityService: ActivityService,
     private readonly fileService: FileService,
-  ) { }
+  ) {}
 
   async findOne(key: string): Promise<Workflow> {
     const workflow = await this.workflowRepository.findOne(key);
@@ -312,7 +312,7 @@ export class WorkflowService {
     store: any,
   ): Promise<number> {
     let value: any = '';
-    if (expression.operator == 'add') {
+    if (expression.operator == 'add' || expression.operator == 'subtract') {
       value = 0;
     }
     if (expression.operator == 'multiply') {
@@ -324,6 +324,14 @@ export class WorkflowService {
     expression.variables.forEach(async (val: ExpressionVariable) => {
       if (val.type == 'constant') {
         if (expression.operator == 'add') {
+          value += parseFloat(val.value);
+        }
+        if (expression.operator == 'subtract') {
+          if (value == 0) {
+            value = parseFloat(val.value);
+          } else {
+            value -= parseFloat(val.value);
+          }
           value += parseFloat(val.value);
         }
         if (expression.operator == 'multiply') {
@@ -364,6 +372,13 @@ export class WorkflowService {
           }
           if (keyArr.length == 1) {
             fieldValue = store.get(keyArr[0]) || 0;
+          }
+        }
+        if (expression.operator == 'subtract') {
+          if (value == 0) {
+            value = parseFloat(val.value);
+          } else {
+            value -= parseFloat(val.value);
           }
         }
         if (expression.operator == 'add') {
