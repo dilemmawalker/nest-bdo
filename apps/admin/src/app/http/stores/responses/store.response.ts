@@ -11,7 +11,7 @@ export class StoreResponse {
   storeId: string;
 
   @ApiProperty()
-  mobile: string;
+  mobile = '';
 
   @ApiProperty()
   owner_name: string;
@@ -34,11 +34,11 @@ export class StoreResponse {
   @ApiProperty()
   workflow: string;
 
-  static fromStore(store: Store, status: string) {
+  static fromStore(store: any, status: string) {
     const { store_address } = store;
     const entity = new StoreResponse();
     entity.store_name = store.store_name;
-    entity.mobile = store.mobile;
+    entity.mobile = store.mobile || '';
     entity.createdAt = moment(store.createdAt).format('MM/DD/YYYY');
     entity.updatedAt = moment(store.updatedAt).format('MM/DD/YYYY');
     entity.owner_name = store.owner_name;
