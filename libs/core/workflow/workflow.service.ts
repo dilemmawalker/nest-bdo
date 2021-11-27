@@ -40,7 +40,7 @@ export class WorkflowService {
     private readonly fieldRepository: FieldRepository,
     private readonly activityService: ActivityService,
     private readonly fileService: FileService,
-  ) { }
+  ) {}
 
   async findOne(key: string): Promise<Workflow> {
     const workflow = await this.workflowRepository.findOne(key);
@@ -111,7 +111,7 @@ export class WorkflowService {
     await this.activityService.push(
       new ActivityDto(
         'Store',
-        'Created',
+        'Updated',
         'Store',
         store.storeId,
         'Agent',
