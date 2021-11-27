@@ -45,7 +45,7 @@ export class StoreResponse {
     entity.status = status;
     entity.storeId = store.storeId;
     entity.address = store.store_address
-      ? `address: ${store_address['address']}, town: ${store_address['town']}, tehsil: ${store_address['tehsil']}, landmark: ${store_address['landmark']}`
+      ? `${store_address['address']}, ${store_address['landmark']}, ${store_address['town']}, ${store_address['tehsil']}`
       : '';
     entity.workflow = store.workflowKey;
     entity.currentWorkflowUrl = generateWorkflowUrl(
