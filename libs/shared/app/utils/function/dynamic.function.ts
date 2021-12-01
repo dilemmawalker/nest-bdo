@@ -252,67 +252,90 @@ export function generateAgreementPdfHtml(store: any): string {
   }
 
   const submitHtml = `
-     <div style='margin: 15px;'><img src='https://bdo-admin.web.app/assets/images/1k-logo.svg' style= 'margin: 10px; width: 100px; float: left; position: absolute;' />
-      <center><b style='color: #FF8C00; font-size: 18px;'>TO WHOM IT MAY CONCERN</b></center>
-      <br>
-      <br>
-      <br>
-      <br>
-      <b style='margin-top:100px; color: #00C6AE'>Commercial Agreement</b>
-      <p> To  <u> ${owner_name} </u>
-      <hr>
-      Commercial Terms: 
-      <ul>
-      <li> - Rent Terms (Rent Agreement) 50% Share of Rent or Rs. 15000 (whichever is lower): Rs. XXXXX </li>
-      <li> - Electricity Bill sharing:  Rs. XXXXX </li>
-      <li> - Wifi Bill sharing: Rs. XXXXX
-      </li>
-      </ul>
-      <hr>
-       Margins
-      <ul>
-      <li>Ghee, Oil, Sugar, Atta - 3%</li>
-      <li>Rest FMCG & Loose - 10%</li>
-      <li>General Merchandise - 20%</li>
-      </ul>
-      <ul>
-      <li>Intial Inventory Investment Required by retailer franchisee (Valuation will be On MRP/15% Less  MRP) - 
-      Rs. 1500 per Sqft retail area (Excluding 25k Security) i.e. Rs. XXXXX(In words:- XXXXXXX XXXXX XXXXXXXXX)
-Calculation will be done on Area of shop and Rs.1500/Sqft rate.)
-      </li>
-      <li>Billing Limit - Billing Limit Equal to the sales of every week, if billing crosses his weekly sales limit - 
-      it should be the paid billing by the franchaisee (for example if Store has done sales of Rs. 50000 in a week, 
-        the  company will bill upto Rs. 50000, incase store demands more  billing in same week it will be payable by store
-        </li>
-      <li>BD/ASM Proposal If any - Retailer will get Credit of Rs. XXXXX.
-      The lock-in period is XX months.
-      </li>
-      </ul>
-      <hr>
-      Conditions: <ul> 
-      <li> All inventory will be supplied by 1K Franchisor except Dairy, tobacco products, breads and eggs </li>
-      <li> Sales Amount should be deposited weekly at a specified date by 1K Franchisee Store  without failure </li>
-      <li> Items will be billed on the prices set by 1K Franchisor Company </li>
-      <li> Selling price will be set by 1K Franchisor Company in consultation with franchisee Store, but final decision will be taken by 1K Franchisor Company. </li>
-      <li> The Franchisor Company will give the difference between billing price(Billed by the Company & Selling Price (Specified by the Franchisor Company) a credit note or Discount will be given to the Franchisee store against that difference on monthly basis </li>
-      <li> Infrastructure investment i.e. Racks, shelves, billing counter and façade will be installed after 1 month of smooth operations, However installation of POS machine, Printer will be done on the very first day after the completion of Stock Audit. </li>
-      <li> All Infrastructure & System is owned by 1K Franchisor Company and can be taken  back without notice. </li>
-      <li> Reimbursement of Rent should be given Post Month & once investment will be done in full capacity as per square feet area, The Franchisee Store will complete his Intial Investment required with in a month from the date of Launch. </li>
-      <li> Three security Signed Cheques, Stamp & Letter Head in the name of Store is required 10. The Company will Charge 2% Rate of Interest on the investment done by the Franchisor Store , if the store is unable to put investment required by him </li>
-       </ul>
-      <hr>
-      Closer & Full & Final Settlement Terms: <ul> 
-      <li> The Closer of any Franchaisee store is to be done on Cost + Margin Model (The Company will discount all Invoices by taking a nominal margin, rest outstanding is need to be paid by the Franchisee Store </li>
-      <li> In Case Franchaisee store wants to pay by returning material, The Franchisor Company will take return the only items that were billed by the Franchisor to the franchisee on MRP value </li>
-      <li>  In case the franchisee want to give material that was not billed by the franchisee, GST bill is required for same (failing which GST will be paid by Franchisee store , value of supply will be on the Current Purchase Cost of the market </li>
-       </ul>
-      <hr>
-      Franchisor Company Stamp & Signature Franchisee Store Stamp & Signature Authorized 
-      <hr>
-      Signatory (BD) Authorized Signatory (Owner)
-      </br>
-      </p>
-      </div>
+  <br>
+  <div style='margin: 15px;'>
+  <center>
+  <table border="1"> 
+  <tr><th><style='margin: 15px;'><img src='https://bdo-admin.web.app/assets/images/1k-logo.svg' style= 'margin: 10px; width: 100px; float: left; position: left;' />
+  <left></center></th><th><b style='color: #FF8C00; font-size: 18px;'></b> <b style='color: #FF8C00; font-size: 18px;'>Odicea Distribution Technologies Private Limited  </th></tr>   
+  <tr><td>Attribute </td><td>Description</td></tr>  
+  <tr><td>Store Name </td><td>${store_name}</td></tr>  
+  <tr><td>Store Full Address </td><td>${store_full_address}</td></tr>  
+  <tr><td>GSTIN </td><td>${gstin}</td></tr> 
+  <tr><td>Udhyog Adhaar </td><td>${udhyog_adhaar}</td></tr> 
+  <tr><td>PAN</td><td>${pan}</td></tr> 
+  <tr><td>Shop & Establishment Act </td><td>${shop_establishment_act}</td></tr> 
+  <tr><td>Store Size (In Square Feet) </td><td>${store_size}</td></tr>
+  <tr><td>Total RPD</td><td>${total_rpd}</td></tr> 
+  <tr><td>Excluding 1K RPD</td><td>${excluding_1k_rpd}</td></tr> 
+  <tr><td>1K RPD </td><td>${k_rpd}</td></tr> 
+  <tr><td>Rent </td><td>${rent}</td></tr> 
+  <tr><td>Owner Name </td><td>${owner_name}</td></tr>
+  <tr><td>Contact Number </td><td>${contact_number}</td></tr> 
+  <tr><td>Present Address (Residential) </td><td>${present_address}</td></tr> 
+  <tr><td>Permanent Address (Residential)</td><td>${permanent_address}</td></tr> 
+  <tr><td>Local / Immigrant</td><td>${local_immigirant}</td></tr> 
+  <tr><td>Store Property (Owned / Rented) </td><td>${store_property}</td></tr>
+  <tr><td>Store Age </td><td>${store_age}</td></tr> 
+  <tr><td>Receivables </td><td>${receivables}</td></tr> 
+  <tr><td>Payables </td><td>${payables}</td></tr> 
+  <tr><td>Facade Size </td><td>${facade_size}</td></tr> 
+  <tr><td>Refrigerator </td><td>${refrigerator}</td></tr>
+  <tr><td>DeepFreezer </td><td>${deep_freezer}</td></tr> 
+  <tr><td>VisiCooler </td><td>${visi_cooler}</td></tr> 
+  <tr><td>AC </td><td>${ac}</td></tr> 
+  <tr><td>No. of Employees in Store </td><td>${no_of_employees_in_store}</td></tr> 
+  <tr><td>Employee Expense</td><td>${employee_expense}</td></tr>  
+  <tr><td><hr>Commercial Terms 
+  <ul>
+  <li>Rent Terms (Rent Agreement) 50% Share of Rent or Rs. 15000 (whichever is lower): Rs. XXXXX</li>
+  <li>Electricity Bill sharing:  Rs. XXXXX </li>
+  <li>Wifi Bill sharing: Rs. XXXXX
+  (From Business Info Page)</li>
+  </ul></td></tr>  
+  <tr><td>Ghee, Oil, Sugar, Atta </td><td>${store_name}</td></tr>  
+  <tr><td>Rest FMCG & Loose</td><td>${store_name}</td></tr>  
+  <tr><td>General Merchandise</td><td>${store_name}</td></tr>  
+  <tr><td>Intial Inventory Investment Required by retailer franchisee 
+  (Valuation will be On MRP/15% Less  MRP)
+  </td><td>${store_name}</td></tr>  
+  <tr><td>Billing Limit </td><td>${store_name}</td></tr>  
+  <tr><td>BD/ASM Proposal If any</td><td>${store_name}</td></tr>  
+
+  </table>  
+
+  <br>
+        <hr>
+        Conditions: <ul> 
+        <li> All inventory will be supplied by 1K Franchisor except Dairy, tobacco products, breads and eggs </li>
+        <li> Sales Amount should be deposited weekly at a specified date by 1K Franchisee Store  without failure </li>
+        <li> Items will be billed on the prices set by 1K Franchisor Company </li>
+        <li> Selling price will be set by 1K Franchisor Company in consultation with franchisee Store, but final decision will be taken by 1K Franchisor Company. </li>
+        <li> The Franchisor Company will give the difference between billing price(Billed by the Company & Selling Price (Specified by the Franchisor Company) a credit note or Discount will be given to the Franchisee store against that difference on monthly basis </li>
+        <li> Infrastructure investment i.e. Racks, shelves, billing counter and façade will be installed after 1 month of smooth operations, However installation of POS machine, Printer will be done on the very first day after the completion of Stock Audit. </li>
+        <li> All Infrastructure & System is owned by 1K Franchisor Company and can be taken  back without notice. </li>
+        <li> Reimbursement of Rent should be given Post Month & once investment will be done in full capacity as per square feet area, The Franchisee Store will complete his Intial Investment required with in a month from the date of Launch. </li>
+        <li> Three security Signed Cheques, Stamp & Letter Head in the name of Store is required 10. The Company will Charge 2% Rate of Interest on the investment done by the Franchisor Store , if the store is unable to put investment required by him </li>
+         </ul>
+        <hr>
+        Closer & Full & Final Settlement Terms: <ul> 
+        <li> The Closer of any Franchaisee store is to be done on Cost + Margin Model (The Company will discount all Invoices by taking a nominal margin, rest outstanding is need to be paid by the Franchisee Store </li>
+        <li> In Case Franchaisee store wants to pay by returning material, The Franchisor Company will take return the only items that were billed by the Franchisor to the franchisee on MRP value </li>
+        <li>  In case the franchisee want to give material that was not billed by the franchisee, GST bill is required for same (failing which GST will be paid by Franchisee store , value of supply will be on the Current Purchase Cost of the market </li>
+         </ul>
+        <hr>
+        <br>
+        <br>
+        <br>
+        Franchisor Company Stamp & Signature Franchisee Store Stamp & Signature Authorized 
+        <hr>
+        <br>
+        <br>
+        <br>
+        Signatory (BD) Authorized Signatory (Owner)
+        </br>
+        </p>
+        </div>
         `;
 
   return submitHtml;
