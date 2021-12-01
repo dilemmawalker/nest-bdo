@@ -54,6 +54,7 @@ export class ClusterManagerController {
       updateStoreStatusRequest.status,
       updateStoreStatusRequest.reason,
       storeId,
+      json.clusterManagerId,
     );
     return ResponseUtils.success(
       BasicResponse.success(updateStoreStatusRequest.status),

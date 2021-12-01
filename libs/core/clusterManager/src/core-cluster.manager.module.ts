@@ -10,11 +10,13 @@ import {
   ClusterSchema,
 } from '@shared/app/schemas/users/cluster.schema';
 import { StoreModule } from 'apps/admin/src/app/http/stores/store.module';
+import { CoreActivityModule } from 'libs/core/activity/core-activity-module';
 import { ClusterManagerRepository } from './cluster.manager.repository';
 import { ClusterManagerService } from './cluster.manager.service';
 
 @Module({
   imports: [
+    CoreActivityModule,
     MongooseModule.forFeature([
       { name: ClusterManager.name, schema: ClusterManagerSchema },
       { name: Cluster.name, schema: ClusterSchema },
