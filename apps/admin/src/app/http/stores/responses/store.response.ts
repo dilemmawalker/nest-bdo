@@ -57,16 +57,22 @@ export class StoreResponse {
     return entity;
   }
 
-  static fromStoreArray(stores: any[], status: string): StoreResponse[] {
+  static fromStoreArray(
+    stores: any[],
+    status: string,
+    page: number,
+    limit: number,
+  ): StoreResponse[] {
     const entities = [];
+    const skip = (page - 1) * limit;
     stores.forEach((store) => {
-      // entities.push(this.fromStore(store));
       if (status == 'any') {
         entities.push(this.fromStore(store, store.status));
       } else if (store.status === status) {
         entities.push(this.fromStore(store, status));
       }
     });
-    return entities;
+    if (page == -1 || limit == -1) return entities;
+    return entities.slice(skip, skip + limit);
   }
 }

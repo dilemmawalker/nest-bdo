@@ -29,7 +29,9 @@ export class StoreController {
   @UseInterceptors(TransformInterceptor)
   async getAllStores(): Promise<any> {
     const stores = await this.storeService.getAllStores();
-    return ResponseUtils.success(StoreResponse.fromStoreArray(stores, 'any'));
+    return ResponseUtils.success(
+      StoreResponse.fromStoreArray(stores, 'any', -1, -1),
+    );
   }
 
   @Get('/lead-flow')

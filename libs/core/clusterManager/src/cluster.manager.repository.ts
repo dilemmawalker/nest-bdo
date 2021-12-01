@@ -82,8 +82,9 @@ export class ClusterManagerRepository {
         path: 'stores',
         model: 'Store',
       });
-    return agents.flatMap((agent) => {
+    const stores = agents.flatMap((agent) => {
       return agent.stores;
     });
+    return stores;
   }
 }

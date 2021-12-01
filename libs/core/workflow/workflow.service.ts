@@ -15,23 +15,30 @@ import {
 import { WorkflowDto } from './dtos/workflow.dto';
 import { AssignFieldDto } from './dtos/assign-field.dto';
 import { StepDto } from './dtos/step.dto';
+
 import { FileDto } from '@file/file/dtos/file.dto';
+
 
 import {
   empty,
   generateWorkflowUrl,
   getCurrentDate,
 } from '@shared/app/utils/function/helper.function';
+
+import { generateWorkflowUrl } from '@shared/app/utils/function/helper.function';
+
 import { Step } from '@shared/app/schemas/steps/steps.schema';
 import { AgentRepository } from '../agent/src/agent.repository';
 import { FieldRepository } from '../fields/src/field.repository';
 import { UpdatePositionDto } from './dtos/update-positions.dto';
 import { ActivityService } from '../activity/activity.service';
 import { ActivityDto } from '../activity/dtos/activity.dto';
+
 import {
   Expression,
   ExpressionVariable,
 } from '@shared/app/schemas/fields/expression.schema';
+
 import {
   generateAgreementCardHtml,
   generateAgreementCardPdfHtml,
@@ -40,6 +47,12 @@ import {
 import { FileService } from '@file/file/file.service';
 import { isContext } from 'vm';
 import { Validator } from '@shared/app/validators/main.validator';
+
+
+
+import { UpdateWorflowDto } from './dtos/updateWorkflow.dto';
+
+
 @Injectable()
 export class WorkflowService {
   constructor(
@@ -558,5 +571,8 @@ export class WorkflowService {
       }
     }
     return step.fields;
+  }
+  async updatePosition(updateWorkflowDto: UpdateWorflowDto): Promise<any> {
+    return await this.workflowRepository.updatePosition(updateWorkflowDto);
   }
 }
