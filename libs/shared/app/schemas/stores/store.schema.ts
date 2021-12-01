@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { BaseItemSchema } from '@shared/app/schemas/base/base-Item.schema';
-import { Document } from 'mongoose';
+import { Document, Mixed } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { Expression } from '../fields/expression.schema';
 
@@ -27,7 +27,7 @@ export class Store {
   remark: string;
 
   @Prop()
-  address: string;
+  store_address: Mixed;
 
   @Prop({ required: true })
   workflowKey: string;
@@ -84,23 +84,24 @@ export class FieldInputData extends BaseItemSchema {
     entity.keyName = field.keyName;
     entity.type = field.type;
     entity.options = field.options;
-    entity.inputValue = this.getDefaultInputValue(field.options);
+    entity.inputValue = this.getDefaultInputValue(field.options, field);
     entity.isEditable = field.isEditable;
-
     if (field.groups && field.groups.length != 0) {
       entity.group = this.fromFieldArray(field.groups);
     }
     return entity;
   }
-
-  static getDefaultInputValue(options) {
-    let value = '';
+  static getDefaultInputValue(options, field) {
+    let value: any = '';
     if (options) {
       options.forEach((option) => {
         if (option['key'] == 'defaultValue') {
           value = option['value'];
         }
       });
+    }
+    if (field.type == 'multiImage') {
+      value = [];
     }
     return value;
   }

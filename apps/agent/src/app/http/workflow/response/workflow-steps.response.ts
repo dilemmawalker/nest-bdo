@@ -13,7 +13,12 @@ export class WorkflowStepResponse {
   @ApiProperty()
   completed = false;
 
-  static fromStep(step: Step, workflowKey: string, storeId: string) {
+  static fromStep(
+    step: Step,
+    workflowKey: string,
+    storeId: string,
+    completedStatus: boolean,
+  ) {
     const entity = new WorkflowStepResponse();
     entity.name = step.name;
     entity.current_step_url = generateWorkflowUrl(
@@ -21,17 +26,21 @@ export class WorkflowStepResponse {
       step.stepId,
       storeId,
     );
+    entity.completed = completedStatus;
     return entity;
   }
 
   static fromStepsArray(
     steps: Step[],
     workflowKey: string,
-    stepId: string,
+    storeId: string,
+    completedStatus: any,
   ): WorkflowStepResponse[] {
     const entities = [];
     steps.forEach((step) => {
-      entities.push(this.fromStep(step, workflowKey, stepId));
+      entities.push(
+        this.fromStep(step, workflowKey, storeId, completedStatus[step.stepId]),
+      );
     });
     return entities;
   }

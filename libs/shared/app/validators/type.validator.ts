@@ -6,6 +6,7 @@ import { ValidationResponseUtils } from './validation-response.utils';
 
 export class TypeValidator {
   static validate(field: Field, value: string): boolean {
+    if (Validator.isNullOrEmpty(value)) return true;
     switch (field.type) {
       case 'integer':
         return Validator.isInteger(value);
