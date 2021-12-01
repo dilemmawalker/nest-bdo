@@ -35,6 +35,7 @@ import {
 import {
   generateAgreementCardHtml,
   generateAgreementCardPdfHtml,
+  generateAgreementPdfHtml,
 } from '@shared/app/utils/function/dynamic.function';
 import { FileService } from '@file/file/file.service';
 import { isContext } from 'vm';
@@ -48,7 +49,7 @@ export class WorkflowService {
     private readonly fieldRepository: FieldRepository,
     private readonly activityService: ActivityService,
     private readonly fileService: FileService,
-  ) { }
+  ) {}
 
   async findOne(key: string): Promise<Workflow> {
     const workflow = await this.workflowRepository.findOne(key);
@@ -353,6 +354,22 @@ export class WorkflowService {
             await this.fileService.uploadFile(
               pdfBuffer,
               pdfFileName,
+              pdfFileDto,
+            );
+          } else if (val.value == 'generateAgreementPdfHtml') {
+            value = generateAgreementPdfHtml(store);
+            const pdfBuffer = await this.fileService.generatePDF(
+              generateAgreementPdfHtml(store),
+            );
+            const pdfFileNamePdf = `pdf/${store.get('storeId')}.pdf`;
+            const pdfFileDto = new FileDto();
+            pdfFileDto.keyName = 'agreement_pdf';
+            pdfFileDto.isMultiple = false;
+            pdfFileDto.refId = store.get('storeId');
+            pdfFileDto.fileName = pdfFileNamePdf;
+            await this.fileService.uploadFile(
+              pdfBuffer,
+              pdfFileNamePdf,
               pdfFileDto,
             );
           }
