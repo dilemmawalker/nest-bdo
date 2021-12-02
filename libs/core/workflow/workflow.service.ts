@@ -322,6 +322,9 @@ export class WorkflowService {
     if (expression.operator == 'equal') {
       value = '';
     }
+    if (!expression.variables) {
+      return value;
+    }
     expression.variables.forEach(async (val: ExpressionVariable) => {
       if (val.type == 'constant') {
         if (expression.operator == 'add') {
