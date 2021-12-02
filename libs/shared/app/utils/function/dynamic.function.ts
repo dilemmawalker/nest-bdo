@@ -126,6 +126,10 @@ export function generateAgreementCardPdfHtml(store: any): string {
     digital_html = '';
   }
 
+  if (digital_signature) {
+    digital_html = `<img src='${digital_signature}' style='max-width: 100px' />`;
+  }
+
   const submitHtml = `
      <div style='margin: 15px;'><img src='https://bdo-admin.web.app/assets/images/1k-logo.svg' style= 'margin: 10px; width: 100px; float: left; position: absolute;' />
       <center><b style='color: #FF8C00; font-size: 18px;'>TO WHOM IT MAY CONCERN</b></center>
@@ -161,8 +165,6 @@ export function generateAgreementCardPdfHtml(store: any): string {
       <li>Racks will be installed after completion of investment ( ₹300/sq. ft. as per requirement).</li>
       </ul>
       </p>
-      <br>
-      <br>
       <div>
       <b>Signature</b><br>${digital_html}
       </div>
