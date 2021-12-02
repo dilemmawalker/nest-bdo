@@ -4,6 +4,7 @@ export function generateAgreementCardHtml(store: any) {
   let security_amount = '__________________';
   let total_investment = '__________________';
   let store_dimensions = '__________________';
+
   if (store) {
     owner_name = store.get('owner_name') ? store.get('owner_name') : owner_name;
     security_amount = store.get('security_amount')
@@ -92,7 +93,6 @@ export function generateAgreementCardHtml(store: any) {
         <li style='color: red;'>After completion of investment only you will be available to avail credit limit.</li>
         <li style='color: red;'>Racks will be installed after completion of investment ( ₹300/sq. ft. as per requirement).</li> 
     </div>
-
    </div>
      `;
   return submitHtml;
@@ -104,6 +104,8 @@ export function generateAgreementCardPdfHtml(store: any): string {
   let security_amount = '__________________';
   let total_investment = '__________________';
   let store_dimensions = '__________________';
+  let digital_signature = '';
+  let digital_html = '';
   if (store) {
     owner_name = store.get('owner_name') ? store.get('owner_name') : owner_name;
     security_amount = store.get('security_amount')
@@ -118,6 +120,10 @@ export function generateAgreementCardPdfHtml(store: any): string {
     reimbursement = store.get('reimbursement')
       ? store.get('reimbursement')
       : security_amount;
+    digital_signature = store.get('digital_signature')
+      ? store.get('digital_signature')
+      : '';
+    digital_html = '';
   }
 
   const submitHtml = `
@@ -155,6 +161,11 @@ export function generateAgreementCardPdfHtml(store: any): string {
       <li>Racks will be installed after completion of investment ( ₹300/sq. ft. as per requirement).</li>
       </ul>
       </p>
+      <br>
+      <br>
+      <div>
+      <b>Signature</b><br>${digital_html}
+      </div>
       </div>
         `;
 
