@@ -7,7 +7,7 @@ import { FieldService } from 'libs/core/fields/src/field.service';
 
 @Injectable()
 export class ValidationUtils {
-  constructor(private fieldService: FieldService) {}
+  constructor(private fieldService: FieldService) { }
   async validateWorkFlowRequestFields(workflowRequestFields: any[]) {
     for (const workflowRequestField of workflowRequestFields) {
       await this.validateField(
@@ -22,7 +22,7 @@ export class ValidationUtils {
 
     if (!TypeValidator.validate(field, inputValue)) {
       throw new BadRequestException(
-        keyName,
+        invalidDataType(field.type, field.label),
         invalidDataType(field.type, field.label),
       );
     }
@@ -32,7 +32,10 @@ export class ValidationUtils {
       field.validations,
     );
     if (!dynamicValidationResult.isValid) {
-      throw new BadRequestException(keyName, dynamicValidationResult.message);
+      throw new BadRequestException(
+        dynamicValidationResult.message,
+        dynamicValidationResult.message,
+      );
     }
   }
 }
