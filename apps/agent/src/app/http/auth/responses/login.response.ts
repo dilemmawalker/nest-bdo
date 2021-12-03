@@ -18,8 +18,8 @@ export class LoginResponse {
   user: LoginUserDto;
 
   static fromUser(userData: any): LoginUserDto {
-    const leadWorkflowKey = 'd02854e3-c19f-48b0-90d8-4eda96781f60';
-    const leadStepId = '789036ff-e8fd-410d-94e6-b7fe641618fa';
+    const leadWorkflowKey = '64dd7f50-47d8-4089-b38f-dbc5f5741487';
+    const leadStepId = '8add6945-94ab-4257-a615-d6662e1b29fa';
     const entity = new LoginUserDto();
     const { user } = userData;
     entity.email = user.email;
