@@ -173,9 +173,9 @@ export function generateAgreementCardPdfHtml(store: any): string {
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>Store Name </td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-          'store_name',
-          store,
-        )}</td>
+    'store_name',
+    store,
+  )}</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>Store Full Address </td>
@@ -184,52 +184,52 @@ export function generateAgreementCardPdfHtml(store: any): string {
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>GSTIN </td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-          'gstin',
-          store,
-        )}</td>
+    'gstin',
+    store,
+  )}</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>Udhyog Adhaar </td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-          'udyog_adhaar',
-          store,
-        )}
+    'udyog_adhaar',
+    store,
+  )}
         </td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>PAN</td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-          'pan',
-          store,
-        )}</td>
+    'pan',
+    store,
+  )}</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>Shop &amp; Establishment Act </td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-          'shop_and_establishment_act',
-          store,
-        )}</td>
+    'shop_and_establishment_act',
+    store,
+  )}</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>Store Size (In Square Feet) </td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-          'store_dimensions',
-          store,
-        )}</td>
+    'store_dimensions',
+    store,
+  )}</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>Total RPD</td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-          'total_revenue_per_day',
-          store,
-        )}</td>
+    'total_revenue_per_day',
+    store,
+  )}</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>Excluding 1K RPD</td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-          'excluding_1k_rpd',
-          store,
-        )}</td>
+    'excluding_1k_rpd',
+    store,
+  )}</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>Rent </td>
@@ -239,22 +239,22 @@ export function generateAgreementCardPdfHtml(store: any): string {
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>Owner Name </td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-          'owner_name',
-          store,
-        )}</td>
+    'owner_name',
+    store,
+  )}</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>Contact Number </td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-          'mobile',
-          store,
-        )}</td>
+    'mobile',
+    store,
+  )}</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>Present Address (Residential) </td>
         <td style='padding: 10px;'>${mapAddress(
-          store.get('present_addressmodal'),
-        )}</td>
+    store.get('present_addressmodal'),
+  )}</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>Permanent Address (Residential)</td>
@@ -265,79 +265,79 @@ export function generateAgreementCardPdfHtml(store: any): string {
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>Local / Immigrant</td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-          'citizenship',
-          store,
-        )}</</td>
+    'citizenship',
+    store,
+  )}</</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>Store Property (Owned / Rented) </td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-          'store_property',
-          store,
-        )}</td>
+    'store_property',
+    store,
+  )}</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>Store Age </td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-          'store_age',
-          store,
-        )}</td>
+    'store_age',
+    store,
+  )}</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>Receivables </td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-          'receivables',
-          store,
-        )}</td>
+    'receivables',
+    store,
+  )}</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>Payables </td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-          'payables_(indian_rupee)',
-          store,
-        )}</</td>
+    'payables_(indian_rupee)',
+    store,
+  )}</</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>Facade Size </td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-          'facade_size',
-          store,
-        )}</</td>
+    'facade_size',
+    store,
+  )}</</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>Refrigerator Price</td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-          'security_and_assets_information#refrigerator_price',
-          store,
-        )}</td>
+    'security_and_assets_information#refrigerator_price',
+    store,
+  )}</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>Refrigerator Qty</td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-          'security_and_assets_information#refrigerator_qty',
-          store,
-        )}</td>
+    'security_and_assets_information#refrigerator_qty',
+    store,
+  )}</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>DeepFreezer Price</td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-          'security_and_assets_information#deepfreezer_price',
-          store,
-        )}</td>
+    'security_and_assets_information#deepfreezer_price',
+    store,
+  )}</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
       <td style='padding: 10px;'>DeepFreezer Qty</td>
       <td style='padding: 10px;'>${getKeyNameValueFromStore(
-        'security_and_assets_information#deepfreezer_qty',
-        store,
-      )}</td>
+    'security_and_assets_information#deepfreezer_qty',
+    store,
+  )}</td>
     </tr>
     <tr style='border-color: black; line-height: 30px;'>
     <td style='padding: 10px;'>Visicooler Price</td>
     <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'security_and_assets_information#visi_cooler_price',
-      store,
-    )}</td>
+    'security_and_assets_information#visi_cooler_price',
+    store,
+  )}</td>
   </tr>
   <tr style='border-color: black; line-height: 30px;'>
   <td style='padding: 10px;'>Visicooler Qty</td>
@@ -364,9 +364,9 @@ export function generateAgreementCardPdfHtml(store: any): string {
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>Employee Expense</td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-          'employee_expenses_',
-          store,
-        )}</td>
+    'employee_expenses_',
+    store,
+  )}</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
       <td colspan="2">
@@ -495,6 +495,9 @@ Franchisor Company Stamp &amp; Signature
     </div>
   </div>
 </div>
+<br>
+<br>
+<br>
   <hr style='page-break-after: always;'>
         <br>
         
