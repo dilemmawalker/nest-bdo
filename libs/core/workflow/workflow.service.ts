@@ -48,7 +48,7 @@ export class WorkflowService {
     private readonly fieldRepository: FieldRepository,
     private readonly activityService: ActivityService,
     private readonly fileService: FileService,
-  ) { }
+  ) {}
 
   async findOne(key: string): Promise<Workflow> {
     const workflow = await this.workflowRepository.findOne(key);
@@ -270,8 +270,46 @@ export class WorkflowService {
     return [];
   }
 
+  getMappedOptValue(options, keyName) {
+    let val = null;
+    if (options) {
+      options.forEach((option) => {
+        if (option['key'] == keyName) {
+          val = option['value'];
+        }
+      });
+    }
+    return val;
+  }
+  async setEqualField(fields: FieldInputData[], store: any) {
+    let updateStore = store;
+    console.log('setEqual Called');
+    fields.forEach(async (field) => {
+      if (this.getMappedOptValue(field.options, 'isCopiable') == 'true') {
+        if (store.get(field.keyName) == 'true') {
+          const copiableFrom = this.getMappedOptValue(
+            field.options,
+            'copiableFrom',
+          );
+          const copiableTo = this.getMappedOptValue(
+            field.options,
+            'copiableTo',
+          );
+          const copiableVal = store.get(copiableFrom) || '';
+          const updateObj = {};
+          updateObj[copiableTo] = copiableVal;
+          updateStore = await this.storeRepository.updateObj(
+            updateObj,
+            store.get('storeId'),
+          );
+        }
+      }
+    });
+    return updateStore;
+  }
   async getInputFields(fields: any[], store: any) {
     const inputFields = FieldInputData.fromFieldArray(fields);
+    store = await this.setEqualField(inputFields, store);
     if (!store) {
       return inputFields;
     }
