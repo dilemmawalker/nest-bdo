@@ -19,6 +19,9 @@ export class WorkflowRequest {
   @ApiProperty({ type: [WorkflowRequestField] })
   fields: WorkflowRequestField[] = [];
 
+  @ApiProperty({ default: false })
+  isFullValidationRequired: boolean;
+
   static getStoreDto(
     createStoreRequest: WorkflowRequest,
     workflowKey: string,
