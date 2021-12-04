@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Store } from '@shared/app/schemas/stores/store.schema';
+import { mapAddress } from '@shared/app/utils/function/dynamic.function';
 import { generateWorkflowUrl } from '@shared/app/utils/function/helper.function';
 import * as moment from 'moment';
 
@@ -44,9 +45,7 @@ export class StoreResponse {
     entity.owner_name = store.owner_name;
     entity.status = status;
     entity.storeId = store.storeId;
-    entity.address = store.store_address
-      ? `${store_address['address']}, ${store_address['landmark']}, ${store_address['town']}, ${store_address['tehsil']}`
-      : '';
+    entity.address = mapAddress(store.get('store_address_pr'));
     entity.workflow = store.workflowKey;
     entity.currentWorkflowUrl = generateWorkflowUrl(
       store.workflowKey,

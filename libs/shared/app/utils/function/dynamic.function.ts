@@ -343,20 +343,6 @@ html { -webkit-print-color-adjust: exact; }
         )}</td>
       </tr>
       
-      <tr style='border-color: black; line-height: 30px;'>
-      <td style='padding: 10px;'>Store Age (Years)</td>
-      <td style='padding: 10px;'>${getKeyNameValueFromStore(
-        'store_age_(years)',
-        store,
-      )}</td>
-    </tr>
-    <tr style='border-color: black; line-height: 30px;'>
-    <td style='padding: 10px;'>Layout</td>
-    <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'store_layout',
-      store,
-    )}</td>
-  </tr>
 
   <tr style='border-color: black; line-height: 30px;'>
       <td colspan="2" style='padding: 10px; background: #fdcf97 !important;'>
