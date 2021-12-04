@@ -177,6 +177,13 @@ html { -webkit-print-color-adjust: exact; }
       </td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
+      <td style='padding: 10px;'>Store Source </td>
+      <td style='padding: 10px;'>${getKeyNameValueFromStore(
+        'store_source',
+        store,
+      )}</td>
+    </tr>
+      <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>Store Name </td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
           'store_name',
@@ -463,6 +470,20 @@ html { -webkit-print-color-adjust: exact; }
         )}</td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
+      <td style='padding: 10px;'>Owner Pan </td>
+      <td style='padding: 10px;'>${getKeyNameValueFromStore(
+        'owner_pan',
+        store,
+      )}</td>
+    </tr>
+    <tr style='border-color: black; line-height: 25px;'>
+    <td style='padding: 10px;'>Email </td>
+    <td style='padding: 10px;'>${getKeyNameValueFromStore(
+      'owner_email',
+      store,
+    )}</td>
+  </tr>
+      <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>Current Residential Address </td>
         <td style='padding: 10px;'>${mapAddress(
           store.get("owner's_present_address_pr"),
@@ -558,20 +579,6 @@ html { -webkit-print-color-adjust: exact; }
 <td style='padding: 10px;'>Chocolate VisiCooler Qty</td>
 <td style='padding: 10px;'>${getKeyNameValueFromStore(
     'security_and_assets_information#visi_cooler_qty',
-    store,
-  )}</td>
-</tr>
-<tr style='border-color: black; line-height: 25px;'>
-<td style='padding: 10px;'>AC Price</td>
-<td style='padding: 10px;'>${getKeyNameValueFromStore(
-    'security_and_assets_information#ac_price',
-    store,
-  )}</td>
-</tr>
-<tr style='border-color: black; line-height: 25px;'>
-<td style='padding: 10px;'>AC Qty</td>
-<td style='padding: 10px;'>${getKeyNameValueFromStore(
-    'security_and_assets_information#ac_qty',
     store,
   )}</td>
 </tr>
