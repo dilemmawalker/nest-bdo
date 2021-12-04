@@ -618,7 +618,7 @@ html { -webkit-print-color-adjust: exact; }
         <td style='padding: 10px;'>
         ${store.get('inventory_information')
       ? store.get('inventory_information')[
-      'required_inventory_investment'
+      'ideal_inventory'
       ]
       : ''
     }</td>
@@ -628,7 +628,7 @@ html { -webkit-print-color-adjust: exact; }
         <b>Security Deposit (INR)
         (Valuation will be on MRP)</b></td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'security_amount_pr',
+      'security_amount',
       store,
     )}</td>
       </tr>
@@ -636,7 +636,7 @@ html { -webkit-print-color-adjust: exact; }
       <td style='padding: 10px;'>
       <b>Total Amount Payable (INR)</b></td>
       <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'actual_payment_by_retailer_pr',
+      'total_amount_payable_',
       store,
     )}</td>
     </tr>
