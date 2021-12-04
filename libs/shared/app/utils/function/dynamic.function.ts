@@ -12,7 +12,7 @@ export function getKeyNameValueFromStore(keyName, store): string {
 
 export function mapAddress(address) {
   const full_address = address
-    ? `${address['address']}, ${address['landmark']}, ${address['town']}, ${address['tehsil']}`
+    ? `${address['address_line']}, ${address['townvillage_pr']}, ${address['district_pr']}, ${address['select_state']} , ${address['pin_code']}`
     : '';
   return full_address;
 }
@@ -157,7 +157,9 @@ export function generateAgreementCardPdfHtml(store: any): string {
 
   const company_stamp_img_url = `<img src='https://i.pinimg.com/originals/e1/9f/2a/e19f2a3cbe820468d7ba1a835134590c.jpg' style='max-width: 65px' />`;
   const submitHtml = `
-
+<style>
+html { -webkit-print-color-adjust: exact; }
+</style>
   <div>
     <div text-align="center" style="text-align: center; font-size: 18px;">
       <img src="https://bdo-admin.web.app/assets/images/1k-logo.svg" style="margin: 10px;width: 100px;float: left;position: absolute;left: 15px;top: 2px;">
@@ -166,182 +168,395 @@ export function generateAgreementCardPdfHtml(store: any): string {
     </div>
     <br>
     <table border="1" style="border: 0px;padding: 11px;width: 100%;">
-      <tbody><tr style='border-color: black; line-height: 30px;'>
-        <td style='padding: 10px;'><b>Attribute</b> </td>
-        <td style='padding: 10px;'><b>Description</b></td>
+      <tbody>
+      <tr style='border-color: black; line-height: 30px;'>
+      <td colspan="2" style='padding: 10px; background: #fdcf97 !important;'>
+      <b>
+       Business Details
+       </b>
+      </td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>Store Name </td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-    'store_name',
-    store,
-  )}</td>
+          'store_name',
+          store,
+        )}</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
-        <td style='padding: 10px;'>Store Full Address </td>
-        <td style='padding: 10px;'>${mapAddress(store_address)}</td>
+        <td style='padding: 10px;'>Store Address </td>
+        <td style='padding: 10px;'>${
+          store.get("owner's_present_address_pr")
+            ? store.get("owner's_present_address_pr")['address_line']
+            : ''
+        }</td>
       </tr>
+      <tr style='border-color: black; line-height: 30px;'>
+      <td style='padding: 10px;'>Town / Village </td>
+      <td style='padding: 10px;'>${
+        store.get("owner's_present_address_pr")
+          ? store.get("owner's_present_address_pr")['townvillage_pr']
+          : ''
+      }</td>
+    </tr>
+    <tr style='border-color: black; line-height: 30px;'>
+    <td style='padding: 10px;'>District </td>
+    <td style='padding: 10px;'>${
+      store.get("owner's_present_address_pr")
+        ? store.get("owner's_present_address_pr")['district_pr']
+        : ''
+    }</td>
+  </tr>
+  <tr style='border-color: black; line-height: 30px;'>
+    <td style='padding: 10px;'>Pin Code </td>
+    <td style='padding: 10px;'>${
+      store.get("owner's_present_address_pr")
+        ? store.get("owner's_present_address_pr")['pin_code']
+        : ''
+    }</td>
+  </tr>
+  <tr style='border-color: black; line-height: 30px;'>
+    <td style='padding: 10px;'>State </td>
+    <td style='padding: 10px;'>${
+      store.get("owner's_present_address_pr")
+        ? store.get("owner's_present_address_pr")['select_state']
+        : ''
+    }</td>
+  </tr>
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>GSTIN </td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-    'gstin',
-    store,
-  )}</td>
+          'gstin',
+          store,
+        )}</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>Udhyog Adhaar </td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-    'udyog_adhaar',
-    store,
-  )}
+          'udyog_aadhar_pr',
+          store,
+        )}
         </td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
-        <td style='padding: 10px;'>PAN</td>
+        <td style='padding: 10px;'>Store PAN</td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-    'pan',
-    store,
-  )}</td>
+          'store_pan',
+          store,
+        )}</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
         <td style='padding: 10px;'>Shop &amp; Establishment Act </td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-    'shop_and_establishment_act',
-    store,
-  )}</td>
+          'shop_and_establishment_act',
+          store,
+        )}</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
-        <td style='padding: 10px;'>Store Size (In Square Feet) </td>
+      <td colspan="2" style='padding: 10px;  background: #fdcf97 !important;'>
+      <b>
+      Store Commercial Details
+       </b>
+      </td>
+      </tr>
+      <tr style='border-color: black; line-height: 30px;'>
+        <td style='padding: 10px;'>1K RPD (INR)</td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-    'store_dimensions',
-    store,
-  )}</td>
+          '1k_rpd_(inr)',
+          store,
+        )}</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
-        <td style='padding: 10px;'>Total RPD</td>
+        <td style='padding: 10px;'>Dairy, Eggs, Bread RPD(INR)</td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-    'total_revenue_per_day',
-    store,
-  )}</td>
+          'dairy_eggs_and_bread_rpd_(inr)',
+          store,
+        )}</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
-        <td style='padding: 10px;'>Excluding 1K RPD</td>
+      <td style='padding: 10px;'>Cigarettes and Tobacco RPD (INR)</td>
+      <td style='padding: 10px;'>${getKeyNameValueFromStore(
+        'cigarettes_and_tobacco_rpd_(inr)',
+        store,
+      )}</td>
+    </tr>
+    <tr style='border-color: black; line-height: 30px;'>
+    <td style='padding: 10px;'>Frozen Food and Ice Cream RPD (INR)</td>
+    <td style='padding: 10px;'>${getKeyNameValueFromStore(
+      'frozen_food_and_ice_cream_rpd',
+      store,
+    )}</td>
+  </tr>
+  <tr style='border-color: black; line-height: 30px;'>
+        <td style='padding: 10px;'>Total RPD (INR)</td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-    'excluding_1k_rpd',
+          'total_rpd_(inr)',
+          store,
+        )}</td>
+      </tr>
+
+      <tr style='border-color: black; line-height: 30px;'>
+      <td style='padding: 10px;'>Number of Employees</td>
+      <td style='padding: 10px;'>${getKeyNameValueFromStore(
+        'number_of_employees',
+        store,
+      )}</td>
+    </tr>
+    <tr style='border-color: black; line-height: 30px;'>
+    <td style='padding: 10px;'>Employee Expenses (INR)</td>
+    <td style='padding: 10px;'>${getKeyNameValueFromStore(
+      'employee_expenses_(indian_rupee)',
+      store,
+    )}</td>
+    <tr style='border-color: black; line-height: 30px;'>
+      <td colspan="2" style='padding: 10px; background: #fdcf97 !important;'>
+      <b>
+      Store Physical Attributes
+       </b>
+      </td>
+      </tr>
+  </tr>
+  <tr style='border-color: black; line-height: 30px;'>
+  <td style='padding: 10px;'>Store Ownership</td>
+  <td style='padding: 10px;'>${getKeyNameValueFromStore(
+    'store_ownership',
     store,
   )}</td>
-      </tr>
+</tr>
       <tr style='border-color: black; line-height: 30px;'>
-        <td style='padding: 10px;'>Rent </td>
+        <td style='padding: 10px;'>Store Rent (INR) </td>
         <td style='padding: 10px;'>
-        ${getKeyNameValueFromStore('rent_terms', store)}</td>
+        ${getKeyNameValueFromStore('store_rent_(inr)', store)}</td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
-        <td style='padding: 10px;'>Owner Name </td>
+        <td style='padding: 10px;'>Store Size (Square Feet)</td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-    'owner_name',
+          'store_dimensions',
+          store,
+        )}</td>
+      </tr>
+      <tr style='border-color: black; line-height: 30px;'>
+        <td style='padding: 10px;'>Façade Size (Width x Height) </td>
+        <td style='padding: 10px;'>${getKeyNameValueFromStore(
+          'facade_size_(width_x_height)',
+          store,
+        )}</td>
+      </tr>
+      
+      <tr style='border-color: black; line-height: 30px;'>
+      <td style='padding: 10px;'>Store Age (Years)</td>
+      <td style='padding: 10px;'>${getKeyNameValueFromStore(
+        'store_age_(years)',
+        store,
+      )}</td>
+    </tr>
+    <tr style='border-color: black; line-height: 30px;'>
+    <td style='padding: 10px;'>Layout</td>
+    <td style='padding: 10px;'>${getKeyNameValueFromStore(
+      'store_layout',
+      store,
+    )}</td>
+  </tr>
+
+  <tr style='border-color: black; line-height: 30px;'>
+      <td colspan="2" style='padding: 10px; background: #fdcf97 !important;'>
+      <b>
+      Current Store Infrastructure
+       </b>
+      </td>
+      </tr>
+  </tr>
+  <tr style='border-color: black; line-height: 30px;'>
+  <td style='padding: 10px;'>Rack Type</td>
+  <td style='padding: 10px;'>${getKeyNameValueFromStore(
+    'rack_type',
     store,
   )}</td>
-      </tr>
+</tr>
       <tr style='border-color: black; line-height: 30px;'>
-        <td style='padding: 10px;'>Contact Number </td>
-        <td style='padding: 10px;'>${getKeyNameValueFromStore(
-    'mobile',
-    store,
-  )}</td>
-      </tr>
-      <tr style='border-color: black; line-height: 30px;'>
-        <td style='padding: 10px;'>Present Address (Residential) </td>
-        <td style='padding: 10px;'>${mapAddress(
-    store.get('present_addressmodal'),
-  )}</td>
-      </tr>
-      <tr style='border-color: black; line-height: 30px;'>
-        <td style='padding: 10px;'>Permanent Address (Residential)</td>
+        <td style='padding: 10px;'>No. of Refrigerators </td>
         <td style='padding: 10px;'>
-        ${mapAddress(store.get('permanent_addressmodal'))}
+        ${
+          store.get('infrastructure_available_in_store')
+            ? store.get('infrastructure_available_in_store')[
+                'no_of_refrigerators'
+              ]
+            : ''
+        }
         </td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
-        <td style='padding: 10px;'>Local / Immigrant</td>
-        <td style='padding: 10px;'>${getKeyNameValueFromStore(
-    'citizenship',
-    store,
-  )}</</td>
+      <td style='padding: 10px;'>No. of Deep Freezers </td>
+      <td style='padding: 10px;'>
+      ${
+        store.get('infrastructure_available_in_store')
+          ? store.get('infrastructure_available_in_store')[
+              'no_of_deep_freezers'
+            ]
+          : ''
+      }
+      </td>
+    </tr>
+     <tr style='border-color: black; line-height: 30px;'>
+        <td style='padding: 10px;'>No. of Beverage Visicoolers </td>
+        <td style='padding: 10px;'>
+        ${
+          store.get('infrastructure_available_in_store')
+            ? store.get('infrastructure_available_in_store')[
+                'no_of_beverage_visicoolers'
+              ]
+            : ''
+        }
+        </td>
       </tr>
       <tr style='border-color: black; line-height: 30px;'>
-        <td style='padding: 10px;'>Store Property (Owned / Rented) </td>
+        <td style='padding: 10px;'>No. of chocolate visicoolers </td>
+        <td style='padding: 10px;'>
+        ${
+          store.get('infrastructure_available_in_store')
+            ? store.get('infrastructure_available_in_store')[
+                'no_of_chocolate_visicoolers'
+              ]
+            : ''
+        }
+        </td>
+      </tr>
+      <tr style='border-color: black; line-height: 30px;'>
+      <td style='padding: 10px;'>No. of acs </td>
+      <td style='padding: 10px;'>
+      ${
+        store.get('infrastructure_available_in_store')
+          ? store.get('infrastructure_available_in_store')['no_of_acs']
+          : ''
+      }
+      </td>
+    </tr>
+
+    <tr style='border-color: black; line-height: 30px;'>
+    <td colspan="2" style='padding: 10px; background: #fdcf97 !important;'>
+    <b>
+    Store Owner Details
+     </b>
+    </td>
+    </tr>
+
+
+      <tr style='border-color: black; line-height: 30px;'>
+        <td style='padding: 10px;'>Owner Name</td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-    'store_property',
+          'owner_name',
+          store,
+        )}</td>
+      </tr>
+      <tr style='border-color: black; line-height: 30px;'>
+        <td style='padding: 10px;'>Date of Birth </td>
+        <td style='padding: 10px;'>${getKeyNameValueFromStore(
+          'date_of_birth',
+          store,
+        )}</td>
+      </tr>
+      <tr style='border-color: black; line-height: 30px;'>
+        <td style='padding: 10px;'>Owner Aadhar </td>
+        <td style='padding: 10px;'>${getKeyNameValueFromStore(
+          'owner_aadhar',
+          store,
+        )}</td>
+      </tr>
+      <tr style='border-color: black; line-height: 30px;'>
+        <td style='padding: 10px;'>Current Residential Address </td>
+        <td style='padding: 10px;'>${mapAddress(
+          store.get("owner's_present_address_pr"),
+        )}</</td>
+      </tr>
+      <tr style='border-color: black; line-height: 30px;'>
+        <td style='padding: 10px;'>Permanent Residential Address </td>
+        <td style='padding: 10px'>${mapAddress(
+          store.get("owner's_permanent_address_pr"),
+        )}</</td>
+      </tr>
+      <tr style='border-color: black; line-height: 30px;'>
+        <td style='padding: 10px;'>Native State</td>
+        <td style='padding: 10px;'>${getKeyNameValueFromStore(
+          'native_state',
+          store,
+        )}</td>
+      </tr>
+      <tr style='border-color: black; line-height: 30px;'>
+        <td style='padding: 10px;'>Owner Mobile No</td>
+        <td style='padding: 10px;'>${getKeyNameValueFromStore(
+          'mobile',
+          store,
+        )}</td>
+      </tr>
+      <tr style='border-color: black; line-height: 30px;'>
+      <td colspan="2" style='padding: 10px;  background: #fdcf97 !important;'>
+      <b>
+      Service Requirement from 1K
+       </b>
+      </td>
+      </tr>
+      <tr style='border-color: black; line-height: 30px;'>
+        <td style='padding: 10px;'>POS (INR 30,000 - waived off)</td>
+        <td style='padding: 10px;'>10 inch</td>
+      </tr>
+      <tr style='border-color: black; line-height: 30px;'>
+      <td style='padding: 10px;'>Barcode Scanner (INR 2,500 - waived off)</td>
+      <td style='padding: 10px;'>Yes</td>
+    </tr>
+    <tr style='border-color: black; line-height: 30px;'>
+    <td style='padding: 10px;'>Thermal Printer (INR 7,500 - waived off)</td>
+    <td style='padding: 10px;'>Yes</td>
+  </tr>
+  <tr style='border-color: black; line-height: 30px;'>
+  <td style='padding: 10px;'>Billing Counter (INR 25,000 - waived off)</td>
+  <td style='padding: 10px;'>Yes</td>
+</tr>
+<tr style='border-color: black; line-height: 30px;'>
+<td style='padding: 10px;'>Racks</td>
+<td style='padding: 10px;'>${getKeyNameValueFromStore(
+    'racks_requirement',
     store,
   )}</td>
-      </tr>
-      <tr style='border-color: black; line-height: 30px;'>
-        <td style='padding: 10px;'>Store Age </td>
-        <td style='padding: 10px;'>${getKeyNameValueFromStore(
-    'store_age',
-    store,
-  )}</td>
-      </tr>
-      <tr style='border-color: black; line-height: 30px;'>
-        <td style='padding: 10px;'>Receivables </td>
-        <td style='padding: 10px;'>${getKeyNameValueFromStore(
-    'receivables',
-    store,
-  )}</td>
-      </tr>
-      <tr style='border-color: black; line-height: 30px;'>
-        <td style='padding: 10px;'>Payables </td>
-        <td style='padding: 10px;'>${getKeyNameValueFromStore(
-    'payables_(indian_rupee)',
-    store,
-  )}</</td>
-      </tr>
-      <tr style='border-color: black; line-height: 30px;'>
-        <td style='padding: 10px;'>Facade Size </td>
-        <td style='padding: 10px;'>${getKeyNameValueFromStore(
-    'facade_size',
-    store,
-  )}</</td>
-      </tr>
-      <tr style='border-color: black; line-height: 30px;'>
-        <td style='padding: 10px;'>Refrigerator Price</td>
-        <td style='padding: 10px;'>${getKeyNameValueFromStore(
+</tr>
+
+<tr style='border-color: black; line-height: 30px;'>
+<td style='padding: 10px;'>Beverage VisiCooler Price</td>
+<td style='padding: 10px;'>${getKeyNameValueFromStore(
     'security_and_assets_information#refrigerator_price',
     store,
   )}</td>
-      </tr>
-      <tr style='border-color: black; line-height: 30px;'>
-        <td style='padding: 10px;'>Refrigerator Qty</td>
-        <td style='padding: 10px;'>${getKeyNameValueFromStore(
+</tr>
+<tr style='border-color: black; line-height: 30px;'>
+<td style='padding: 10px;'>Beverage VisiCooler Qty</td>
+<td style='padding: 10px;'>${getKeyNameValueFromStore(
     'security_and_assets_information#refrigerator_qty',
     store,
   )}</td>
-      </tr>
-      <tr style='border-color: black; line-height: 30px;'>
-        <td style='padding: 10px;'>DeepFreezer Price</td>
-        <td style='padding: 10px;'>${getKeyNameValueFromStore(
+</tr>
+<tr style='border-color: black; line-height: 30px;'>
+<td style='padding: 10px;'>DeepFreezer Price</td>
+<td style='padding: 10px;'>${getKeyNameValueFromStore(
     'security_and_assets_information#deepfreezer_price',
     store,
   )}</td>
-      </tr>
-      <tr style='border-color: black; line-height: 30px;'>
-      <td style='padding: 10px;'>DeepFreezer Qty</td>
-      <td style='padding: 10px;'>${getKeyNameValueFromStore(
+</tr>
+<tr style='border-color: black; line-height: 30px;'>
+<td style='padding: 10px;'>DeepFreezer Qty</td>
+<td style='padding: 10px;'>${getKeyNameValueFromStore(
     'security_and_assets_information#deepfreezer_qty',
     store,
   )}</td>
-    </tr>
-    <tr style='border-color: black; line-height: 30px;'>
-    <td style='padding: 10px;'>Visicooler Price</td>
-    <td style='padding: 10px;'>${getKeyNameValueFromStore(
+</tr>
+<tr style='border-color: black; line-height: 30px;'>
+<td style='padding: 10px;'>Chocolate VisiCooler Price</td>
+<td style='padding: 10px;'>${getKeyNameValueFromStore(
     'security_and_assets_information#visi_cooler_price',
     store,
   )}</td>
-  </tr>
-  <tr style='border-color: black; line-height: 30px;'>
-  <td style='padding: 10px;'>Visicooler Qty</td>
-  <td style='padding: 10px;'>${getKeyNameValueFromStore(
+</tr>
+<tr style='border-color: black; line-height: 30px;'>
+<td style='padding: 10px;'>Chocolate VisiCooler Qty</td>
+<td style='padding: 10px;'>${getKeyNameValueFromStore(
     'security_and_assets_information#visi_cooler_qty',
     store,
   )}</td>
@@ -361,13 +576,6 @@ export function generateAgreementCardPdfHtml(store: any): string {
   )}</td>
 </tr>
     
-      <tr style='border-color: black; line-height: 30px;'>
-        <td style='padding: 10px;'>Employee Expense</td>
-        <td style='padding: 10px;'>${getKeyNameValueFromStore(
-    'employee_expenses_',
-    store,
-  )}</td>
-      </tr>
       <tr style='border-color: black; line-height: 30px;'>
       <td colspan="2">
       <br>
