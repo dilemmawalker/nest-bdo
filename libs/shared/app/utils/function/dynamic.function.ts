@@ -179,73 +179,78 @@ html { -webkit-print-color-adjust: exact; }
       <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>Store Name </td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-    'store_name',
-    store,
-  )}</td>
+          'store_name',
+          store,
+        )}</td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>Store Address </td>
-        <td style='padding: 10px;'>${store.get("owner's_present_address_pr")
-      ? store.get("owner's_present_address_pr")['address_line']
-      : ''
-    }</td>
+        <td style='padding: 10px;'>${
+          store.get("owner's_present_address_pr")
+            ? store.get("owner's_present_address_pr")['address_line']
+            : ''
+        }</td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
       <td style='padding: 10px;'>Town / Village </td>
-      <td style='padding: 10px;'>${store.get("owner's_present_address_pr")
-      ? store.get("owner's_present_address_pr")['townvillage_pr']
-      : ''
-    }</td>
+      <td style='padding: 10px;'>${
+        store.get("owner's_present_address_pr")
+          ? store.get("owner's_present_address_pr")['townvillage_pr']
+          : ''
+      }</td>
     </tr>
     <tr style='border-color: black; line-height: 25px;'>
     <td style='padding: 10px;'>District </td>
-    <td style='padding: 10px;'>${store.get("owner's_present_address_pr")
-      ? store.get("owner's_present_address_pr")['district_pr']
-      : ''
+    <td style='padding: 10px;'>${
+      store.get("owner's_present_address_pr")
+        ? store.get("owner's_present_address_pr")['district_pr']
+        : ''
     }</td>
   </tr>
   <tr style='border-color: black; line-height: 25px;'>
     <td style='padding: 10px;'>Pin Code </td>
-    <td style='padding: 10px;'>${store.get("owner's_present_address_pr")
-      ? store.get("owner's_present_address_pr")['pin_code']
-      : ''
+    <td style='padding: 10px;'>${
+      store.get("owner's_present_address_pr")
+        ? store.get("owner's_present_address_pr")['pin_code']
+        : ''
     }</td>
   </tr>
   <tr style='border-color: black; line-height: 25px;'>
     <td style='padding: 10px;'>State </td>
-    <td style='padding: 10px;'>${store.get("owner's_present_address_pr")
-      ? store.get("owner's_present_address_pr")['select_state']
-      : ''
+    <td style='padding: 10px;'>${
+      store.get("owner's_present_address_pr")
+        ? store.get("owner's_present_address_pr")['select_state']
+        : ''
     }</td>
   </tr>
       <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>GSTIN </td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'gstin',
-      store,
-    )}</td>
+          'gstin',
+          store,
+        )}</td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>Udhyog Adhaar </td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'udyog_aadhar_pr',
-      store,
-    )}
+          'udyog_aadhar_pr',
+          store,
+        )}
         </td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>Store PAN</td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'store_pan',
-      store,
-    )}</td>
+          'store_pan',
+          store,
+        )}</td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>Shop &amp; Establishment Act </td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'shop_and_establishment_act',
-      store,
-    )}</td>
+          'shop_and_establishment_act',
+          store,
+        )}</td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
       <td colspan="2" style='padding: 10px;  background: #fdcf97 !important;'>
@@ -257,23 +262,23 @@ html { -webkit-print-color-adjust: exact; }
       <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>1K RPD (INR)</td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      '1k_rpd_(inr)',
-      store,
-    )}</td>
+          '1k_rpd_(inr)',
+          store,
+        )}</td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>Dairy, Eggs, Bread RPD(INR)</td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'dairy_eggs_and_bread_rpd_(inr)',
-      store,
-    )}</td>
+          'dairy_eggs_and_bread_rpd_(inr)',
+          store,
+        )}</td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
       <td style='padding: 10px;'>Cigarettes and Tobacco RPD (INR)</td>
       <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'cigarettes_and_tobacco_rpd_(inr)',
-      store,
-    )}</td>
+        'cigarettes_and_tobacco_rpd_(inr)',
+        store,
+      )}</td>
     </tr>
     <tr style='border-color: black; line-height: 25px;'>
     <td style='padding: 10px;'>Frozen Food and Ice Cream RPD (INR)</td>
@@ -285,17 +290,17 @@ html { -webkit-print-color-adjust: exact; }
   <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>Total RPD (INR)</td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'total_rpd_(inr)',
-      store,
-    )}</td>
+          'total_rpd_(inr)',
+          store,
+        )}</td>
       </tr>
 
       <tr style='border-color: black; line-height: 25px;'>
       <td style='padding: 10px;'>Number of Employees</td>
       <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'number_of_employees',
-      store,
-    )}</td>
+        'number_of_employees',
+        store,
+      )}</td>
     </tr>
     <tr style='border-color: black; line-height: 25px;'>
     <td style='padding: 10px;'>Employee Expenses (INR)</td>
@@ -314,9 +319,9 @@ html { -webkit-print-color-adjust: exact; }
   <tr style='border-color: black; line-height: 25px;'>
   <td style='padding: 10px;'>Store Ownership</td>
   <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'store_ownership',
-      store,
-    )}</td>
+    'store_ownership',
+    store,
+  )}</td>
 </tr>
       <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>Store Rent (INR) </td>
@@ -326,24 +331,24 @@ html { -webkit-print-color-adjust: exact; }
       <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>Store Size (Square Feet)</td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'store_dimensions',
-      store,
-    )}</td>
+          'store_dimensions',
+          store,
+        )}</td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>Façade Size (Width x Height) </td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'facade_size_(width_x_height)',
-      store,
-    )}</td>
+          'facade_size_(width_x_height)',
+          store,
+        )}</td>
       </tr>
       
       <tr style='border-color: black; line-height: 25px;'>
       <td style='padding: 10px;'>Store Age (Years)</td>
       <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'store_age_(years)',
-      store,
-    )}</td>
+        'store_age_(years)',
+        store,
+      )}</td>
     </tr>
     <tr style='border-color: black; line-height: 25px;'>
     <td style='padding: 10px;'>Layout</td>
@@ -364,61 +369,66 @@ html { -webkit-print-color-adjust: exact; }
   <tr style='border-color: black; line-height: 25px;'>
   <td style='padding: 10px;'>Rack Type</td>
   <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'rack_type',
-      store,
-    )}</td>
+    'rack_type',
+    store,
+  )}</td>
 </tr>
       <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>No. of Refrigerators </td>
         <td style='padding: 10px;'>
-        ${store.get('infrastructure_available_in_store')
-      ? store.get('infrastructure_available_in_store')[
-      'no_of_refrigerators'
-      ]
-      : ''
-    }
+        ${
+          store.get('infrastructure_available_in_store')
+            ? store.get('infrastructure_available_in_store')[
+                'no_of_refrigerators'
+              ]
+            : ''
+        }
         </td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
       <td style='padding: 10px;'>No. of Deep Freezers </td>
       <td style='padding: 10px;'>
-      ${store.get('infrastructure_available_in_store')
-      ? store.get('infrastructure_available_in_store')[
-      'no_of_deep_freezers'
-      ]
-      : ''
-    }
+      ${
+        store.get('infrastructure_available_in_store')
+          ? store.get('infrastructure_available_in_store')[
+              'no_of_deep_freezers'
+            ]
+          : ''
+      }
       </td>
     </tr>
      <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>No. of Beverage Visicoolers </td>
         <td style='padding: 10px;'>
-        ${store.get('infrastructure_available_in_store')
-      ? store.get('infrastructure_available_in_store')[
-      'no_of_beverage_visicoolers'
-      ]
-      : ''
-    }
+        ${
+          store.get('infrastructure_available_in_store')
+            ? store.get('infrastructure_available_in_store')[
+                'no_of_beverage_visicoolers'
+              ]
+            : ''
+        }
         </td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>No. of chocolate visicoolers </td>
         <td style='padding: 10px;'>
-        ${store.get('infrastructure_available_in_store')
-      ? store.get('infrastructure_available_in_store')[
-      'no_of_chocolate_visicoolers'
-      ]
-      : ''
-    }
+        ${
+          store.get('infrastructure_available_in_store')
+            ? store.get('infrastructure_available_in_store')[
+                'no_of_chocolate_visicoolers'
+              ]
+            : ''
+        }
         </td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
       <td style='padding: 10px;'>No. of acs </td>
       <td style='padding: 10px;'>
-      ${store.get('infrastructure_available_in_store')
-      ? store.get('infrastructure_available_in_store')['no_of_acs']
-      : ''
-    }
+      ${
+        store.get('infrastructure_available_in_store')
+          ? store.get('infrastructure_available_in_store')['no_of_acs']
+          : ''
+      }
       </td>
     </tr>
 
@@ -434,49 +444,49 @@ html { -webkit-print-color-adjust: exact; }
       <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>Owner Name</td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'owner_name',
-      store,
-    )}</td>
+          'owner_name',
+          store,
+        )}</td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>Date of Birth </td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'date_of_birth',
-      store,
-    )}</td>
+          'date_of_birth',
+          store,
+        )}</td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>Owner Aadhar </td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'owner_aadhar',
-      store,
-    )}</td>
+          'owner_aadhar',
+          store,
+        )}</td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>Current Residential Address </td>
         <td style='padding: 10px;'>${mapAddress(
-      store.get("owner's_present_address_pr"),
-    )}</</td>
+          store.get("owner's_present_address_pr"),
+        )}</</td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>Permanent Residential Address </td>
         <td style='padding: 10px'>${mapAddress(
-      store.get("owner's_permanent_address_pr"),
-    )}</</td>
+          store.get("owner's_permanent_address_pr"),
+        )}</</td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>Native State</td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'native_state',
-      store,
-    )}</td>
+          'native_state',
+          store,
+        )}</td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>Owner Mobile No</td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'mobile',
-      store,
-    )}</td>
+          'mobile',
+          store,
+        )}</td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
       <td colspan="2" style='padding: 10px;  background: #fdcf97 !important;'>
@@ -504,80 +514,80 @@ html { -webkit-print-color-adjust: exact; }
 <tr style='border-color: black; line-height: 25px;'>
 <td style='padding: 10px;'>Racks</td>
 <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'racks_requirement',
-      store,
-    )}</td>
+    'racks_requirement',
+    store,
+  )}</td>
 </tr>
 
 <tr style='border-color: black; line-height: 25px;'>
 <td style='padding: 10px;'>Beverage VisiCooler Price</td>
 <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'security_and_assets_information#refrigerator_price',
-      store,
-    )}</td>
+    'security_and_assets_information#refrigerator_price',
+    store,
+  )}</td>
 </tr>
 <tr style='border-color: black; line-height: 25px;'>
 <td style='padding: 10px;'>Beverage VisiCooler Qty</td>
 <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'security_and_assets_information#refrigerator_qty',
-      store,
-    )}</td>
+    'security_and_assets_information#refrigerator_qty',
+    store,
+  )}</td>
 </tr>
 <tr style='border-color: black; line-height: 25px;'>
 <td style='padding: 10px;'>DeepFreezer Price</td>
 <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'security_and_assets_information#deep_freezer_price',
-      store,
-    )}</td>
+    'security_and_assets_information#deep_freezer_price',
+    store,
+  )}</td>
 </tr>
 <tr style='border-color: black; line-height: 25px;'>
 <td style='padding: 10px;'>DeepFreezer Qty</td>
 <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'security_and_assets_information#deep_freezer_qty',
-      store,
-    )}</td>
+    'security_and_assets_information#deep_freezer_qty',
+    store,
+  )}</td>
 </tr>
 <tr style='border-color: black; line-height: 25px;'>
 <td style='padding: 10px;'>Chocolate VisiCooler Price</td>
 <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'security_and_assets_information#visi_cooler_price',
-      store,
-    )}</td>
+    'security_and_assets_information#visi_cooler_price',
+    store,
+  )}</td>
 </tr>
 <tr style='border-color: black; line-height: 25px;'>
 <td style='padding: 10px;'>Chocolate VisiCooler Qty</td>
 <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'security_and_assets_information#visi_cooler_qty',
-      store,
-    )}</td>
+    'security_and_assets_information#visi_cooler_qty',
+    store,
+  )}</td>
 </tr>
 <tr style='border-color: black; line-height: 25px;'>
 <td style='padding: 10px;'>AC Price</td>
 <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'security_and_assets_information#ac_price',
-      store,
-    )}</td>
+    'security_and_assets_information#ac_price',
+    store,
+  )}</td>
 </tr>
 <tr style='border-color: black; line-height: 25px;'>
 <td style='padding: 10px;'>AC Qty</td>
 <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'security_and_assets_information#ac_qty',
-      store,
-    )}</td>
+    'security_and_assets_information#ac_qty',
+    store,
+  )}</td>
 </tr>
 <tr style='border-color: black; line-height: 25px;'>
 <td style='padding: 10px;'>Facade Size</td>
 <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'facade_size(ft)_pr',
-      store,
-    )}</td>
+    'facade_size_(width_x_height)',
+    store,
+  )}</td>
 </tr>
 <tr style='border-color: black; line-height: 25px;'>
 <td style='padding: 10px;'>Facade Type</td>
 <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'facade_type',
-      store,
-    )}</td>
+    'facade_type',
+    store,
+  )}</td>
 </tr>
 <tr style='border-color: black; line-height: 25px;'>
 <td colspan="2" style='padding: 10px;  background: #fdcf97 !important;'>
@@ -606,39 +616,35 @@ html { -webkit-print-color-adjust: exact; }
       <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>Rent Terms</td>
         <td style='padding: 10px;'>
-        ${store.get('commecial_terms')
-      ? store.get('commecial_terms')['rent_sharing_pr']
-      : ''
-    }</td>
+        ${
+          store.get('commecial_terms')
+            ? store.get('commecial_terms')['rent_sharing_pr']
+            : ''
+        }</td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>
         <b>Inventory Investment Required (INR)
         (Valuation will be on MRP)</b></td>
         <td style='padding: 10px;'>
-        ${store.get('inventory_information')
-      ? store.get('inventory_information')[
-      'ideal_inventory'
-      ]
-      : ''
-    }</td>
+        ${getKeyNameValueFromStore('ideal_inventory', store)}</td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>
         <b>Security Deposit (INR)
         (Valuation will be on MRP)</b></td>
         <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'security_amount',
-      store,
-    )}</td>
+          'security_amount',
+          store,
+        )}</td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
       <td style='padding: 10px;'>
       <b>Total Amount Payable (INR)</b></td>
       <td style='padding: 10px;'>${getKeyNameValueFromStore(
-      'total_amount_payable_',
-      store,
-    )}</td>
+        'total_amount_payable_(inr)',
+        store,
+      )}</td>
     </tr>
    
       <tr style='border-color: black; line-height: 25px;'>
