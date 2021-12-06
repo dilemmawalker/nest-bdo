@@ -1,3 +1,4 @@
+import { HttpService } from '@nestjs/axios';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { User } from '@shared/app/schemas/users/user.schema';
 import { RoleDto } from 'libs/core/roles/src/dtos/role.dto';
@@ -7,7 +8,10 @@ import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    private httpService: HttpService,
+  ) {}
 
   async findOne(username: string): Promise<User> {
     const user = await this.userRepository.findOne({ username });
@@ -38,9 +42,21 @@ export class UserService {
     throw new NotFoundException();
   }
 
+  async sendOtpSmsRequestToServer(mobile: number, otp: string) {
+    const number = '+91' + mobile;
+    const res = await this.httpService
+      .post(`${process.env.NIYOOS_URL}/v1/send-otp`, {
+        mobile: number,
+        otp: otp,
+      })
+      .subscribe((val) => console.log(val.data));
+  }
   async updateOtp(mobile: number, otp: string): Promise<User> {
     const user = await this.findOneByMobile(mobile);
     user.otp = otp;
+    if (process.env.SERVER_ENV != 'staging') {
+      await this.sendOtpSmsRequestToServer(mobile, otp);
+    }
     return await this.update(user.username, user);
   }
 
