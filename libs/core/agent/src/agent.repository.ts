@@ -58,7 +58,7 @@ export class AgentRepository {
       path: 'stores',
       model: 'Store',
     });
-    return agent['stores'];
+    return agent['stores'].sort((a, b) => b['createdAt'] - a['createdAt']);
   }
 
   async findOneAndUpdate(
