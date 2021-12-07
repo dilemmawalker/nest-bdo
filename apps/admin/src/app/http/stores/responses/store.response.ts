@@ -27,6 +27,9 @@ export class StoreResponse {
   updatedAt: string;
 
   @ApiProperty()
+  remark: string;
+
+  @ApiProperty()
   address = '';
 
   @ApiProperty()
@@ -44,6 +47,7 @@ export class StoreResponse {
     entity.updatedAt = moment(store.updatedAt).format('MM/DD/YYYY');
     entity.owner_name = store.owner_name;
     entity.status = status;
+    entity.remark = store.get('remark') || '';
     entity.storeId = store.storeId;
     entity.address = mapAddress(store.get('store_address_pr'));
     entity.workflow = store.workflowKey;
