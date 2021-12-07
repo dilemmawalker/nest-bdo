@@ -12,4 +12,7 @@ export class UpdateStoreStatusRequest {
 
   @ApiProperty()
   reason: string;
+
+  @ApiProperty()
+  updatedBy: string;
 }

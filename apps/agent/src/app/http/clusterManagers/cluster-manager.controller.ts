@@ -50,11 +50,16 @@ export class ClusterManagerController {
     @Body() updateStoreStatusRequest: UpdateStoreStatusRequest,
   ): Promise<any> {
     const json = this.jwtUtil.decode(auth);
+    const refId =
+      updateStoreStatusRequest.updatedBy == 'Agent'
+        ? json.agentId
+        : json.clusterManagerId;
     await this.clusterManagerService.updateStatus(
       updateStoreStatusRequest.status,
       updateStoreStatusRequest.reason,
       storeId,
-      json.clusterManagerId,
+      refId,
+      updateStoreStatusRequest.updatedBy,
     );
     return ResponseUtils.success(
       BasicResponse.success(updateStoreStatusRequest.status),

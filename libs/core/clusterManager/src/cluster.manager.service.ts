@@ -33,7 +33,8 @@ export class ClusterManagerService {
     status: string,
     remark: string,
     storeId: string,
-    clusterManagerId: string,
+    refId: string,
+    updatedBy: string,
   ): Promise<any> {
     const store = await this.storeRepository.updateObj(
       { status, remark },
@@ -46,8 +47,8 @@ export class ClusterManagerService {
         'status updated as ' + status,
         'Store',
         store.storeId,
-        'Cluster Manager',
-        clusterManagerId,
+        updatedBy,
+        refId,
         '{}',
         getCurrentDate(),
       ),
