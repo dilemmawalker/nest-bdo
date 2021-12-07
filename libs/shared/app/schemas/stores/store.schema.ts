@@ -3,6 +3,7 @@ import { BaseItemSchema } from '@shared/app/schemas/base/base-Item.schema';
 import { Document, Mixed } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { Expression } from '../fields/expression.schema';
+import * as mongoose from 'mongoose';
 
 export type StoreDocument = Store & Document;
 
@@ -34,6 +35,9 @@ export class Store {
 
   @Prop({ required: true })
   currentStepId: string;
+
+  @Prop({ required: true, type: mongoose.Types.ObjectId, ref: 'Agent' })
+  createdBy: mongoose.Types.ObjectId;
 
   @Prop({ type: Date })
   createdAt: Date;

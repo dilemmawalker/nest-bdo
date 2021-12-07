@@ -93,6 +93,7 @@ export class WorkflowService {
     if (!agent.stores) {
       agent.stores = [];
     }
+    storeDto.createdBy = agent._id;
     if (storeDto.fields.length == 0) {
       throw new BadRequestException(
         'Please enter store name',

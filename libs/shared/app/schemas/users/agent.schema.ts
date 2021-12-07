@@ -7,6 +7,7 @@ export type AgentDocument = Agent & Document;
 
 @Schema()
 export class Agent extends BaseItemSchema {
+  _id: mongoose.Types.ObjectId;
   @Prop()
   agentId: string;
 

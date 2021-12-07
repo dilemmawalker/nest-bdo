@@ -18,12 +18,16 @@ export class StoreDto {
   status: string;
   createdAt: Date;
   updatedAt: Date;
+  createdBy: any;
   fields: StoreField[] = [];
 
   static getStoreObj(storeData: StoreDto) {
     const storeObj = {};
     storeObj['storeId'] = storeData.storeId;
     storeObj['status'] = storeData.status;
+    if (storeData.createdBy) {
+      storeObj['createdBy'] = storeData.createdBy;
+    }
     if (storeData.createdAt) {
       storeObj['createdAt'] = storeData.createdAt;
     }
