@@ -1,17 +1,28 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 import { Workflow } from '../../shared/app/schemas/workflows/workflow.schema';
 import { WorkflowRepository } from './workflow.repository';
 import { StoreRepository } from 'apps/admin/src/app/http/stores/store.repository';
 import { FieldInputData, Store } from '@shared/app/schemas/stores/store.schema';
-import { StoreDto } from 'apps/admin/src/app/http/stores/dtos/store.dtos';
+import {
+  StoreDto,
+  StoreField,
+} from 'apps/admin/src/app/http/stores/dtos/store.dtos';
 import { WorkflowDto } from './dtos/workflow.dto';
 import { AssignFieldDto } from './dtos/assign-field.dto';
 import { StepDto } from './dtos/step.dto';
 
+import { FileDto } from '@file/file/dtos/file.dto';
+
+
 import {
   empty,
   generateWorkflowUrl,
+  getCurrentDate,
 } from '@shared/app/utils/function/helper.function';
 
 import { generateWorkflowUrl } from '@shared/app/utils/function/helper.function';
@@ -28,6 +39,16 @@ import {
   ExpressionVariable,
 } from '@shared/app/schemas/fields/expression.schema';
 
+import {
+  generateAgreementCardHtml,
+  generateAgreementCardPdfHtml,
+  generateAgreementPdfHtml,
+} from '@shared/app/utils/function/dynamic.function';
+import { FileService } from '@file/file/file.service';
+import { isContext } from 'vm';
+import { Validator } from '@shared/app/validators/main.validator';
+
+
 
 import { UpdateWorflowDto } from './dtos/updateWorkflow.dto';
 
@@ -40,6 +61,7 @@ export class WorkflowService {
     private readonly agentRepository: AgentRepository,
     private readonly fieldRepository: FieldRepository,
     private readonly activityService: ActivityService,
+    private readonly fileService: FileService,
   ) {}
 
   async findOne(key: string): Promise<Workflow> {
@@ -51,14 +73,11 @@ export class WorkflowService {
   }
 
   async post(storeDto: StoreDto): Promise<any> {
+    const workflowKey = storeDto.workflowKey;
     const store = await this.storeRepository.findOne(storeDto.storeId);
     if (!store) {
       const storeObj = await this.createStore(storeDto);
-      return await this.get(
-        storeDto.workflowKey,
-        storeObj.storeId,
-        storeDto.stepId,
-      );
+      return await this.get(workflowKey, 'new', storeDto.stepId);
     } else {
       const storeObj = await this.updateStore(storeDto);
       console.log(storeDto.workflowKey, storeDto.stepId, storeObj.storeId);
@@ -69,11 +88,34 @@ export class WorkflowService {
       );
     }
   }
+  containField(keyName, label, fields: StoreField[]) {
+    let isContainKeyName = false;
+    fields.forEach((field) => {
+      if (field.keyName == keyName) {
+        isContainKeyName = true;
+      }
+    });
+    if (!isContainKeyName) {
+      throw new BadRequestException(
+        label + ' is required',
+        label + ' is required',
+      );
+    }
+  }
   async createStore(storeDto: StoreDto): Promise<Store> {
     const agent = await this.agentRepository.getAgent(storeDto.agentId);
     if (!agent.stores) {
       agent.stores = [];
     }
+    if (storeDto.fields.length == 0) {
+      throw new BadRequestException(
+        'Please enter store name',
+        'Please enter store name',
+      );
+    }
+    this.containField('store_name', 'Store Name', storeDto.fields);
+    this.containField('owner_name', 'Owner Name', storeDto.fields);
+
     storeDto = this.populateDataInStoreDto(storeDto, agent);
     const store = await this.storeRepository.create(storeDto);
     agent.stores.push(store._id);
@@ -91,7 +133,7 @@ export class WorkflowService {
         'Agent',
         storeDto.agentId,
         '{}',
-        new Date(Date.now()),
+        getCurrentDate(),
       ),
     );
     return store;
@@ -114,7 +156,7 @@ export class WorkflowService {
     await this.activityService.push(
       new ActivityDto(
         'Store',
-        'Created',
+        'Updated',
         'Store',
         store.storeId,
         'Agent',
@@ -126,11 +168,39 @@ export class WorkflowService {
     return store;
   }
 
-  async getSteps(workflowKey: string) {
+  async getSteps(workflowKey: string, storeId: string) {
     const workflow = await this.findOne(workflowKey);
-    return workflow.steps;
+    const store = await this.storeRepository.findOne(storeId);
+    const completedStatus = {};
+    for (const step of workflow.steps) {
+      const fields: FieldInputData[] = await this.getInputFields(
+        this.getStepsFields(workflow, step.stepId),
+        store,
+      );
+      completedStatus[step.stepId] = this.isStepCompleted(fields);
+    }
+    return { steps: workflow.steps, completedStatus };
   }
 
+  isStepCompleted(fields: FieldInputData[]): boolean {
+    return fields.every((field) => {
+      if (field.group.length === 0) return this.isStepFieldCompleted(field);
+
+      return (
+        !field.isEditable ||
+        field.group.every((fieldGroupField) =>
+          this.isStepFieldCompleted(fieldGroupField),
+        )
+      );
+    });
+  }
+  isStepFieldCompleted(field: FieldInputData): boolean {
+    return !field.isEditable || !this.isFieldNullOrEmpty(field.inputValue);
+  }
+
+  isFieldNullOrEmpty(value: string): boolean {
+    return value === null || value.length === 0;
+  }
   async get(workflowKey: string, storeId: string, stepId: string) {
     const workflow = await this.findOne(workflowKey);
     const store = await this.storeRepository.findOne(storeId);
@@ -232,10 +302,13 @@ export class WorkflowService {
       } else {
         inputField.group.forEach(async (field, index) => {
           if (field.expression) {
+            console.log('field = ', inputFields[i].group[index].keyName);
+            console.log('ex = ', inputField.expression);
             const val = await this.calculateFieldExpression(
               field.expression,
               store,
             );
+            console.log('val = ', val);
             inputFields[i].group[index].inputValue = val;
           } else {
             if (store.get(inputField.keyName)) {
@@ -253,28 +326,90 @@ export class WorkflowService {
     expression: Expression,
     store: any,
   ): Promise<number> {
-    let value = 0;
+    let value: any = '';
+    if (expression.operator == 'add' || expression.operator == 'subtract') {
+      value = 0;
+    }
     if (expression.operator == 'multiply') {
       value = 1;
     }
-    expression.variables.forEach((val: ExpressionVariable) => {
-      if (val.type == 'custom') {
+    if (expression.operator == 'equal') {
+      value = '';
+    }
+    expression.variables.forEach(async (val: ExpressionVariable) => {
+      if (val.type == 'constant') {
         if (expression.operator == 'add') {
+          value += parseFloat(val.value);
+        }
+        if (expression.operator == 'subtract') {
+          if (value == 0) {
+            value = parseFloat(val.value);
+          } else {
+            value -= parseFloat(val.value);
+          }
           value += parseFloat(val.value);
         }
         if (expression.operator == 'multiply') {
           value *= parseFloat(val.value);
         }
+        if (expression.operator == 'function') {
+          if (val.value == 'generateAgreementCardHtml') {
+            value = generateAgreementCardHtml(store);
+            const pdfBuffer = await this.fileService.generatePDF(
+              generateAgreementCardPdfHtml(store),
+            );
+            const pdfFileName = `pdf/${store.get('storeId')}.pdf`;
+            const pdfFileDto = new FileDto();
+            pdfFileDto.keyName = 'agreement_pdf';
+            pdfFileDto.isMultiple = false;
+            pdfFileDto.refId = store.get('storeId');
+            pdfFileDto.fileName = pdfFileName;
+            await this.fileService.uploadFile(
+              pdfBuffer,
+              pdfFileName,
+              pdfFileDto,
+            );
+          } else if (val.value == 'generateAgreementPdfHtml') {
+            value = generateAgreementPdfHtml(store);
+            const pdfBuffer = await this.fileService.generatePDF(
+              generateAgreementPdfHtml(store),
+            );
+            const pdfFileNamePdf = `pdf/${store.get('storeId')}.pdf`;
+            const pdfFileDto = new FileDto();
+            pdfFileDto.keyName = 'agreement_pdf';
+            pdfFileDto.isMultiple = false;
+            pdfFileDto.refId = store.get('storeId');
+            pdfFileDto.fileName = pdfFileNamePdf;
+            await this.fileService.uploadFile(
+              pdfBuffer,
+              pdfFileNamePdf,
+              pdfFileDto,
+            );
+          }
+        }
+        if (expression.operator == 'equal') {
+          value = val.value;
+        }
       }
       if (val.type == 'field') {
         const keyArr = val.value.split('#');
-        let fieldValue = '0';
+        let fieldValue: any = 0;
+        if (expression.operator == 'equal') {
+          fieldValue = '';
+        }
         if (store.get(keyArr[0])) {
           if (keyArr.length == 2) {
-            fieldValue = store.get(keyArr[0])[keyArr[1]] || '0';
+            fieldValue = store.get(keyArr[0])[keyArr[1]] || 0;
           }
           if (keyArr.length == 1) {
-            fieldValue = store.get(keyArr[0]) || '0';
+            fieldValue = store.get(keyArr[0]) || 0;
+          }
+        }
+        if (expression.operator == 'subtract') {
+          if (value == 0) {
+            value = parseFloat(fieldValue);
+          } else {
+            value -= parseFloat(fieldValue);
           }
         }
         if (expression.operator == 'add') {
@@ -282,6 +417,10 @@ export class WorkflowService {
         }
         if (expression.operator == 'multiply') {
           value *= parseFloat(fieldValue);
+        }
+
+        if (expression.operator == 'equal') {
+          value = fieldValue;
         }
       }
     });

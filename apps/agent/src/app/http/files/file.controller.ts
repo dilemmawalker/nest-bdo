@@ -45,6 +45,7 @@ export class FileController {
       fileFilter: FileUploadingUtils.imageFileFilter,
     }),
   )
+  @UseInterceptors(TransformInterceptor)
   public async uploadImage(
     @Req() req: any,
     @Body() uploadImageRequest: UploadImageRequest,
@@ -58,7 +59,10 @@ export class FileController {
       FileUploadingUtils.getImageFilename(file.originalname),
       UploadImageRequest.getFileDto(uploadImageRequest),
     );
-    return ResponseUtils.success(FileResponse.fromFile(fileObj));
+    return ResponseUtils.success(
+      FileResponse.fromFile(fileObj),
+      'File uploaded successfully',
+    );
   }
 
   @Post('/upload/document')
@@ -69,6 +73,7 @@ export class FileController {
       fileFilter: FileUploadingUtils.docFileFilter,
     }),
   )
+  @UseInterceptors(TransformInterceptor)
   public async uploadDoc(
     @Req() req: any,
     @Body() uploadImageRequest: UploadImageRequest,
@@ -82,7 +87,10 @@ export class FileController {
       FileUploadingUtils.getDocFilename(file.originalname),
       UploadImageRequest.getFileDto(uploadImageRequest),
     );
-    return ResponseUtils.success(FileResponse.fromFile(fileObj));
+    return ResponseUtils.success(
+      FileResponse.fromFile(fileObj),
+      'Document Uploaded successfully',
+    );
   }
 
   @Post('/delete')
@@ -91,11 +99,15 @@ export class FileController {
     status: HttpStatus.OK,
     type: BasicResponse,
   })
+  @UseInterceptors(TransformInterceptor)
   public async deleteFile(@Body() deleteFileRequest: DeleteFileRequest) {
     await this.fileService.deleFileObj(
       DeleteFileRequest.getFileDto(deleteFileRequest),
     );
-    return ResponseUtils.success(BasicResponse.success());
+    return ResponseUtils.success(
+      BasicResponse.success(),
+      'File deleted successfully',
+    );
   }
 
 
@@ -106,6 +118,7 @@ export class FileController {
       fileFilter: FileUploadingUtils.imageFileFilter,
     }),
   )
+  @UseInterceptors(TransformInterceptor)
   public async uploadMultipleFiles(
     @Req() req: any,
     @Body() uploadImageRequest: UploadImageRequest,
@@ -137,6 +150,7 @@ export class FileController {
       fileFilter: FileUploadingUtils.docFileFilter,
     }),
   )
+  @UseInterceptors(TransformInterceptor)
   public async uploadMultipleDocs(
     @Req() req: any,
     @Body() uploadImageRequest: UploadImageRequest,

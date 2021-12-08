@@ -74,4 +74,16 @@ export class Validator {
       !isNaN(value) && parseInt(value) == value && !isNaN(parseInt(value, 10))
     );
   }
+
+  static max(value: number, maxValue: number): boolean {
+    return value <= maxValue;
+  }
+
+  static min(value: number, minValue: number): boolean {
+    return value >= minValue;
+  }
+
+  static isNullOrEmpty(value: string): boolean {
+    return value === null || value.length === 0;
+  }
 }

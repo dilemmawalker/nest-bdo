@@ -20,6 +20,13 @@ export function getFormattedDate(date: Date): string {
   return dateString;
 }
 
+export function getCurrentDate(): Date {
+  const todayDateTime = new Date().toLocaleString('en-US', {
+    timeZone: 'Asia/Kolkata',
+  });
+  return new Date(todayDateTime);
+}
+
 export function getFormattedTime(date: Date): string {
   const timeString =
     date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();

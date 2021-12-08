@@ -4,7 +4,7 @@ import { FileDto } from './dtos/file.dto';
 import { FileRepository } from './file.repository';
 import { File } from '@shared/app/schemas/files/file.schema';
 import { StoreService } from 'apps/admin/src/app/http/stores/store.service';
-import { empty } from '@shared/app/utils/function/helper.function';
+import * as htmlPdf from 'html-pdf-chrome';
 
 @Injectable()
 export class FileService {
@@ -65,7 +65,9 @@ export class FileService {
   }
 
   public async checkExistingFile(fileDto: FileDto) {
+    console.log('getting file', fileDto.refId);
     const store: any = await this.storeService.findOne(fileDto.refId);
+    console.log(store);
     const hasStore = Boolean(store);
     const prevUrl = store.get(fileDto.keyName);
     console.log(prevUrl);
@@ -102,5 +104,11 @@ export class FileService {
         Key: key,
       })
       .promise();
+  }
+
+  async generatePDF(html: string): Promise<Buffer> {
+    const pdf = await htmlPdf.create(html);
+    const buffer = pdf.toBuffer();
+    return buffer;
   }
 }
