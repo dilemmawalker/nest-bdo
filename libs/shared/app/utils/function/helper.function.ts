@@ -41,6 +41,27 @@ export function generateWorkflowUrl(
   return `agent/api/workflows/${workflowKey}/${stepId}/${storeId}`;
 }
 
+export function getAgreementName(store) {
+  console.log('geting pdf data');
+  return `Agreement_${store.get('store_name').replace(' ', '')}_${getInitials(
+    store.get('owner_name'),
+  )}_${new Date().toISOString()}_${
+    store.get('createdBy')
+      ? store.get('createdBy').toString()
+      : store.get('storeId')
+  }.pdf`;
+}
+
+export function getInitials(string) {
+  const names = string.split(' ');
+  let initials = names[0].substring(0, 1).toUpperCase();
+
+  if (names.length > 1) {
+    initials += names[names.length - 1].substring(0, 1).toUpperCase();
+  }
+  return initials;
+}
+
 export function empty(e) {
   switch (e) {
     case '':

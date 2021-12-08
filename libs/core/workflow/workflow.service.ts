@@ -20,6 +20,7 @@ import { FileDto } from '@file/file/dtos/file.dto';
 import {
   empty,
   generateWorkflowUrl,
+  getAgreementName,
   getCurrentDate,
 } from '@shared/app/utils/function/helper.function';
 import { Step } from '@shared/app/schemas/steps/steps.schema';
@@ -386,7 +387,7 @@ export class WorkflowService {
             const pdfBuffer = await this.fileService.generatePDF(
               generateAgreementCardPdfHtml(store),
             );
-            const pdfFileName = `pdf/${store.get('storeId')}.pdf`;
+            const pdfFileName = `pdf/${getAgreementName(store)}`;
             const pdfFileDto = new FileDto();
             pdfFileDto.keyName = 'agreement_pdf';
             pdfFileDto.isMultiple = false;
