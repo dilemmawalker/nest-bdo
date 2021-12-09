@@ -132,7 +132,7 @@ export class WorkflowService {
     storeDto.workflowKey = agent['cluster']['onboarding']['key'];
     storeDto.currentStepId =
       agent['cluster']['onboarding']['steps'][0]['stepId'];
-    storeDto.status = 'open';
+    storeDto.status = 'interested';
     storeDto.createdAt = new Date();
     storeDto.updatedAt = new Date();
     return storeDto;
