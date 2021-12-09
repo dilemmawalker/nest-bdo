@@ -23,9 +23,11 @@ export function generateAgreementCardHtml(store: any) {
   let security_amount = '__________________';
   let total_investment = '__________________';
   let store_dimensions = '__________________';
+  let store_name = '__________________';
 
   if (store) {
     owner_name = store.get('owner_name') ? store.get('owner_name') : owner_name;
+    store_name = store.get('store_name') ? store.get('store_name') : store_name;
     security_amount = store.get('security_amount')
       ? store.get('security_amount')
       : security_amount;
