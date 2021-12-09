@@ -145,7 +145,7 @@ export function generateAgreementCardPdfHtml(store: any): string {
       : security_amount;
     reimbursement = store.get('reimbursement')
       ? store.get('reimbursement')
-      : security_amount;
+      : store_dimensions;
     digital_signature = store.get('digital_signature')
       ? store.get('digital_signature')
       : '';
@@ -161,13 +161,15 @@ export function generateAgreementCardPdfHtml(store: any): string {
       facadeSize =
         parseFloat(store.get('current_facade_length_(in_ft)')) *
         parseFloat(store.get('current_facade_height_(in_ft)'));
-      parseFloat(store.get('store_amount'));
+      console.log('Facade Size', facadeSize);
     }
-    if (facadeSize > 600) {
-      pos_size = '15 inch';
-    }
-    if (facadeSize > 400) {
-      facade_size_dem = '12x3 ft';
+    if (store.get('store_dimensions')) {
+      if (parseFloat(store.get('store_dimensions')) > 600) {
+        pos_size = '15 inch';
+      }
+      if (parseFloat(store.get('store_dimensions')) > 400) {
+        facade_size_dem = '12x3 ft';
+      }
     }
   }
 
@@ -363,11 +365,15 @@ html { -webkit-print-color-adjust: exact; }
         )}</td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
-        <td style='padding: 10px;'>Façade Size (Width x Height) </td>
-        <td style='padding: 10px;'>${getKeyNameValueFromStore(
-          'facade_size_(width_x_height)',
+        <td style='padding: 10px;'>Facade Size (Width x Height) </td>
+        <td style='padding: 10px;'>
+        ${getKeyNameValueFromStore(
+          'current_facade_length_(in_ft)',
           store,
-        )}</td>
+        )} x ${getKeyNameValueFromStore(
+    'current_facade_height_(in_ft)',
+    store,
+  )} ft</td>
       </tr>
       
       <tr style='border-color: black; line-height: 25px;'>
