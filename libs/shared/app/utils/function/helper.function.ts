@@ -44,7 +44,7 @@ export function generateWorkflowUrl(
 export function getAgreementName(store) {
   console.log('geting pdf data');
   return `Agreement_${store.get('store_name').replace(' ', '')}_${getInitials(
-    store.get('owner_name'),
+    store.get('owner_name').replace(' ', ''),
   )}_${new Date().toISOString()}_${
     store.get('createdBy')
       ? store.get('createdBy').toString()
