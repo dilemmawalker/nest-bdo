@@ -86,7 +86,7 @@ export function generateAgreementCardHtml(store: any) {
       <b>Commercial Agreement</b>
   </p>
 
-   <p> To  <u> ${owner_name} </u></p>
+   <p> To  <u> ${store_name} </u></p>
    <hr>
    1. Margins
    <ul>
@@ -118,6 +118,7 @@ export function generateAgreementCardHtml(store: any) {
 }
 
 export function generateAgreementCardPdfHtml(store: any): string {
+  let facadeSize = 0;
   let owner_name = '______________________';
   let store_name = '';
   let reimbursement = '__________________';
@@ -126,6 +127,8 @@ export function generateAgreementCardPdfHtml(store: any): string {
   let store_dimensions = '__________________';
   let digital_signature = '';
   let store_address = '';
+  let pos_size = '10 inch';
+  let facade_size_dem = '9x3 ft';
   let digital_html = '';
   if (store) {
     owner_name = store.get('owner_name') ? store.get('owner_name') : owner_name;
@@ -149,6 +152,21 @@ export function generateAgreementCardPdfHtml(store: any): string {
       ? store.get('store_address')
       : '';
     digital_html = '';
+    if (
+      store.get('current_facade_length_(in_ft)') &&
+      store.get('current_facade_height_(in_ft)')
+    ) {
+      facadeSize =
+        parseFloat(store.get('current_facade_length_(in_ft)')) *
+        parseFloat(store.get('current_facade_height_(in_ft)'));
+      parseFloat(store.get('store_amount'));
+    }
+    if (facadeSize > 600) {
+      pos_size = '15 inch';
+    }
+    if (facadeSize > 400) {
+      facade_size_dem = '12x3 ft';
+    }
   }
 
   if (digital_signature) {
@@ -193,32 +211,32 @@ html { -webkit-print-color-adjust: exact; }
       <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>Store Address </td>
         <td style='padding: 10px;'>${
-          store.get("owner's_present_address_pr")
-            ? store.get("owner's_present_address_pr")['address_line']
+          store.get('store_address_pr')
+            ? store.get('store_address_pr')['address_line']
             : ''
         }</td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
       <td style='padding: 10px;'>Town / Village </td>
       <td style='padding: 10px;'>${
-        store.get("owner's_present_address_pr")
-          ? store.get("owner's_present_address_pr")['townvillage_pr']
+        store.get('store_address_pr')
+          ? store.get('store_address_pr')['townvillage_pr']
           : ''
       }</td>
     </tr>
     <tr style='border-color: black; line-height: 25px;'>
     <td style='padding: 10px;'>District </td>
     <td style='padding: 10px;'>${
-      store.get("owner's_present_address_pr")
-        ? store.get("owner's_present_address_pr")['district_pr']
+      store.get('store_address_pr')
+        ? store.get('store_address_pr')['district_pr']
         : ''
     }</td>
   </tr>
   <tr style='border-color: black; line-height: 25px;'>
     <td style='padding: 10px;'>Pin Code </td>
     <td style='padding: 10px;'>${
-      store.get("owner's_present_address_pr")
-        ? store.get("owner's_present_address_pr")['pin_code']
+      store.get('store_address_pr')
+        ? store.get('store_address_pr')['pin_code']
         : ''
     }</td>
   </tr>
@@ -518,7 +536,7 @@ html { -webkit-print-color-adjust: exact; }
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
         <td style='padding: 10px;'>POS (INR 30,000 - waived off)</td>
-        <td style='padding: 10px;'>10 inch</td>
+        <td style='padding: 10px;'>${pos_size}</td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
       <td style='padding: 10px;'>Barcode Scanner (INR 2,500 - waived off)</td>
@@ -584,10 +602,7 @@ html { -webkit-print-color-adjust: exact; }
 </tr>
 <tr style='border-color: black; line-height: 25px;'>
 <td style='padding: 10px;'>Facade Size</td>
-<td style='padding: 10px;'>${getKeyNameValueFromStore(
-    'facade_size_(width_x_height)',
-    store,
-  )}</td>
+<td style='padding: 10px;'>${facade_size_dem}</td>
 </tr>
 <tr style='border-color: black; line-height: 25px;'>
 <td style='padding: 10px;'>Facade Type</td>
@@ -654,6 +669,14 @@ html { -webkit-print-color-adjust: exact; }
       )}</td>
     </tr>
    
+    <tr style='border-color: black; line-height: 25px;'>
+      <td style='padding: 10px;'>
+      <b>Interested in Delivering to Consumers using Store Resources</b></td>
+      <td style='padding: 10px;'>${getKeyNameValueFromStore(
+        'interested_in_delivering_to_consumers_using_store_resources',
+        store,
+      )}</td>
+    </tr>
       <tr style='border-color: black; line-height: 25px;'>
 
         <td style='padding: 10px' colspan="2">
@@ -771,7 +794,7 @@ Franchisor Company Stamp &amp; Signature
       <br>
       <br>
       <b style='margin-top:100px; color: #00C6AE'>Commercial Agreement</b>
-      <p> To  <u> ${owner_name} </u>
+      <p> To  <u> ${store_name} </u>
       <hr>
       1. Margins
       <ul>
