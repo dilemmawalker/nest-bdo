@@ -383,7 +383,7 @@ export class WorkflowService {
         }
         if (expression.operator == 'function') {
           if (val.value == 'generateAgreementCardHtml') {
-            value = generateAgreementCardHtml(store);
+            value = generateAgreementCardPdfHtml(store);
             const pdfBuffer = await this.fileService.generatePDF(
               generateAgreementCardPdfHtml(store),
             );
