@@ -42,12 +42,14 @@ export function generateWorkflowUrl(
 }
 
 export function getAgreementName(store) {
-  console.log('geting pdf data');
-  return `Agreement_${store.get('store_name').replace(' ', '')}_${getInitials(
+  const date_time = `${new Date().toISOString().split('T')[0]}`;
+  return `1K_Retailer_Agreement_${store
+    .get('store_name')
+    .replace(' ', '')}_${getInitials(
     store.get('owner_name').replace(' ', ''),
-  )}_${new Date().toISOString()}_${
+  )}_${date_time}_${
     store.get('createdBy')
-      ? store.get('createdBy').toString()
+      ? store.get('createdBy')['agentId'].toString()
       : store.get('storeId')
   }.pdf`;
 }
