@@ -57,6 +57,14 @@ export class AgentRepository {
     const agent = await this.agentModel.findOne({ agentId: agentId }).populate({
       path: 'stores',
       model: 'Store',
+      populate: {
+        path: 'createdBy',
+        model: 'Agent',
+        populate: {
+          path: 'user',
+          model: 'User',
+        },
+      },
     });
     return agent['stores'].sort((a, b) => b['createdAt'] - a['createdAt']);
   }

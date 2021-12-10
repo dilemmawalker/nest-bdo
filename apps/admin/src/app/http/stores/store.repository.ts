@@ -43,8 +43,15 @@ export class StoreRepository {
     return await store;
   }
 
-  async findOne(storeId: string): Promise<Store> {
-    return await this.storeModel.findOne({ storeId });
+  async findOne(storeId: string): Promise<any> {
+    return await this.storeModel.findOne({ storeId }).populate({
+      path: 'createdBy',
+      model: 'Agent',
+      populate: {
+        path: 'user',
+        model: 'User',
+      },
+    });
   }
 
   async getStores(): Promise<Store[]> {

@@ -74,7 +74,6 @@ export class ClusterManagerRepository {
     const clusterManager = await this.clusterManagerModel.findOne({
       clusterManagerId: clusterManagerFilterQuery.clusterManagerId,
     });
-    console.log('i am here');
     const agents = await this.agentModel
       .find({
         cluster: { $in: clusterManager.clusters },
@@ -82,6 +81,14 @@ export class ClusterManagerRepository {
       .populate({
         path: 'stores',
         model: 'Store',
+        populate: {
+          path: 'createdBy',
+          model: 'Agent',
+          populate: {
+            path: 'user',
+            model: 'User',
+          },
+        },
       })
       .sort({ createdAt: -1 });
     return agents

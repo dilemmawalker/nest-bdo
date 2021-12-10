@@ -36,6 +36,9 @@ export class StoreResponse {
   status: string;
 
   @ApiProperty()
+  agent: any;
+
+  @ApiProperty()
   workflow: string;
 
   static fromStore(store: any, status: string) {
@@ -47,7 +50,9 @@ export class StoreResponse {
     entity.updatedAt = moment(store.updatedAt).format('MM/DD/YYYY');
     entity.owner_name = store.owner_name;
     entity.status = status;
+    console.log('i');
     entity.remark = store.get('remark') || '';
+    console.log('i o');
     entity.storeId = store.storeId;
     entity.address = mapAddress(store.get('store_address_pr'));
     entity.workflow = store.workflowKey;
@@ -56,7 +61,12 @@ export class StoreResponse {
       store.currentStepId,
       store.storeId,
     );
-
+    const agent = {};
+    if (store.get('createdBy')) {
+      agent['name'] = store.get('createdBy').get('user')['name'];
+      agent['agentId'] = store.get('createdBy')['agentId'];
+    }
+    entity.agent = agent;
     return entity;
   }
 
