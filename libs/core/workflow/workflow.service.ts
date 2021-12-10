@@ -49,7 +49,7 @@ export class WorkflowService {
     private readonly fieldRepository: FieldRepository,
     private readonly activityService: ActivityService,
     private readonly fileService: FileService,
-  ) {}
+  ) { }
 
   async findOne(key: string): Promise<Workflow> {
     const workflow = await this.workflowRepository.findOne(key);
@@ -286,19 +286,19 @@ export class WorkflowService {
     let updateStore = store;
     console.log('setEqual Called');
     fields.forEach(async (field) => {
-      if (this.getMappedOptValue(field.options, 'isCopiable') == 'true') {
+      if (this.getMappedOptValue(field.options, 'isCopyable') == 'true') {
         if (store.get(field.keyName) == 'true') {
-          const copiableFrom = this.getMappedOptValue(
+          const copyableFrom = this.getMappedOptValue(
             field.options,
-            'copiableFrom',
+            'copyableFrom',
           );
-          const copiableTo = this.getMappedOptValue(
+          const copyableTo = this.getMappedOptValue(
             field.options,
-            'copiableTo',
+            'copyableTo',
           );
-          const copiableVal = store.get(copiableFrom) || '';
+          const copiableVal = store.get(copyableFrom) || '';
           const updateObj = {};
-          updateObj[copiableTo] = copiableVal;
+          updateObj[copyableTo] = copiableVal;
           updateStore = await this.storeRepository.updateObj(
             updateObj,
             store.get('storeId'),
