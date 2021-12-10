@@ -20,6 +20,7 @@ import { Roles } from 'apps/admin/src/app/decorators/auth/roles.decorators';
 import { JwtAuthGuard } from 'apps/admin/src/app/guards/jwt-auth.guard';
 import { RolesGuard } from 'apps/admin/src/app/guards/roles.guard';
 import { StoreResponse } from 'apps/admin/src/app/http/stores/responses/store.response';
+import { StoreService } from 'apps/admin/src/app/http/stores/store.service';
 import { RoleConst } from 'apps/admin/src/constant/auth/roles.constant';
 import { ClusterManagerService } from 'libs/core/clusterManager/src/cluster.manager.service';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
@@ -34,6 +35,7 @@ import { UpdateStoreStatusRequest } from './request/update-store-status.request'
 export class ClusterManagerController {
   constructor(
     private readonly clusterManagerService: ClusterManagerService,
+    private readonly storeService: StoreService,
     private readonly jwtUtil: JWTUtil,
   ) {}
 
@@ -61,8 +63,9 @@ export class ClusterManagerController {
       refId,
       updateStoreStatusRequest.updatedBy,
     );
+    const store = await this.storeService.findOne(storeId);
     return ResponseUtils.success(
-      BasicResponse.success(updateStoreStatusRequest.status),
+      StoreResponse.fromStore(store, updateStoreStatusRequest.status),
       STATUS_UPDATE_SUCCESS,
     );
   }
