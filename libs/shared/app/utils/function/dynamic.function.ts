@@ -156,7 +156,7 @@ export function generateAgreementCardHtml(store: any) {
     )}</td>
 </tr>
 <tr style='border-color: black; line-height: 25px;'>
-<td colspan="2" style='padding: 10px;  background: orange; color: white;'>
+<td colspan='2' style='padding: 10px;  background: orange; color: white;'>
 <b>
 Store Commercial Details
 </b>
@@ -212,7 +212,7 @@ Store Commercial Details
       store,
     )}</td>
 <tr style='border-color: black; line-height: 25px;'>
-<td colspan="2" style='padding: 10px; background-color: orange; color: white;'>
+<td colspan='2' style='padding: 10px; background-color: orange; color: white;'>
 <b>
 Store Physical Attributes
 </b>
@@ -263,7 +263,7 @@ ${getKeyNameValueFromStore(
 </tr>
 
 <tr style='border-color: black; line-height: 25px;'>
-<td colspan="2" style='padding: 10px; background-color: orange; color: white;'>
+<td colspan='2' style='padding: 10px; background-color: orange; color: white;'>
 <b>
 Current Store Infrastructure
 </b>
@@ -325,7 +325,7 @@ ${store.get('infrastructure_available_in_store')
 </tr>
 
 <tr style='border-color: black; line-height: 25px;'>
-<td colspan="2" style='padding: 10px; background-color: orange; color: white;'>
+<td colspan='2' style='padding: 10px; background-color: orange; color: white;'>
 <b>
 Store Owner Details
 </b>
@@ -386,7 +386,7 @@ Store Owner Details
 <td style='padding: 10px;'>${getKeyNameValueFromStore('mobile', store)}</td>
 </tr>
 <tr style='border-color: black; line-height: 25px;'>
-<td colspan="2" style='padding: 10px;  background-color: orange; color: white;'>
+<td colspan='2' style='padding: 10px;  background-color: orange; color: white;'>
 <b>
 Service Requirement from 1K
 </b>
@@ -470,7 +470,7 @@ Service Requirement from 1K
     )}</td>
 </tr>
 <tr style='border-color: black; line-height: 25px;'>
-<td colspan="2" style='padding: 10px;  background-color: orange; color: white;'>
+<td colspan='2' style='padding: 10px;  background-color: orange; color: white;'>
 <b>
 1K Commercials
 </b>
@@ -642,7 +642,7 @@ receive its full inventory refillment request. </td>
         <p style = 'text-align: center;'>
             <b>Commercial Agreement</b>
         </p>
-        To <u style='color: red;'> Pranjal Modak </u>
+        To <u style='color: red;'> ${store_name} </u>
         <hr>1. Margins
         <ul>
         <li>Ghee, Oil, Sugar, Atta - 3%</li>
@@ -650,18 +650,40 @@ receive its full inventory refillment request. </td>
         <li>General Merchandise - 20%</li>
         </ul>
         <hr>2. Reimbursement: <u> 25000 </u>
-        <hr>3. Security Amount: <u> 25000 </u>
-        <hr>4. Racks: <u> 21 </u>  
-        <hr>5. Total Investment(₹): <u> 25000 </u> /sq.ft. , (₹) <u>400</u> MRP   
-        <hr>6. Sales person will collect the sales payment on weekly basis. (Monday)   
-        <hr>7. Sales and marketing will be done by 1K Kirana. (Online and offline both)
         <hr>
+        3. Security Amount: <u> ${security_amount} </u>
+        <hr>
+        4. Racks: <u> 21 </u>
+        <hr>
+         5. Total Investment(₹): <u> ${total_investment} </u> /sq.ft. , (₹) <u>${store_dimensions}</u> MRP
+         <hr>
+         6. Sales person will collect the sales payment on weekly basis. (Monday)
+         <hr>
+         7. Sales and marketing will be done by 1K Kirana. (Online and offline both)
+         <hr><hr>
         <div>
             <b style='color: red;'>Note </b>
             <li style='color: red;'>After completion of investment only you will be available to avail credit limit.</li>
             <li style='color: red;'>Racks will be installed after completion of investment ( ₹300/sq. ft. as per requirement).</li> 
         </div>
-    
+        <div style='min-height: 200px;'>
+        <div style='float: right; text-align: center; min-height: 120px;'>
+        ${digital_html}
+        <p>${owner_name}</p>
+        <b>Retail Partner</b><br>
+        </div>
+        <div style='float: left; text-align: center; min-height: 120px;'>
+        <div>
+        <br>
+        <br>
+        <br>
+        ${company_stamp_img_url}
+        <br>
+        <br>
+        </div>
+        <b>1K KIRANA</b><br>
+        </div>
+        </div>
     </div>
 
         `;
@@ -742,7 +764,7 @@ html { -webkit-print-color-adjust: exact; }
     <table border="1" style="border: 0px;padding: 11px;width: 100%;">
       <tbody>
       <tr style='border-color: black; line-height: 25px;'>
-      <td colspan="2" style='padding: 10px; background: #fdcf97 !important;'>
+      <td colspan='2' style='padding: 10px; background: #fdcf97 !important;'>
       <b>
        Business Details
        </b>
@@ -827,7 +849,7 @@ html { -webkit-print-color-adjust: exact; }
     )}</td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
-      <td colspan="2" style='padding: 10px;  background: #fdcf97 !important;'>
+      <td colspan='2' style='padding: 10px;  background: #fdcf97 !important;'>
       <b>
       Store Commercial Details
        </b>
@@ -883,7 +905,7 @@ html { -webkit-print-color-adjust: exact; }
       store,
     )}</td>
     <tr style='border-color: black; line-height: 25px;'>
-      <td colspan="2" style='padding: 10px; background: #fdcf97 !important;'>
+      <td colspan='2' style='padding: 10px; background: #fdcf97 !important;'>
       <b>
       Store Physical Attributes
        </b>
@@ -937,7 +959,7 @@ html { -webkit-print-color-adjust: exact; }
   </tr>
 
   <tr style='border-color: black; line-height: 25px;'>
-      <td colspan="2" style='padding: 10px; background: #fdcf97 !important;'>
+      <td colspan='2' style='padding: 10px; background: #fdcf97 !important;'>
       <b>
       Current Store Infrastructure
        </b>
@@ -1006,7 +1028,7 @@ html { -webkit-print-color-adjust: exact; }
     </tr>
 
     <tr style='border-color: black; line-height: 25px;'>
-    <td colspan="2" style='padding: 10px; background: #fdcf97 !important;'>
+    <td colspan='2' style='padding: 10px; background: #fdcf97 !important;'>
     <b>
     Store Owner Details
      </b>
@@ -1076,7 +1098,7 @@ html { -webkit-print-color-adjust: exact; }
     )}</td>
       </tr>
       <tr style='border-color: black; line-height: 25px;'>
-      <td colspan="2" style='padding: 10px;  background: #fdcf97 !important;'>
+      <td colspan='2' style='padding: 10px;  background: #fdcf97 !important;'>
       <b>
       Service Requirement from 1K
        </b>
@@ -1160,7 +1182,7 @@ html { -webkit-print-color-adjust: exact; }
     )}</td>
 </tr>
 <tr style='border-color: black; line-height: 25px;'>
-<td colspan="2" style='padding: 10px;  background: #fdcf97 !important;'>
+<td colspan='2' style='padding: 10px;  background: #fdcf97 !important;'>
 <b>
 1K Commercials
  </b>
