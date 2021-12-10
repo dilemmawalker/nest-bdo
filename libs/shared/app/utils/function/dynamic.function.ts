@@ -553,11 +553,12 @@ receive its full inventory refillment request. </td>
     </table>
     
      <div style='min-height: 200px;'>
-        <div style='float: right; text-align: center; min-height: 120px;'><p>Pranjal 3/4</p> <b>Retail Partner</b><br>
+        <div style='float: right; text-align: center; min-height: 120px;'>
+        ${digital_html}
+        <p>${owner_name}</p><b>Retail Partner</b><br>
         </div>
         <div style='float: left; text-align: center; min-height: 120px;'>
-            <div><br> <br> <br> <img src='https://i.pinimg.com/originals/e1/9f/2a/e19f2a3cbe820468d7ba1a835134590c.jpg'
-                                     style='max-width: 65px'/> <br> <br></div>
+            <div><br> <br> <br>${company_stamp_img_url} <br> <br></div>
             <b>1K KIRANA</b><br></div>
     </div>
     
