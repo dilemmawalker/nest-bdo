@@ -20,7 +20,6 @@ export class Validator {
   static isArray(value: any): boolean {
     return Array.isArray(value);
   }
-
   static maxLength(value: string, len: number): boolean {
     return value.length <= len;
   }
@@ -77,6 +76,10 @@ export class Validator {
 
   static max(value: number, maxValue: number): boolean {
     return value <= maxValue;
+  }
+
+  static fixLength(value: any, length: number): boolean {
+    return value.toString().length == length;
   }
 
   static min(value: number, minValue: number): boolean {

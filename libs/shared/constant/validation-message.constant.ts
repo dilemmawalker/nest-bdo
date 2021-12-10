@@ -16,6 +16,13 @@ export function requiredValidation(fieldLabel: string): string {
   return `${fieldLabel} is required`;
 }
 
+export function fixLengthValidationMessage(
+  fieldLabel: string,
+  length: number,
+): string {
+  return `${fieldLabel} should be of ${length} characters`;
+}
+
 export function invalidMinMaxValidation(
   fieldLabel: string,
   type: string,

@@ -1,4 +1,5 @@
 import {
+  fixLengthValidationMessage,
   invalidMinMaxValidation,
   invalidRangeValidation,
   requiredValidation,
@@ -43,6 +44,11 @@ export class DynamicValidator {
             validation.options[0].value,
             validation.options[1].value,
           ),
+        );
+      case 'fixLength':
+        return ValidationResponseUtils.result(
+          !Validator.fixLength(value, validation.options[0].value),
+          fixLengthValidationMessage(label, validation.options[0].value),
         );
       case 'required':
         return ValidationResponseUtils.result(
