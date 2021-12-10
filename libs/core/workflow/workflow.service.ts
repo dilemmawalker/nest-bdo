@@ -67,7 +67,6 @@ export class WorkflowService {
       return await this.get(workflowKey, 'new', storeDto.stepId);
     } else {
       const storeObj = await this.updateStore(storeDto);
-      console.log(storeDto.workflowKey, storeDto.stepId, storeObj.storeId);
       return await this.get(
         storeDto.workflowKey,
         storeObj.storeId,

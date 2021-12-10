@@ -47,7 +47,7 @@ export class DynamicValidator {
         );
       case 'fixLength':
         return ValidationResponseUtils.result(
-          !Validator.fixLength(value, validation.options[0].value),
+          Validator.fixLength(value, validation.options[0].value),
           fixLengthValidationMessage(label, validation.options[0].value),
         );
       case 'required':
