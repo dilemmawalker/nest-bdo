@@ -23,6 +23,9 @@ export class FieldResponse {
   @ApiProperty()
   isEditable: boolean;
 
+  @ApiProperty()
+  isExportable: boolean;
+
   @ApiProperty({ type: Expression })
   expression: Expression;
 
@@ -40,6 +43,7 @@ export class FieldResponse {
     entity.options = field.options;
     entity.type = field.type;
     entity.isEditable = field.isEditable;
+    entity.isExportable = field.isExportable;
     entity.expression = field.expression || null;
     entity.validations = field.validations;
     entity.groups = field.groups;

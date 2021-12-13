@@ -76,6 +76,9 @@ export class FieldInputData extends BaseItemSchema {
   isEditable = true;
 
   @ApiProperty()
+  isExportable = true;
+
+  @ApiProperty()
   type: string;
 
   @ApiProperty()
@@ -90,6 +93,7 @@ export class FieldInputData extends BaseItemSchema {
     entity.options = field.options;
     entity.inputValue = this.getDefaultInputValue(field.options, field);
     entity.isEditable = field.isEditable;
+    entity.isExportable = field.isExportable;
     if (field.groups && field.groups.length != 0) {
       entity.group = this.fromFieldArray(field.groups);
     }

@@ -9,6 +9,7 @@ export class FieldDto {
   position = 0;
   expression: Expression;
   isEditable = true;
+  isExportable = true;
   groups: Types.ObjectId[] = [];
   validations: Types.ObjectId[] = [];
   type: string;

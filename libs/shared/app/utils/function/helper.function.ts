@@ -46,11 +46,12 @@ export function getAgreementName(store) {
   return `1K_Retailer_Agreement_${store
     .get('store_name')
     .replace(' ', '')}_${getInitials(
-      store.get('owner_name').replace(' ', ''),
-    )}_${date_time}_${store.get('createdBy')
+    store.get('owner_name').replace(' ', ''),
+  )}_${date_time}_${
+    store.get('createdBy')
       ? store.get('createdBy')['agentId'].toString()
       : store.get('storeId')
-    }.pdf`;
+  }.pdf`;
 }
 
 export function getInitials(string) {
@@ -73,5 +74,25 @@ export function empty(e) {
       return true;
     default:
       return false;
+  }
+}
+
+export function convertToString(str) {
+  if (empty(str)) {
+    return null;
+  }
+  console.log(typeof str);
+  console.log(str instanceof Array);
+  if (typeof str == 'object' && !(str instanceof Array)) {
+    let returnStr = '';
+    for (const key in str) {
+      if (Object.prototype.hasOwnProperty.call(str, key)) {
+        returnStr += Boolean(returnStr) ? ' , ' : '';
+        returnStr += str[key];
+      }
+    }
+    return returnStr;
+  } else {
+    return str.toString();
   }
 }

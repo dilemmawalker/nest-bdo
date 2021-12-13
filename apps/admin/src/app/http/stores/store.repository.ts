@@ -54,6 +54,10 @@ export class StoreRepository {
     });
   }
 
+  async findStoreByWorkflowKey(workflowKey: string): Promise<any> {
+    return await this.storeModel.find({ workflowKey });
+  }
+
   async getStores(): Promise<Store[]> {
     return await this.storeModel.find({});
   }

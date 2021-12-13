@@ -45,4 +45,15 @@ export class StoreController {
     const storeInfo = await this.storeService.getStoreInfo(storeKey);
     return ResponseUtils.success(storeInfo);
   }
+
+  @Get('/exportable/:workflowKey')
+  @UseInterceptors(TransformInterceptor)
+  async getStoreExportableDetails(
+    @Param('workflowKey') workflowKey: string,
+  ): Promise<any> {
+    const storeInfo = await this.storeService.getExportableStoreDataArray(
+      workflowKey,
+    );
+    return ResponseUtils.success(storeInfo);
+  }
 }

@@ -18,6 +18,9 @@ export class CreateFieldRequest {
   @ApiProperty()
   isEditable: boolean;
 
+  @ApiProperty()
+  isExportable: boolean;
+
   @ApiProperty({ type: Expression })
   expression: Expression;
 
@@ -42,6 +45,9 @@ export class CreateFieldRequest {
     fieldDto.isEditable = empty(createFieldRequest.isEditable)
       ? true
       : createFieldRequest.isEditable;
+    fieldDto.isExportable = empty(createFieldRequest.isExportable)
+      ? true
+      : createFieldRequest.isExportable;
     createFieldRequest.groups.forEach((group) => {
       const groupObj = new Types.ObjectId(group);
       fieldDto.groups.push(groupObj);

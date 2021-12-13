@@ -4,6 +4,7 @@ import { WorkflowRepository } from 'libs/core/workflow/workflow.repository';
 import { Workflow } from '@shared/app/schemas/workflows/workflow.schema';
 import { StoreDto } from './dtos/store.dtos';
 import { StoreRepository } from './store.repository';
+import { convertToString } from '@shared/app/utils/function/helper.function';
 
 @Injectable()
 export class StoreService {
@@ -27,6 +28,44 @@ export class StoreService {
 
   async findOne(storeId: string): Promise<any> {
     return await this.storeRepository.findOne(storeId);
+  }
+
+  async getExportableStoreDataArray(workflowKey: string): Promise<any> {
+    const stores =
+      (await this.storeRepository.findStoreByWorkflowKey(workflowKey)) || [];
+
+    const exportableFields =
+      (await this.getWorkflowExportableField(workflowKey)) || [];
+
+    const mappedStore = [];
+    stores.forEach((store) => {
+      const storeObj = {};
+      exportableFields.forEach((obj) => {
+        storeObj[obj['label']] =
+          convertToString(store.get(obj['keyName'])) || '';
+      });
+
+      mappedStore.push(storeObj);
+    });
+    return mappedStore;
+  }
+
+  async getWorkflowExportableField(workflowKey: string): Promise<any> {
+    const workflow = await this.workflowRepository.findOne(workflowKey);
+    const fieldsArr = [];
+    for (const i in workflow.steps) {
+      const step = workflow.steps[i];
+      const fields = step.fields || [];
+      fields.forEach((field) => {
+        if (field['isExportable']) {
+          const obj = {};
+          obj['keyName'] = field['keyName'];
+          obj['label'] = field['label'];
+          fieldsArr.push(obj);
+        }
+      });
+    }
+    return fieldsArr;
   }
 
   async getStoreInfo(storeId: string): Promise<any> {
