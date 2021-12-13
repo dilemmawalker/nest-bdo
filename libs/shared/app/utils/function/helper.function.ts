@@ -46,12 +46,11 @@ export function getAgreementName(store) {
   return `1K_Retailer_Agreement_${store
     .get('store_name')
     .replace(' ', '')}_${getInitials(
-    store.get('owner_name').replace(' ', ''),
-  )}_${date_time}_${
-    store.get('createdBy')
+      store.get('owner_name').replace(' ', ''),
+    )}_${date_time}_${store.get('createdBy')
       ? store.get('createdBy')['agentId'].toString()
       : store.get('storeId')
-  }.pdf`;
+    }.pdf`;
 }
 
 export function getInitials(string) {
@@ -65,10 +64,12 @@ export function getInitials(string) {
 }
 
 export function empty(e) {
+  if (typeof e === 'undefined') {
+    return true;
+  }
   switch (e) {
     case '':
     case null:
-    case typeof e == 'undefined':
       return true;
     default:
       return false;

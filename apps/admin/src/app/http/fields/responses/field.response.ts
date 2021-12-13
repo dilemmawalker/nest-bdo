@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expression } from '@shared/app/schemas/fields/expression.schema';
 import { Field } from '@shared/app/schemas/fields/field.schema';
+import { empty } from '@shared/app/utils/function/helper.function';
 import { Types } from 'mongoose';
 
 export class FieldResponse {
@@ -38,7 +39,7 @@ export class FieldResponse {
     entity.label = field.label;
     entity.options = field.options;
     entity.type = field.type;
-    entity.isEditable = field.isEditable || true;
+    entity.isEditable = field.isEditable;
     entity.expression = field.expression || null;
     entity.validations = field.validations;
     entity.groups = field.groups;

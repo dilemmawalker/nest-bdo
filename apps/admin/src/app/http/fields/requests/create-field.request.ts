@@ -1,5 +1,6 @@
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
 import { Expression } from '@shared/app/schemas/fields/expression.schema';
+import { empty } from '@shared/app/utils/function/helper.function';
 import { FieldDto } from 'libs/core/fields/src/dtos/field.dto';
 import { Types } from 'mongoose';
 
@@ -38,7 +39,9 @@ export class CreateFieldRequest {
     fieldDto.type = createFieldRequest.type;
     fieldDto.keyName = createFieldRequest.keyName;
     fieldDto.expression = createFieldRequest.expression;
-    fieldDto.isEditable = createFieldRequest.isEditable || true;
+    fieldDto.isEditable = empty(createFieldRequest.isEditable)
+      ? true
+      : createFieldRequest.isEditable;
     createFieldRequest.groups.forEach((group) => {
       const groupObj = new Types.ObjectId(group);
       fieldDto.groups.push(groupObj);
