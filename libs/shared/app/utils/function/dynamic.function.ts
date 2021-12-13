@@ -630,7 +630,9 @@ receive its full inventory refillment request. </td>
         <div style='min-height: 150px;'>
             <div style=' text-align: center; font-weight: 700;'>
                 <div style='width: 25%;float: right;'>
-                    <div style='min-height: 100px;'></div>
+                    <div style='min-height: 100px;'>
+                    ${company_stamp_img_url}
+                    </div>
                     Franchisee Store Stamp &amp; Signature Authorized
                 </div>
                 <div></div>
@@ -646,58 +648,6 @@ receive its full inventory refillment request. </td>
             </div>
         </div>
     </div>
-    
-    <br><br><br>
-    <hr style='page-break-after: always;'> <br>
-     <img src='https://bdo-admin.web.app/assets/images/1k-logo.svg' style= 'margin:10px; width: 100px;' />
-        <p style = 'text-align: center;'>To whom it may concern</p>
-        <p style = 'text-align: center;'>
-            <b>Commercial Agreement</b>
-        </p>
-        To <u style='color: red;'> ${store_name} </u>
-        <hr>1. Margins
-        <ul>
-        <li>Ghee, Oil, Sugar, Atta - 3%</li>
-        <li>Rest FMCG & Loose - 10%</li>
-        <li>General Merchandise - 20%</li>
-        </ul>
-        <hr>2. Reimbursement: <u> 25000 </u>
-        <hr>
-        3. Security Amount: <u> ${security_amount} </u>
-        <hr>
-        4. Racks: <u> 21 </u>
-        <hr>
-         5. Total Investment(₹): <u> ${total_investment} </u> /sq.ft. , (₹) <u>${store_dimensions}</u> MRP
-         <hr>
-         6. Sales person will collect the sales payment on weekly basis. (Monday)
-         <hr>
-         7. Sales and marketing will be done by 1K Kirana. (Online and offline both)
-         <hr><hr>
-        <div>
-            <b style='color: red;'>Note </b>
-            <li style='color: red;'>After completion of investment only you will be available to avail credit limit.</li>
-            <li style='color: red;'>Racks will be installed after completion of investment ( ₹300/sq. ft. as per requirement).</li> 
-        </div>
-        <div style='min-height: 200px;'>
-        <div style='float: right; text-align: center; min-height: 120px;'>
-        ${digital_html}
-        <p>${owner_name}</p>
-        <b>Retail Partner</b><br>
-        </div>
-        <div style='float: left; text-align: center; min-height: 120px;'>
-        <div>
-        <br>
-        <br>
-        <br>
-        ${company_stamp_img_url}
-        <br>
-        <br>
-        </div>
-        <b>1K KIRANA</b><br>
-        </div>
-        </div>
-    </div>
-
         `;
 
   return submitHtml;
@@ -1373,66 +1323,7 @@ Franchisor Company Stamp &amp; Signature
     </div>
   </div>
 </div>
-<br>
-<br>
-<br>
-  <hr style='page-break-after: always;'>
-        <br>
-        
-     <div style='margin: 15px;'><img src='https://bdo-admin.web.app/assets/images/1k-logo.svg' style= 'margin: 10px; width: 100px; float: left; position: absolute;' />
-      <center><b style='color: #FF8C00; font-size: 18px;'>TO WHOM IT MAY CONCERN</b></center>
-      <br>
-      <br>
-      <br>
-      <br>
-      <b style='margin-top:100px; color: #00C6AE'>Commercial Agreement</b>
-      <p> To  <u> ${store_name} </u>
-      <hr>
-      1. Margins
-      <ul>
-      <li style='line-height: 24px;'>Ghee, Oil, Sugar, Atta - 3%</li>
-      <li style='line-height: 24px;'>Rest FMCG & Loose - 10%</li>
-      <li style='line-height: 24px;'>General Merchandise - 20%</li>
-      </ul>
-      <hr>
-      2. Reimbursement: <u> ${reimbursement} </u>
-      <hr>
-      3. Security Amount: <u> ${security_amount} </u>
-      <hr>
-      4. Racks: <u> 21 </u>
-      <hr>
-       5. Total Investment(₹): <u> ${total_investment} </u> /sq.ft. , (₹) <u>${store_dimensions}</u> MRP
-       <hr>
-       6. Sales person will collect the sales payment on weekly basis. (Monday)
-       <hr>
-       7. Sales and marketing will be done by 1K Kirana. (Online and offline both)
-       <hr>
-       <ul style='color: #FF8C00;'>
-      <b style='position: relative; right: 40px'> Note </b>
-       <li style='line-height: 24px;'>After completion of investment only you will be available to avail credit limit.</li>
-      <li style='line-height: 24px;'>Racks will be installed after completion of investment ( ₹300/sq. ft. as per requirement).</li>
-      </ul>
-      </p>
-      <div style='min-height: 200px;'>
-      <div style='float: right; text-align: center; min-height: 120px;'>
-      ${digital_html}
-      <p>${owner_name}</p>
-      <b>Retail Partner</b><br>
-      </div>
-      <div style='float: left; text-align: center; min-height: 120px;'>
-      <div>
-      <br>
-      <br>
-      <br>
-      ${company_stamp_img_url}
-      <br>
-      <br>
-      </div>
-      <b>1K KIRANA</b><br>
-      </div>
-      </div>
-      </div>
-        `;
+`;
 
   return submitHtml;
 }
