@@ -46,11 +46,12 @@ export class StoreController {
     return ResponseUtils.success(storeInfo);
   }
 
-  @Get('/exportable/:workflowKey')
+  @Get('/exportable/stores')
   @UseInterceptors(TransformInterceptor)
-  async getStoreExportableDetails(
-    @Param('workflowKey') workflowKey: string,
-  ): Promise<any> {
+  async getStoreExportableDetails(): Promise<any> {
+    const workflowKey =
+      process.env.DEFAULT_STORE_ONBOARDING_WORKFLOW ||
+      '36f95603-fd8e-4e01-943e-9875ef53c0fa';
     const storeInfo = await this.storeService.getExportableStoreDataArray(
       workflowKey,
     );
