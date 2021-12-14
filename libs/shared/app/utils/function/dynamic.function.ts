@@ -628,17 +628,17 @@ receive its full inventory refillment request. </td>
         </ul>
         <br> <br>
         <div style='min-height: 150px;'>
-            <div style=' text-align: center; font-weight: 700;'>
+            <div style=' text-align: center;'>
+            ${digital_html}
+            <p>${owner_name}</p><b>Retail Partner</b><br>
                 <div style='width: 25%;float: right;'>
-                ${digital_html}
-                <p>${owner_name}</p><b>Retail Partner</b><br>
                     Franchisee Store Stamp &amp; Signature Authorized
                 </div>
                 <div></div>
             </div>
             <div style=' text-align: center; font-weight: 700;'>
                 <div style='width: 25%;float: left;'>
-                    <div style='min-height: 100px;'>  ${company_stamp_img_url}div>
+                    <div style='min-height: 100px;'>  ${company_stamp_img_url} </div>
                     Franchisor Company Stamp &amp; Signature
                 </div>
                 <div></div>
