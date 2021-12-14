@@ -629,9 +629,10 @@ receive its full inventory refillment request. </td>
         <br> <br>
         <div style='min-height: 150px;'>
             <div style=' text-align: center;'>
-            ${digital_html}
-            <p>${owner_name}</p><b>Retail Partner</b><br>
+           
                 <div style='width: 25%;float: right;'>
+                 ${digital_html}
+                <p>${owner_name}</p><b>Retail Partner</b><br>
                     Franchisee Store Stamp &amp; Signature Authorized
                 </div>
                 <div></div>
