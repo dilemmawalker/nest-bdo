@@ -59,6 +59,13 @@ export class StoreRepository {
   }
 
   async getStores(): Promise<Store[]> {
-    return await this.storeModel.find({});
+    return await this.storeModel.find({}).populate({
+      path: 'createdBy',
+      model: 'Agent',
+      populate: {
+        path: 'user',
+        model: 'User',
+      },
+    });
   }
 }
