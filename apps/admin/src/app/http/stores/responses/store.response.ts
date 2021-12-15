@@ -63,7 +63,9 @@ export class StoreResponse {
     );
     const agent = {};
     if (store.get('createdBy')) {
-      agent['name'] = store.get('createdBy').get('user')['name'];
+      agent['name'] = store.get('createdBy')['user']
+        ? store.get('createdBy')['user']['name']
+        : '';
       agent['agentId'] = store.get('createdBy')['agentId'];
     }
     entity.agent = agent;
