@@ -7,7 +7,7 @@ import { FieldService } from 'libs/core/fields/src/field.service';
 
 @Injectable()
 export class ValidationUtils {
-  constructor(private fieldService: FieldService) { }
+  constructor(private fieldService: FieldService) {}
   async validateWorkFlowRequestFields(workflowRequestFields: any[]) {
     for (const workflowRequestField of workflowRequestFields) {
       await this.validateField(
