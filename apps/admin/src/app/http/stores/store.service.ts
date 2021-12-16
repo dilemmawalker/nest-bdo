@@ -113,12 +113,37 @@ export class StoreService {
     for (const i in inputFields) {
       const dataObj = {};
       const inputField = inputFields[i];
-      inputField.inputValue = store.get(inputField.keyName);
-      dataObj[inputField.keyName] = inputField.inputValue;
+      if (inputField.group.length > 0) {
+        inputField.inputValue = this.getInputGroupFields(
+          inputField.group,
+          store.get(inputField.keyName),
+        );
+      } else {
+        inputField.inputValue = store.get(inputField.keyName);
+      }
+      dataObj[inputField.keyName] = {
+        inputValue: inputField.inputValue,
+        type: inputField.type,
+      };
       if (inputField.inputValue) {
         dataArray.push(dataObj);
       }
     }
+    return dataArray;
+  }
+  getInputGroupFields(
+    groupFields: FieldInputData[],
+    inputValueObject: any,
+  ): any {
+    const dataArray = [];
+    groupFields.forEach((groupField) => {
+      const dataObj = {};
+      dataObj[groupField.keyName] = {
+        inputValue: inputValueObject[groupField.keyName],
+        type: groupField.type,
+      };
+      dataArray.push(dataObj);
+    });
     return dataArray;
   }
 }
