@@ -65,6 +65,8 @@ export class StoreService {
         }
       });
     }
+    fieldsArr['status'] = { keyName: 'status', label: 'Status' };
+    fieldsArr['createdAt'] = { keyName: 'createdAt', label: 'Created At' };
     return fieldsArr;
   }
 
