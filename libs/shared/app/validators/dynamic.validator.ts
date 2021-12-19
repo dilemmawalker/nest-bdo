@@ -30,25 +30,36 @@ export class DynamicValidator {
   ): ValidationResponseUtils {
     switch (validation.type) {
       case 'range':
+        const lowerbound = validation.options.find((option) => {
+          option.key === 'lowerbound';
+        });
+        const upperbound = validation.options.find((option) => {
+          option.key === 'upperbound';
+        });
+        if (!lowerbound || !upperbound) {
+          return ValidationResponseUtils.result(true, '');
+        }
         const isValid =
           Validator.isFloat(value) &&
           Validator.inRange(
             parseFloat(value),
-            validation.options[0].value,
-            validation.options[1].value,
+            lowerbound.value,
+            upperbound.value,
           );
         return ValidationResponseUtils.result(
           isValid,
-          invalidRangeValidation(
-            label,
-            validation.options[0].value,
-            validation.options[1].value,
-          ),
+          invalidRangeValidation(label, lowerbound.value, upperbound.value),
         );
       case 'fixLength':
+        const fixLength = validation.options.find((option) => {
+          return option.key === 'fixLength';
+        });
+        if (!fixLength) {
+          return ValidationResponseUtils.result(true, '');
+        }
         return ValidationResponseUtils.result(
-          Validator.fixLength(value, validation.options[0].value),
-          fixLengthValidationMessage(label, validation.options[0].value),
+          Validator.fixLength(value, fixLength.value),
+          fixLengthValidationMessage(label, fixLength.value),
         );
       case 'required':
         return ValidationResponseUtils.result(
@@ -56,32 +67,48 @@ export class DynamicValidator {
           requiredValidation(label),
         );
       case 'min':
+        const min = validation.options.find((option) => {
+          return option.key === 'min';
+        });
+        if (!min) {
+          return ValidationResponseUtils.result(true, '');
+        }
         return ValidationResponseUtils.result(
-          Validator.min(parseFloat(value), validation.options[0].value),
-          invalidMinMaxValidation(label, 'min', validation.options[0].value),
+          Validator.min(parseFloat(value), min.value),
+          invalidMinMaxValidation(label, 'min', min.value),
         );
       case 'max':
+        const max = validation.options.find((option) => {
+          return option.key === 'max';
+        });
+        if (!max) {
+          return ValidationResponseUtils.result(true, '');
+        }
         return ValidationResponseUtils.result(
-          Validator.max(parseFloat(value), validation.options[0].value),
-          invalidMinMaxValidation(label, 'max', validation.options[0].value),
+          Validator.max(parseFloat(value), max.value),
+          invalidMinMaxValidation(label, 'max', max.value),
         );
       case 'maxlength':
+        const maxlength = validation.options.find((option) => {
+          return option.key === 'maxlength';
+        });
+        if (!maxlength) {
+          return ValidationResponseUtils.result(true, '');
+        }
         return ValidationResponseUtils.result(
-          Validator.maxLength(value, validation.options[0].value),
-          invalidMinMaxValidation(
-            label,
-            'maxlength',
-            validation.options[0].value,
-          ),
+          Validator.maxLength(value, maxlength.value),
+          invalidMinMaxValidation(label, 'maxlength', maxlength.value),
         );
       case 'minlength':
+        const minlength = validation.options.find((option) => {
+          return option.key === 'minlength';
+        });
+        if (!minlength) {
+          return ValidationResponseUtils.result(true, '');
+        }
         return ValidationResponseUtils.result(
-          Validator.minLength(value, validation.options[0].value),
-          invalidMinMaxValidation(
-            label,
-            'minlength',
-            validation.options[0].value,
-          ),
+          Validator.minLength(value, minlength.value),
+          invalidMinMaxValidation(label, 'minlength', minlength.value),
         );
     }
     return ValidationResponseUtils.result(true, '');
