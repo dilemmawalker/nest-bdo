@@ -26,11 +26,11 @@ export function fixLengthValidationMessage(
 export function invalidMinMaxValidation(
   fieldLabel: string,
   type: string,
-  bound: any,
+  bound: string,
 ): string {
   const slug = type.match('max*')
-    ? `lesser than ${bound + 1}`
-    : `greater than ${bound - 1}`;
+    ? `lesser than ${parseFloat(bound) + 1}`
+    : `greater than ${parseFloat(bound) - 1}`;
   let data = 'data';
   if (type === 'maxlength' || type === 'minlength') data += ' length';
   return `${fieldLabel} has invalid range, ` + data + ` must be ` + slug;
