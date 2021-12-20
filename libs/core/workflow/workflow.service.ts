@@ -38,8 +38,6 @@ import {
   generateAgreementCardPdfHtml,
 } from '@shared/app/utils/function/dynamic.function';
 import { FileService } from '@file/file/file.service';
-import { isContext } from 'vm';
-import { Validator } from '@shared/app/validators/main.validator';
 @Injectable()
 export class WorkflowService {
   constructor(
@@ -49,7 +47,7 @@ export class WorkflowService {
     private readonly fieldRepository: FieldRepository,
     private readonly activityService: ActivityService,
     private readonly fileService: FileService,
-  ) { }
+  ) {}
 
   async findOne(key: string): Promise<Workflow> {
     const workflow = await this.workflowRepository.findOne(key);
@@ -71,6 +69,7 @@ export class WorkflowService {
         storeDto.workflowKey,
         storeObj.storeId,
         storeDto.stepId,
+        storeObj,
       );
     }
   }
@@ -188,13 +187,23 @@ export class WorkflowService {
   isFieldNullOrEmpty(value: string): boolean {
     return value === null || value.length === 0;
   }
-  async get(workflowKey: string, storeId: string, stepId: string) {
+  async get(
+    workflowKey: string,
+    storeId: string,
+    stepId: string,
+    store = null,
+  ) {
     const workflow = await this.findOne(workflowKey);
-    const store = await this.storeRepository.findOne(storeId);
+
+    if (!store) {
+      store = await this.storeRepository.findOne(storeId);
+    }
+
     const fields: FieldInputData[] = await this.getInputFields(
       this.getStepsFields(workflow, stepId),
       store,
     );
+
     if (store) {
       await this.storeRepository.updateObj({ currentStepId: stepId }, storeId);
     }
