@@ -5,9 +5,9 @@ import { JwtModule } from '@nestjs/jwt';
 import { JWTUtil } from '@shared/app/utils/class/jwt.utils';
 import { jwtConfig } from '@shared/config/auth.config';
 import { RolesGuard } from 'apps/admin/src/app/guards/roles.guard';
-import { RoleModule } from 'apps/admin/src/app/http/roles/role.module';
-import { StoreModule } from 'apps/admin/src/app/http/stores/store.module';
 import { CoreClusterManagerModule } from 'libs/core/clusterManager/src/core-cluster.manager.module';
+import { CoreRoleModule } from 'libs/core/roles/src/core-role.module';
+import { CoreStoreModule } from 'libs/core/stores/src/core-store.module';
 import { ClusterManagerController } from './cluster-manager.controller';
 
 @Module({
@@ -15,8 +15,8 @@ import { ClusterManagerController } from './cluster-manager.controller';
     CoreUserModule,
     CoreClusterManagerModule,
     CaslModule,
-    RoleModule,
-    StoreModule,
+    CoreRoleModule,
+    CoreStoreModule,
     JwtModule.register(jwtConfig),
   ],
   controllers: [ClusterManagerController],

@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Activity } from '@shared/app/schemas/activity/activity.schema';
-import { StoreRepository } from 'apps/admin/src/app/http/stores/store.repository';
+import { StoreRepository } from 'libs/core/stores/src/store.repository';
 import { ActivityResponseDto } from 'apps/agent/src/app/http/activity/dtos/activity.response.dto';
 import { ActivityRepository } from './activity.repository';
 import { ActivityDto } from './dtos/activity.dto';

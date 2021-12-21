@@ -1,3 +1,5 @@
+import { AuthService } from '@core/auth/auth.service';
+import { AUTH_SUCCESS_MESSAGE } from '@core/auth/message/auth.message';
 import {
   Body,
   Controller,
@@ -16,8 +18,6 @@ import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { LocalAuthGuard } from '../../guards/local-auth.guard';
 import { RolesGuard } from '../../guards/roles.guard';
 import { UserResponse } from '../users/responses/user.response';
-import { AuthService } from '../../../../../../libs/core/auth/src/auth.service';
-import { AUTH_SUCCESS_MESSAGE } from '../../../../../../libs/core/auth/src/message/auth.message';
 import { LoginRequest } from './requests/login.request';
 import { LoginResponse } from './responses/login.response';
 

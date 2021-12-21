@@ -20,7 +20,7 @@ import { Roles } from 'apps/admin/src/app/decorators/auth/roles.decorators';
 import { JwtAuthGuard } from 'apps/admin/src/app/guards/jwt-auth.guard';
 import { RolesGuard } from 'apps/admin/src/app/guards/roles.guard';
 import { StoreResponse } from 'apps/admin/src/app/http/stores/responses/store.response';
-import { StoreService } from 'apps/admin/src/app/http/stores/store.service';
+import { StoreService } from 'libs/core/stores/src/store.service';
 import { RoleConst } from 'apps/admin/src/constant/auth/roles.constant';
 import { ClusterManagerService } from 'libs/core/clusterManager/src/cluster.manager.service';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';

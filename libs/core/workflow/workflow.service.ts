@@ -6,7 +6,7 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { Workflow } from '../../shared/app/schemas/workflows/workflow.schema';
 import { WorkflowRepository } from './workflow.repository';
-import { StoreRepository } from 'apps/admin/src/app/http/stores/store.repository';
+import { StoreRepository } from 'libs/core/stores/src/store.repository';
 import { FieldInputData, Store } from '@shared/app/schemas/stores/store.schema';
 import {
   StoreDto,

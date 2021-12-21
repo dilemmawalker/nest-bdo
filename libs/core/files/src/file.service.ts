@@ -3,7 +3,7 @@ import { S3 } from 'aws-sdk';
 import { FileDto } from './dtos/file.dto';
 import { FileRepository } from './file.repository';
 import { File } from '@shared/app/schemas/files/file.schema';
-import { StoreService } from 'apps/admin/src/app/http/stores/store.service';
+import { StoreService } from 'libs/core/stores/src/store.service';
 import * as htmlPdf from 'html-pdf-chrome';
 
 @Injectable()

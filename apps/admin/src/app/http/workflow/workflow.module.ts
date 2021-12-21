@@ -7,7 +7,6 @@ import {
   Workflow,
   WorkflowSchema,
 } from '@shared/app/schemas/workflows/workflow.schema';
-import { StoreModule } from '../stores/store.module';
 import { WorkflowController } from './workflow.controller';
 
 @Module({

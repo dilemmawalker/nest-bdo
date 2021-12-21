@@ -4,7 +4,7 @@ import { Store } from '@shared/app/schemas/stores/store.schema';
 import { Agent } from '@shared/app/schemas/users/agent.schema';
 import { Workflow } from '@shared/app/schemas/workflows/workflow.schema';
 import { FilterQuery, Model } from 'mongoose';
-import { StoreDto } from './dtos/store.dtos';
+import { StoreDto } from '../../../../apps/admin/src/app/http/stores/dtos/store.dtos';
 
 @Injectable()
 export class StoreRepository {

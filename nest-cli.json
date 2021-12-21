@@ -26,6 +26,15 @@
         "tsConfigPath": "libs/core/tsconfig.lib.json"
       }
     },
+    "stores": {
+      "type": "application",
+      "root": "libs/core/stores",
+      "entryFile": "index",
+      "sourceRoot": "libs/core/stores/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/core/tsconfig.lib.json"
+      }
+    },
     "agent": {
       "type": "application",
       "root": "apps/agent",

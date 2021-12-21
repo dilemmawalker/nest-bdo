@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Store, StoreSchema } from '@shared/app/schemas/stores/store.schema';
-import { StoreRepository } from 'apps/admin/src/app/http/stores/store.repository';
+import { StoreRepository } from 'libs/core/stores/src/store.repository';
 import { Field, FieldSchema } from '@shared/app/schemas/fields/field.schema';
 import { Step, StepSchema } from '@shared/app/schemas/steps/steps.schema';
 import {

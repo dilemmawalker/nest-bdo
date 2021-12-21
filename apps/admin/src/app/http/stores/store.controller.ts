@@ -10,11 +10,11 @@ import {
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { TransformInterceptor } from '@shared/app/interceptors/transform.interceptor';
 import { ResponseUtils } from '@shared/app/utils/class/response.utils';
+import { StoreService } from 'libs/core/stores/src/store.service';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
 import { StoreLeadResponse } from '../workflow/responses/store-lead.response';
 import { StoreResponse } from './responses/store.response';
-import { StoreService } from './store.service';
 
 @ApiTags('Stores')
 @Controller('stores')

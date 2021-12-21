@@ -5,7 +5,7 @@ import {
   ClusterManagerDto,
 } from '@shared/app/schemas/users/cluster.manager.schema';
 import { getCurrentDate } from '@shared/app/utils/function/helper.function';
-import { StoreRepository } from 'apps/admin/src/app/http/stores/store.repository';
+import { StoreRepository } from 'libs/core/stores/src/store.repository';
 import { ActivityService } from 'libs/core/activity/activity.service';
 import { ActivityDto } from 'libs/core/activity/dtos/activity.dto';
 import { ClusterManagerRepository } from './cluster.manager.repository';
