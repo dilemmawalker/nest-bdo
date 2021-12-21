@@ -122,12 +122,10 @@ export class StoreService {
         inputField.inputValue = store.get(inputField.keyName);
       }
       dataObj[inputField.keyName] = {
-        inputValue: inputField.inputValue,
+        inputValue: inputField.inputValue ? inputField.inputValue : ' ',
         type: inputField.type,
       };
-      if (inputField.inputValue) {
-        dataArray.push(dataObj);
-      }
+      dataArray.push(dataObj);
     }
     return dataArray;
   }
@@ -139,7 +137,10 @@ export class StoreService {
     groupFields.forEach((groupField) => {
       const dataObj = {};
       dataObj[groupField.keyName] = {
-        inputValue: inputValueObject[groupField.keyName],
+        inputValue:
+          inputValueObject && inputValueObject[groupField.keyName]
+            ? inputValueObject[groupField.keyName]
+            : ' ',
         type: groupField.type,
       };
       dataArray.push(dataObj);
