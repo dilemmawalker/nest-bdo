@@ -25,6 +25,9 @@ export class Agent extends BaseItemSchema {
 
   @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'Store' })
   stores: Types.ObjectId[];
+
+  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'Meeting' })
+  meetings: Types.ObjectId[];
 }
 
 export class AgentDto {
