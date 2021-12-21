@@ -8,10 +8,7 @@ import { Workflow } from '../../shared/app/schemas/workflows/workflow.schema';
 import { WorkflowRepository } from './workflow.repository';
 import { StoreRepository } from 'libs/core/stores/src/store.repository';
 import { FieldInputData, Store } from '@shared/app/schemas/stores/store.schema';
-import {
-  StoreDto,
-  StoreField,
-} from 'apps/admin/src/app/http/stores/dtos/store.dtos';
+import { StoreDto, StoreField } from 'libs/core/stores/dtos/store.dtos';
 import { WorkflowDto } from './dtos/workflow.dto';
 import { AssignFieldDto } from './dtos/assign-field.dto';
 import { StepDto } from './dtos/step.dto';

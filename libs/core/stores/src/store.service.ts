@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { FieldInputData, Store } from '@shared/app/schemas/stores/store.schema';
 import { WorkflowRepository } from 'libs/core/workflow/workflow.repository';
 import { Workflow } from '@shared/app/schemas/workflows/workflow.schema';
-import { StoreDto } from '../../../../apps/admin/src/app/http/stores/dtos/store.dtos';
+import { StoreDto } from '../dtos/store.dtos';
 import { StoreRepository } from './store.repository';
 import { convertToString } from '@shared/app/utils/function/helper.function';
 

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { StoreDto } from 'apps/admin/src/app/http/stores/dtos/store.dtos';
+import { StoreDto } from 'libs/core/stores/dtos/store.dtos';
 
 export class WorkflowRequestField {
   @ApiProperty()
