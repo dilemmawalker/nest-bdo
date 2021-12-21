@@ -26,7 +26,7 @@ export class Meeting extends BaseItemSchema {
   description: string;
 
   @Prop()
-  location: any;
+  location: mongoose.Mixed;
 
   @Prop({ type: Date, required: true })
   scheduledAt: Date;
@@ -43,14 +43,15 @@ export class Meeting extends BaseItemSchema {
   @Prop({ type: Types.ObjectId, ref: 'Agent' })
   agent: Types.ObjectId;
 
-  @Prop({ required: true })
-  status: MeetingStatus;
+  @Prop({ enum: MeetingStatus, required: true })
+  status: string;
 }
 
 export class MeetingDto {
   title: string;
   meetingId: string;
   agentId: string;
+  storeId: string;
   remarks: string;
   outcome: string;
   description: string;

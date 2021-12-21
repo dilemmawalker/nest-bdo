@@ -39,6 +39,9 @@ export class Store {
   @Prop({ required: true, type: mongoose.Types.ObjectId, ref: 'Agent' })
   createdBy: mongoose.Types.ObjectId;
 
+  @Prop({ type: [mongoose.Types.ObjectId], ref: 'Meeting' })
+  meetings: mongoose.Types.ObjectId[];
+
   @Prop({ type: Date })
   createdAt: Date;
 
