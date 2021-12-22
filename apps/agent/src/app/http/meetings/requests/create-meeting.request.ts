@@ -1,5 +1,5 @@
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
-import { MeetingDto } from '@shared/app/schemas/meetings/meeting.schema';
+import { MeetingDto } from 'libs/core/meetings/src/dtos/meeting.dto';
 
 @ApiTags('Meetings')
 export class CreateMeetingRequest {

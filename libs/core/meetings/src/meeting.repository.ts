@@ -1,10 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import {
-  Meeting,
-  MeetingDto,
-} from '@shared/app/schemas/meetings/meeting.schema';
+import { Meeting } from '@shared/app/schemas/meetings/meeting.schema';
 import { FilterQuery, Model } from 'mongoose';
+import { MeetingDto } from './dtos/meeting.dto';
 
 @Injectable()
 export class MeetingRepository {

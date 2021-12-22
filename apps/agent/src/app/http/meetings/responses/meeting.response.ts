@@ -9,6 +9,9 @@ export class MeetingResponse {
   title: string;
 
   @ApiProperty()
+  meetingId: string;
+
+  @ApiProperty()
   description: string;
 
   @ApiProperty()
@@ -35,6 +38,7 @@ export class MeetingResponse {
     entity.store = meeting.store;
     entity.agent = meeting.agent;
     entity.location = meeting.location;
+    entity.meetingId = meeting.meetingId;
     return entity;
   }
 }

@@ -46,23 +46,4 @@ export class Meeting extends BaseItemSchema {
   @Prop({ enum: MeetingStatus, required: true })
   status: string;
 }
-
-export class MeetingDto {
-  title: string;
-  meetingId: string;
-  agentId: string;
-  storeId: string;
-  remarks: string;
-  outcome: string;
-  description: string;
-  location: any;
-  scheduledAt: Date;
-  startedAt: Date;
-  endedAt: Date;
-  store: Types.ObjectId;
-  agent: Types.ObjectId;
-  status: MeetingStatus;
-  createdAt: Date;
-  updatedAt: Date;
-}
 export const MeetingSchema = SchemaFactory.createForClass(Meeting);
