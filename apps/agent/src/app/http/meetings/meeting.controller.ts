@@ -24,7 +24,7 @@ export class MeetingController {
   ) {}
 
   @UseInterceptors(TransformInterceptor)
-  @Post('/create')
+  @Post('/create-or-update')
   @ApiResponse({
     status: HttpStatus.OK,
     type: MeetingResponse,
