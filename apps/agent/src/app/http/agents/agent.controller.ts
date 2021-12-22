@@ -16,6 +16,7 @@ import { AgentService } from 'libs/core/agent/src/agent.service';
 import { ClusterManagerService } from 'libs/core/clusterManager/src/cluster.manager.service';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
+import { MeetingResponse } from '../meetings/responses/meeting.response';
 
 @ApiTags('Agents')
 @Controller('agent')
@@ -46,5 +47,16 @@ export class AgentController {
       StoreResponse.fromStoreArray(stores, status),
       status,
     );
+  }
+
+  @Get('meetings')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: [MeetingResponse],
+  })
+  async getMeetings(@Headers('Authorization') auth: string): Promise<any> {
+    const json = this.jwtUtil.decode(auth);
+    const meetings = await this.agentService.getMeetings(json.agentId);
+    return ResponseUtils.success(MeetingResponse.fromArray(meetings));
   }
 }
