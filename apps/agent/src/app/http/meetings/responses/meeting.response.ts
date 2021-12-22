@@ -41,4 +41,12 @@ export class MeetingResponse {
     entity.meetingId = meeting.meetingId;
     return entity;
   }
+
+  static fromArray(meetings: Meeting[]): MeetingResponse[] {
+    const entities = [];
+    meetings.forEach((meeting) => {
+      entities.push(this.fromMeeting(meeting));
+    });
+    return entities;
+  }
 }

@@ -23,4 +23,8 @@ export class AgentService {
     agentDto.userId = userId;
     return await this.agentRepository.findOne(agentDto);
   }
+
+  async getMeetings(agentId: string): Promise<any> {
+    return await this.agentRepository.getMeetings(agentId);
+  }
 }

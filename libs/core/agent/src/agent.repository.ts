@@ -97,4 +97,14 @@ export class AgentRepository {
       model: 'User',
     });
   }
+
+  async getMeetings(agentId: string): Promise<any> {
+    const agent = await this.agentModel.findOne({ agentId: agentId }).populate({
+      path: 'meetings',
+      model: 'Meeting',
+    });
+    return agent['meetings'].sort(
+      (a, b) => b['scheduledAt'] - a['scheduledAt'],
+    );
+  }
 }
