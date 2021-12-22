@@ -1,8 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import {
-  Meeting,
-  MeetingDto,
-} from '@shared/app/schemas/meetings/meeting.schema';
+import { Meeting } from '@shared/app/schemas/meetings/meeting.schema';
 import { AgentRepository } from 'libs/core/agent/src/agent.repository';
 import { MeetingRepository } from './meeting.repository';
 import { v4 as uuidv4 } from 'uuid';
@@ -11,6 +8,7 @@ import { ActivityDto } from 'libs/core/activity/dtos/activity.dto';
 import { ActivityService } from 'libs/core/activity/activity.service';
 import { getCurrentDate } from '@shared/app/utils/function/helper.function';
 import { StoreService } from 'libs/core/stores/src/store.service';
+import { MeetingDto } from './dtos/meeting.dto';
 
 @Injectable()
 export class MeetingService {
