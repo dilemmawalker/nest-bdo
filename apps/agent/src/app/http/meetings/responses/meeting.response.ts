@@ -1,7 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Meeting } from '@shared/app/schemas/meetings/meeting.schema';
-import { MeetingStatus } from '@shared/constant/meeting.constant';
-import { Types } from 'aws-sdk/clients/acm';
 import * as mongoose from 'mongoose';
 
 export class MeetingResponse {
