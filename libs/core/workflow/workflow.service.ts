@@ -66,7 +66,6 @@ export class WorkflowService {
         storeDto.workflowKey,
         storeObj.storeId,
         storeDto.stepId,
-        storeObj,
       );
     }
   }
@@ -156,16 +155,16 @@ export class WorkflowService {
     const store = await this.storeRepository.findOne(storeId);
     const completedStatus = {};
     for (const step of workflow.steps) {
-      const fields: FieldInputData[] = await this.getInputFields(
+      const obj: any = await this.getInputFields(
         this.getStepsFields(workflow, step.stepId),
         store,
       );
-      completedStatus[step.stepId] = this.isStepCompleted(fields);
+      completedStatus[step.stepId] = this.isStepCompleted(obj.fields);
     }
     return { steps: workflow.steps, completedStatus };
   }
 
-  isStepCompleted(fields: FieldInputData[]): boolean {
+  isStepCompleted(fields: any): boolean {
     return fields.every((field) => {
       if (field.group.length === 0) return this.isStepFieldCompleted(field);
 
@@ -184,32 +183,25 @@ export class WorkflowService {
   isFieldNullOrEmpty(value: string): boolean {
     return value === null || value.length === 0;
   }
-  async get(
-    workflowKey: string,
-    storeId: string,
-    stepId: string,
-    store = null,
-  ) {
+  async get(workflowKey: string, storeId: string, stepId: string) {
     const workflow = await this.findOne(workflowKey);
+    const store = await this.storeRepository.findOne(storeId);
 
-    if (!store) {
-      store = await this.storeRepository.findOne(storeId);
-    }
-
-    const fields: FieldInputData[] = await this.getInputFields(
+    const obj: any = await this.getInputFields(
       this.getStepsFields(workflow, stepId),
       store,
     );
 
     if (store) {
-      await this.storeRepository.updateObj({ currentStepId: stepId }, storeId);
+      obj.dynamicFields['currentStepId'] = stepId;
+      await this.storeRepository.updateObj(obj.dynamicFields, storeId);
     }
 
-    const is_step_completed = this.checkStepCompleted(fields);
+    const is_step_completed = this.checkStepCompleted(obj.fields);
     const meta = this.getStoreMeta(workflow, store, stepId);
     meta['is_step_completed'] = is_step_completed;
     meta['ref_id'] = storeId;
-    return { fields, meta };
+    return { fields: obj.fields, meta };
   }
 
   getStoreMeta(workflow: Workflow, store: any, stepId: string) {
@@ -316,6 +308,7 @@ export class WorkflowService {
   }
   async getInputFields(fields: any[], store: any) {
     const inputFields = FieldInputData.fromFieldArray(fields);
+    const dynamicFields = {};
     store = await this.setEqualField(inputFields, store);
     if (!store) {
       return inputFields;
@@ -323,34 +316,38 @@ export class WorkflowService {
     for (const i in inputFields) {
       const inputField = inputFields[i];
       if (inputField.expression) {
-        inputField.inputValue = await this.calculateFieldExpression(
+        const calculatedValue = await this.calculateFieldExpression(
           inputField.expression,
           store,
         );
+        dynamicFields[inputField.keyName] = calculatedValue;
+        inputField.inputValue = calculatedValue;
       } else if (inputField.group.length == 0) {
         inputField.inputValue =
           store.get(inputField.keyName) || inputField.inputValue;
       } else {
+        const groupValue = {};
         inputField.group.forEach(async (field, index) => {
           if (field.expression) {
-            console.log('field = ', inputFields[i].group[index].keyName);
-            console.log('ex = ', inputField.expression);
             const val = await this.calculateFieldExpression(
               field.expression,
               store,
             );
-            console.log('val = ', val);
+            groupValue[field.keyName] = val;
             inputFields[i].group[index].inputValue = val;
           } else {
             if (store.get(inputField.keyName)) {
-              inputFields[i].group[index].inputValue =
+              groupValue[field.keyName] =
                 store.get(inputField.keyName)[field.keyName] || '';
+              inputFields[i].group[index].inputValue =
+                groupValue[field.keyName];
             }
           }
         });
+        dynamicFields[inputField.keyName] = groupValue;
       }
     }
-    return inputFields;
+    return { fields: inputFields, dynamicFields };
   }
 
   async calculateFieldExpression(
