@@ -74,6 +74,9 @@ export class StoreRepository {
       path: 'meetings',
       model: 'Meeting',
     });
+    if (!store) {
+      return null;
+    }
     return store['meetings'].sort((a, b) => {
       return b['createdAt'] - a['createdAt'];
     });

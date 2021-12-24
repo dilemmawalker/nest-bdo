@@ -10,6 +10,7 @@ import {
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { TransformInterceptor } from '@shared/app/interceptors/transform.interceptor';
 import { ResponseUtils } from '@shared/app/utils/class/response.utils';
+import { MeetingResponse } from 'apps/agent/src/app/http/meetings/responses/meeting.response';
 import { StoreService } from 'libs/core/stores/src/store.service';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
@@ -56,5 +57,12 @@ export class StoreController {
       workflowKey,
     );
     return ResponseUtils.success(storeInfo);
+  }
+
+  @UseInterceptors(TransformInterceptor)
+  @Get('/meetings/:storeId')
+  async getMeetingsOfStore(@Param('storeId') storeId: string): Promise<any> {
+    const meetings = await this.storeService.getMeetings(storeId);
+    return ResponseUtils.success(MeetingResponse.fromArray(meetings));
   }
 }
