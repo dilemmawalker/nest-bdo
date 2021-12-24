@@ -30,6 +30,10 @@ export class StoreService {
     return await this.storeRepository.findOne(storeId);
   }
 
+  async getMeetings(storeId: string): Promise<any> {
+    return await this.storeRepository.getMeetings(storeId);
+  }
+
   async getExportableStoreDataArray(workflowKey: string): Promise<any> {
     const stores =
       (await this.storeRepository.findStoreByWorkflowKey(workflowKey)) || [];
