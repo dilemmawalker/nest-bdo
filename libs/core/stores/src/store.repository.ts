@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { Meeting } from '@shared/app/schemas/meetings/meeting.schema';
 import { Store } from '@shared/app/schemas/stores/store.schema';
 import { Agent } from '@shared/app/schemas/users/agent.schema';
 import { Workflow } from '@shared/app/schemas/workflows/workflow.schema';
@@ -11,6 +12,7 @@ export class StoreRepository {
   constructor(
     @InjectModel(Store.name) private storeModel: Model<Store>,
     @InjectModel(Agent.name) private agentModel: Model<Agent>,
+    @InjectModel(Meeting.name) private meetingModel: Model<Meeting>,
   ) {}
 
   async create(storeDto: StoreDto): Promise<any> {
@@ -80,5 +82,27 @@ export class StoreRepository {
     return store['meetings'].sort((a, b) => {
       return b['createdAt'] - a['createdAt'];
     });
+  }
+
+  async getMeetingsByDate(
+    storeId: string,
+    startDate: Date,
+    endDate: Date,
+  ): Promise<any> {
+    const store = await this.storeModel.findOne({ storeId });
+    if (!store) {
+      return null;
+    }
+    const meetings: Meeting[] = await this.meetingModel.find({
+      $and: [
+        {
+          _id: { $in: store.meetings },
+        },
+        {
+          scheduledAt: { $gte: startDate, $lt: endDate },
+        },
+      ],
+    });
+    return meetings;
   }
 }
