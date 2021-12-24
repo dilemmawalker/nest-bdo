@@ -68,4 +68,14 @@ export class StoreRepository {
       },
     });
   }
+
+  async getMeetings(storeId: string): Promise<any> {
+    const store = await this.storeModel.findOne({ storeId }).populate({
+      path: 'meetings',
+      model: 'Meeting',
+    });
+    return store['meetings'].sort((a, b) => {
+      return b['createdAt'] - a['createdAt'];
+    });
+  }
 }
