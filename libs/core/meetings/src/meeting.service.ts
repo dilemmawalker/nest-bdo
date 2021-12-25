@@ -19,11 +19,14 @@ export class MeetingService {
     private readonly storeService: StoreService,
   ) {}
 
-  async createOrUpdate(meetingDto: MeetingDto): Promise<Meeting> {
+  async createOrUpdate(meetingDto: MeetingDto): Promise<any> {
+    const store = await this.storeService.findOne(meetingDto.storeId);
     if (meetingDto.meetingId) {
-      return await this.update(meetingDto);
+      const meeting = await this.update(meetingDto);
+      return { meeting, store };
     }
-    return await this.create(meetingDto);
+    const meeting = await this.create(meetingDto);
+    return { meeting, store };
   }
 
   private async create(meetingDto: MeetingDto): Promise<Meeting> {
@@ -34,7 +37,7 @@ export class MeetingService {
     }
     meetingDto.agent = agent._id;
     meetingDto.store = store._id;
-    meetingDto = this.populateDatainMeetingDto(meetingDto);
+    meetingDto = this.populateMeetingDto(meetingDto);
     const meeting = await this.meetingRepository.create(meetingDto);
     if (!agent.meetings) {
       agent.meetings = [];
@@ -58,7 +61,7 @@ export class MeetingService {
     return meeting;
   }
 
-  private populateDatainMeetingDto(meetingDto: MeetingDto): MeetingDto {
+  private populateMeetingDto(meetingDto: MeetingDto): MeetingDto {
     meetingDto.createdAt = new Date();
     meetingDto.updatedAt = new Date();
     meetingDto.meetingId = uuidv4();

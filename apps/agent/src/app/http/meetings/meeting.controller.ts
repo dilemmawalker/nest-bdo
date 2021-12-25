@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Get,
   Headers,
   HttpStatus,
   Post,
@@ -35,9 +34,12 @@ export class MeetingController {
     @Body() createMeetingRequest: CreateMeetingRequest,
   ): Promise<any> {
     const json = this.jwtUtil.decode(auth);
-    const meeting = await this.meetingService.createOrUpdate(
+    const { meeting, store } = await this.meetingService.createOrUpdate(
       CreateMeetingRequest.getMeetingDto(createMeetingRequest, json.agentId),
     );
-    return ResponseUtils.success(MeetingResponse.fromMeeting(meeting));
+    return ResponseUtils.success(
+      MeetingResponse.fromMeeting(meeting, store),
+      'Meeting created successfully',
+    );
   }
 }
