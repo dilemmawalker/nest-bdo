@@ -22,28 +22,37 @@ export class MeetingResponse {
   location: any;
 
   @ApiProperty()
-  store: mongoose.Types.ObjectId;
+  store: any;
 
   @ApiProperty()
-  agent: mongoose.Types.ObjectId;
+  agent: any;
 
-  static fromMeeting(meeting: Meeting): MeetingResponse {
+  static fromMeeting(meeting: any, store = null): MeetingResponse {
+    const storeObj = store || meeting.get('store');
     const entity = new MeetingResponse();
     entity.title = meeting.title;
     entity.description = meeting.description;
     entity.scheduledAt = meeting.scheduledAt;
     entity.status = meeting.status;
-    entity.store = meeting.store;
-    entity.agent = meeting.agent;
+    entity.store = {
+      owner_name: storeObj.owner_name,
+      store_name: storeObj.store_name,
+      storeId: storeObj.store_id,
+    };
+    entity.agent = {
+      agent_name: storeObj.get('agent_name') || '',
+      agent_id: storeObj.get('agent_id') || '',
+    };
     entity.location = meeting.location;
     entity.meetingId = meeting.meetingId;
     return entity;
   }
 
-  static fromArray(meetings: Meeting[]): MeetingResponse[] {
+  static fromArray(meetings: any[] = [], store = null): MeetingResponse[] {
     const entities = [];
+    console.log(meetings);
     meetings.forEach((meeting) => {
-      entities.push(this.fromMeeting(meeting));
+      entities.push(this.fromMeeting(meeting, store));
     });
     return entities;
   }

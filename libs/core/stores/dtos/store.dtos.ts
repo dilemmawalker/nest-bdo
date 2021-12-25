@@ -19,6 +19,8 @@ export class StoreDto {
   createdAt: Date;
   updatedAt: Date;
   createdBy: any;
+  agent_name: string;
+  agent_id: string;
   fields: StoreField[] = [];
 
   static getStoreObj(storeData: StoreDto) {
@@ -28,8 +30,11 @@ export class StoreDto {
     if (storeData.createdBy) {
       storeObj['createdBy'] = storeData.createdBy;
     }
-    if (storeData.createdAt) {
-      storeObj['createdAt'] = storeData.createdAt;
+    if (storeData.agent_name) {
+      storeObj['agent_name'] = storeData.agent_name;
+    }
+    if (storeData.agent_id) {
+      storeObj['agent_id'] = storeData.agent_id;
     }
     if (storeData.workflowKey) {
       storeObj['workflowKey'] = storeData.workflowKey;

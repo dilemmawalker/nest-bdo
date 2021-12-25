@@ -31,7 +31,9 @@ export class StoreService {
   }
 
   async getMeetings(storeId: string): Promise<any> {
-    return await this.storeRepository.getMeetings(storeId);
+    const meetings = await this.storeRepository.getMeetings(storeId);
+    const store = await this.storeRepository.findOne(storeId);
+    return { meetings, store };
   }
 
   async getExportableStoreDataArray(workflowKey: string): Promise<any> {

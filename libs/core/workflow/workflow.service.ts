@@ -89,6 +89,9 @@ export class WorkflowService {
       agent.stores = [];
     }
     storeDto.createdBy = agent._id;
+    storeDto.agent_name = agent.get('user').name;
+    storeDto.agent_id = agent.agentId;
+
     if (storeDto.fields.length == 0) {
       throw new BadRequestException(
         'Please enter store name',
@@ -282,7 +285,6 @@ export class WorkflowService {
   }
   async setEqualField(fields: FieldInputData[], store: any) {
     let updateStore = store;
-    console.log('setEqual Called');
     fields.forEach(async (field) => {
       if (this.getMappedOptValue(field.options, 'isCopyable') == 'true') {
         if (store.get(field.keyName) == 'true') {

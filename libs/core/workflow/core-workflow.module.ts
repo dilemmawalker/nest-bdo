@@ -13,7 +13,6 @@ import { Agent, AgentSchema } from '@shared/app/schemas/users/agent.schema';
 import { CoreAgentModule } from '../agent/src/core-agent.module';
 import { CoreFieldModule } from '../fields/src/core-field.module';
 import { WorkflowService } from './workflow.service';
-import { CoreActivityModule } from '../activity/core-activity-module';
 import {
   Activity,
   ActivitySchema,
