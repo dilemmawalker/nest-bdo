@@ -18,14 +18,23 @@ export class StoreDto {
   status: string;
   createdAt: Date;
   updatedAt: Date;
+  createdBy: any;
+  agent_name: string;
+  agent_id: string;
   fields: StoreField[] = [];
 
   static getStoreObj(storeData: StoreDto) {
     const storeObj = {};
     storeObj['storeId'] = storeData.storeId;
     storeObj['status'] = storeData.status;
-    if (storeData.createdAt) {
-      storeObj['createdAt'] = storeData.createdAt;
+    if (storeData.createdBy) {
+      storeObj['createdBy'] = storeData.createdBy;
+    }
+    if (storeData.agent_name) {
+      storeObj['agent_name'] = storeData.agent_name;
+    }
+    if (storeData.agent_id) {
+      storeObj['agent_id'] = storeData.agent_id;
     }
     if (storeData.workflowKey) {
       storeObj['workflowKey'] = storeData.workflowKey;

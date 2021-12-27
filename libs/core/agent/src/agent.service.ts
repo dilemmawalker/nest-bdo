@@ -24,6 +24,9 @@ export class AgentService {
     return await this.agentRepository.findOne(agentDto);
   }
 
+  async getMeetings(agentId: string): Promise<any> {
+    return await this.agentRepository.getMeetings(agentId);
+=======
   async storeCount(stores: any[], status: string): Promise<number> {
     const entities = [];
     stores.forEach((store) => {

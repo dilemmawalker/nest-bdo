@@ -11,6 +11,9 @@ export class UploadImageRequest {
   @ApiProperty({ enum: uploadType })
   type: uploadType;
 
+  @ApiProperty({ required: false })
+  location: any;
+
   static getFileDto(
     uploadImageRequest: UploadImageRequest,
     isMultiple = false,
@@ -42,6 +45,9 @@ export const ApiUploadImageRequest =
           },
           type: {
             type: 'string',
+          },
+          location: {
+            type: 'any',
           },
         },
       },

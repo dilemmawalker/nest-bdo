@@ -1,9 +1,9 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
 import {
   AppAbility,
   CaslAbilityFactory,
-} from '../../../../../libs/core/auth/src/casl/casl-ability.factory';
+} from '@core/auth/casl/casl-ability.factory';
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { CHECK_POLICIES_KEY } from '../decorators/auth/check-policy.decorators';
 import { PolicyHandler } from '../interfaces/auth/ipolicy.interface';
 

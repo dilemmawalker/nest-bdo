@@ -69,11 +69,11 @@ export class UserController {
   @UseInterceptors(TransformInterceptor)
   async update(
     @Param('userId') userId: string,
-    @Body() updateUserDto: UpdateUserRequest,
+    @Body() updateUserRequest: UpdateUserRequest,
   ): Promise<any> {
     const user = await this.userService.update(
       userId,
-      UpdateUserRequest.getUserDto(updateUserDto),
+      UpdateUserRequest.getUserDto(updateUserRequest),
     );
     return ResponseUtils.success(UserResponse.fromUser(user));
   }

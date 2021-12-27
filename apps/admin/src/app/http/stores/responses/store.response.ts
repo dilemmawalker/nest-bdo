@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Store } from '@shared/app/schemas/stores/store.schema';
+import { mapAddress } from '@shared/app/utils/function/dynamic.function';
 import { generateWorkflowUrl } from '@shared/app/utils/function/helper.function';
 import * as moment from 'moment';
 
@@ -26,10 +27,16 @@ export class StoreResponse {
   updatedAt: string;
 
   @ApiProperty()
+  remark: string;
+
+  @ApiProperty()
   address = '';
 
   @ApiProperty()
   status: string;
+
+  @ApiProperty()
+  agent: any;
 
   @ApiProperty()
   workflow: string;
@@ -43,17 +50,25 @@ export class StoreResponse {
     entity.updatedAt = moment(store.updatedAt).format('MM/DD/YYYY');
     entity.owner_name = store.owner_name;
     entity.status = status;
+    console.log('i');
+    entity.remark = store.get('remark') || '';
+    console.log('i o');
     entity.storeId = store.storeId;
-    entity.address = store.store_address
-      ? `${store_address['address']}, ${store_address['landmark']}, ${store_address['town']}, ${store_address['tehsil']}`
-      : '';
+    entity.address = mapAddress(store.get('store_address_pr'));
     entity.workflow = store.workflowKey;
     entity.currentWorkflowUrl = generateWorkflowUrl(
       store.workflowKey,
       store.currentStepId,
       store.storeId,
     );
-
+    const agent = {};
+    if (store.get('createdBy')) {
+      agent['name'] = store.get('createdBy')['user']
+        ? store.get('createdBy')['user']['name']
+        : '';
+      agent['agentId'] = store.get('createdBy')['agentId'];
+    }
+    entity.agent = agent;
     return entity;
   }
 

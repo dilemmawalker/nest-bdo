@@ -60,7 +60,6 @@ export class FieldController {
     type: FieldResponse,
   })
   async create(@Body() createFieldRequest: CreateFieldRequest): Promise<any> {
-    console.log(CreateFieldRequest.getFieldDto(createFieldRequest));
     const field = await this.fieldService.createOrUpdate(
       CreateFieldRequest.getFieldDto(createFieldRequest),
     );

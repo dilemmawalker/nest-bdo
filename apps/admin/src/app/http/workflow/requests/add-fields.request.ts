@@ -1,6 +1,6 @@
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
-import { FieldsDto } from '../../../../../../../libs/core/workflow/dtos/fields.dto';
+import { FieldsDto } from 'libs/core/workflow/dtos/fields.dto';
 
 export class FieldData {
   @ApiProperty()

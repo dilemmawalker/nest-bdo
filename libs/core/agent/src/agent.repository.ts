@@ -29,15 +29,21 @@ export class AgentRepository {
     return this.agentModel.findOneAndUpdate({ agentId }, obj);
   }
 
-  async getAgent(agentId: string): Promise<Agent> {
-    return await this.agentModel.findOne({ agentId }).populate({
-      path: 'cluster',
-      model: 'Cluster',
-      populate: {
-        path: 'onboarding',
-        model: 'Workflow',
-      },
-    });
+  async getAgent(agentId: string): Promise<any> {
+    return await this.agentModel
+      .findOne({ agentId })
+      .populate({
+        path: 'cluster',
+        model: 'Cluster',
+        populate: {
+          path: 'onboarding',
+          model: 'Workflow',
+        },
+      })
+      .populate({
+        path: 'user',
+        model: 'User',
+      });
   }
 
   async getAll(): Promise<any[]> {
@@ -57,8 +63,16 @@ export class AgentRepository {
     const agent = await this.agentModel.findOne({ agentId: agentId }).populate({
       path: 'stores',
       model: 'Store',
+      populate: {
+        path: 'createdBy',
+        model: 'Agent',
+        populate: {
+          path: 'user',
+          model: 'User',
+        },
+      },
     });
-    return agent['stores'];
+    return agent['stores'].sort((a, b) => b['createdAt'] - a['createdAt']);
   }
 
   async findOneAndUpdate(
@@ -88,5 +102,20 @@ export class AgentRepository {
       path: 'user',
       model: 'User',
     });
+  }
+
+  async getMeetings(agentId: string): Promise<any> {
+    const agent = await this.agentModel.findOne({ agentId: agentId }).populate({
+      path: 'meetings',
+      model: 'Meeting',
+      populate: {
+        path: 'store',
+        model: 'Store',
+      },
+    });
+
+    return Boolean(agent['meetings'])
+      ? agent['meetings'].sort((a, b) => b['scheduledAt'] - a['scheduledAt'])
+      : [];
   }
 }

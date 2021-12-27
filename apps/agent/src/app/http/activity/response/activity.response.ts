@@ -16,7 +16,7 @@ export class ActivityResponse {
     entity.id = activity._id.toString();
     entity.date = getFormattedDate(date);
     entity.time = getFormattedTime(date);
-    entity.activity = `${storeName} - Lead ${activity.description.toLowerCase()} by agent`;
+    entity.activity = `${storeName} - ${activity.description.toLowerCase()} by ${activity.causer_type.toLowerCase()}`;
     return entity;
   }
 

@@ -81,6 +81,22 @@ export class ClusterManagerRepository {
       .populate({
         path: 'stores',
         model: 'Store',
+        populate: {
+          path: 'createdBy',
+          model: 'Agent',
+          populate: {
+            path: 'user',
+            model: 'User',
+          },
+        },
+      })
+      .sort({ createdAt: -1 });
+    return agents
+      .flatMap((agent) => {
+        return agent.stores;
+      })
+      .sort((a, b) => b['createdAt'] - a['createdAt']);
+=======
       });
     const stores = agents.flatMap((agent) => {
       return agent.stores;

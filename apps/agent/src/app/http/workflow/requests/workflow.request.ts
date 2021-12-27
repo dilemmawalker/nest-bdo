@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { StoreDto } from 'apps/admin/src/app/http/stores/dtos/store.dtos';
+import { StoreDto } from 'libs/core/stores/dtos/store.dtos';
 
 export class WorkflowRequestField {
   @ApiProperty()
@@ -18,6 +18,9 @@ export class WorkflowRequestField {
 export class WorkflowRequest {
   @ApiProperty({ type: [WorkflowRequestField] })
   fields: WorkflowRequestField[] = [];
+
+  @ApiProperty({ default: false })
+  isFullValidationRequired: boolean;
 
   static getStoreDto(
     createStoreRequest: WorkflowRequest,

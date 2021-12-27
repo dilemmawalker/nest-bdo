@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Store, StoreSchema } from '@shared/app/schemas/stores/store.schema';
-import { StoreRepository } from 'apps/admin/src/app/http/stores/store.repository';
+import { StoreRepository } from 'libs/core/stores/src/store.repository';
 import { Field, FieldSchema } from '@shared/app/schemas/fields/field.schema';
 import { Step, StepSchema } from '@shared/app/schemas/steps/steps.schema';
 import {
@@ -14,7 +14,6 @@ import { Agent, AgentSchema } from '@shared/app/schemas/users/agent.schema';
 import { CoreAgentModule } from '../agent/src/core-agent.module';
 import { CoreFieldModule } from '../fields/src/core-field.module';
 import { WorkflowService } from './workflow.service';
-import { CoreActivityModule } from '../activity/core-activity-module';
 import {
   Activity,
   ActivitySchema,
@@ -22,6 +21,10 @@ import {
 import { ActivityService } from '../activity/activity.service';
 import { ActivityRepository } from '../activity/activity.repository';
 import { CoreFileModule } from '@file/file/core-file.module';
+import {
+  Meeting,
+  MeetingSchema,
+} from '@shared/app/schemas/meetings/meeting.schema';
 
 import {
   UpdateWorkflow,
@@ -44,6 +47,7 @@ import {
     MongooseModule.forFeature([
 
       { name: Activity.name, schema: ActivitySchema },
+      { name: Meeting.name, schema: MeetingSchema },
     ]),
   ],
   providers: [

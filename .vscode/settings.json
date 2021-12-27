@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
+        "aadhar",
         "Casl",
         "dockerize",
         "dtos",
@@ -13,11 +14,13 @@
         "originalame",
         "originalname",
         "ormconfig",
+        "pincode",
         "prebuild",
         "rolename",
         "serilization",
         "typeorm",
         "uuidv4",
+        "visicoolers",
         "wiston"
     ],
     "cSpell.ignoreWords": [

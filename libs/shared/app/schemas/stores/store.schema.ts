@@ -3,6 +3,7 @@ import { BaseItemSchema } from '@shared/app/schemas/base/base-Item.schema';
 import { Document, Mixed } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { Expression } from '../fields/expression.schema';
+import * as mongoose from 'mongoose';
 
 export type StoreDocument = Store & Document;
 
@@ -34,6 +35,12 @@ export class Store {
 
   @Prop({ required: true })
   currentStepId: string;
+
+  @Prop({ required: true, type: mongoose.Types.ObjectId, ref: 'Agent' })
+  createdBy: mongoose.Types.ObjectId;
+
+  @Prop({ type: [mongoose.Types.ObjectId], ref: 'Meeting' })
+  meetings: mongoose.Types.ObjectId[];
 
   @Prop({ type: Date })
   createdAt: Date;
@@ -72,6 +79,9 @@ export class FieldInputData extends BaseItemSchema {
   isEditable = true;
 
   @ApiProperty()
+  isExportable = true;
+
+  @ApiProperty()
   type: string;
 
   @ApiProperty()
@@ -86,6 +96,7 @@ export class FieldInputData extends BaseItemSchema {
     entity.options = field.options;
     entity.inputValue = this.getDefaultInputValue(field.options, field);
     entity.isEditable = field.isEditable;
+    entity.isExportable = field.isExportable;
     if (field.groups && field.groups.length != 0) {
       entity.group = this.fromFieldArray(field.groups);
     }

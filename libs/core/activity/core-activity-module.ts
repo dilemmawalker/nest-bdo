@@ -4,14 +4,13 @@ import {
   Activity,
   ActivitySchema,
 } from '@shared/app/schemas/activity/activity.schema';
-import { StoreModule } from 'apps/admin/src/app/http/stores/store.module';
-import { StoreRepository } from 'apps/admin/src/app/http/stores/store.repository';
+import { CoreStoreModule } from '../stores/src/core-store.module';
 import { ActivityRepository } from './activity.repository';
 import { ActivityService } from './activity.service';
 
 @Module({
   imports: [
-    StoreModule,
+    CoreStoreModule,
     MongooseModule.forFeature([
       { name: Activity.name, schema: ActivitySchema },
     ]),

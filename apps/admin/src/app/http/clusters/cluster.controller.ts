@@ -36,7 +36,7 @@ export class ClusterController {
     return ResponseUtils.success(ClusterResponse.fromCluster(cluster));
   }
 
-  @Post()
+  @Post('update')
   @UseInterceptors(TransformInterceptor)
   @ApiResponse({
     status: HttpStatus.OK,

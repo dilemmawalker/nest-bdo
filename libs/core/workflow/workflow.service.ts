@@ -6,12 +6,9 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { Workflow } from '../../shared/app/schemas/workflows/workflow.schema';
 import { WorkflowRepository } from './workflow.repository';
-import { StoreRepository } from 'apps/admin/src/app/http/stores/store.repository';
+import { StoreRepository } from 'libs/core/stores/src/store.repository';
 import { FieldInputData, Store } from '@shared/app/schemas/stores/store.schema';
-import {
-  StoreDto,
-  StoreField,
-} from 'apps/admin/src/app/http/stores/dtos/store.dtos';
+import { StoreDto, StoreField } from 'libs/core/stores/dtos/store.dtos';
 import { WorkflowDto } from './dtos/workflow.dto';
 import { AssignFieldDto } from './dtos/assign-field.dto';
 import { StepDto } from './dtos/step.dto';
@@ -22,6 +19,7 @@ import { FileDto } from '@file/file/dtos/file.dto';
 import {
   empty,
   generateWorkflowUrl,
+  getAgreementName,
   getCurrentDate,
 } from '@shared/app/utils/function/helper.function';
 
@@ -45,6 +43,7 @@ import {
   generateAgreementPdfHtml,
 } from '@shared/app/utils/function/dynamic.function';
 import { FileService } from '@file/file/file.service';
+=======
 import { isContext } from 'vm';
 import { Validator } from '@shared/app/validators/main.validator';
 
@@ -80,7 +79,6 @@ export class WorkflowService {
       return await this.get(workflowKey, 'new', storeDto.stepId);
     } else {
       const storeObj = await this.updateStore(storeDto);
-      console.log(storeDto.workflowKey, storeDto.stepId, storeObj.storeId);
       return await this.get(
         storeDto.workflowKey,
         storeObj.storeId,
@@ -107,6 +105,10 @@ export class WorkflowService {
     if (!agent.stores) {
       agent.stores = [];
     }
+    storeDto.createdBy = agent._id;
+    storeDto.agent_name = agent.get('user').name;
+    storeDto.agent_id = agent.agentId;
+
     if (storeDto.fields.length == 0) {
       throw new BadRequestException(
         'Please enter store name',
@@ -144,7 +146,7 @@ export class WorkflowService {
     storeDto.workflowKey = agent['cluster']['onboarding']['key'];
     storeDto.currentStepId =
       agent['cluster']['onboarding']['steps'][0]['stepId'];
-    storeDto.status = 'open';
+    storeDto.status = 'interested';
     storeDto.createdAt = new Date();
     storeDto.updatedAt = new Date();
     return storeDto;
@@ -173,16 +175,16 @@ export class WorkflowService {
     const store = await this.storeRepository.findOne(storeId);
     const completedStatus = {};
     for (const step of workflow.steps) {
-      const fields: FieldInputData[] = await this.getInputFields(
+      const obj: any = await this.getInputFields(
         this.getStepsFields(workflow, step.stepId),
         store,
       );
-      completedStatus[step.stepId] = this.isStepCompleted(fields);
+      completedStatus[step.stepId] = this.isStepCompleted(obj.fields);
     }
     return { steps: workflow.steps, completedStatus };
   }
 
-  isStepCompleted(fields: FieldInputData[]): boolean {
+  isStepCompleted(fields: any): boolean {
     return fields.every((field) => {
       if (field.group.length === 0) return this.isStepFieldCompleted(field);
 
@@ -204,19 +206,22 @@ export class WorkflowService {
   async get(workflowKey: string, storeId: string, stepId: string) {
     const workflow = await this.findOne(workflowKey);
     const store = await this.storeRepository.findOne(storeId);
-    const fields: FieldInputData[] = await this.getInputFields(
+
+    const obj: any = await this.getInputFields(
       this.getStepsFields(workflow, stepId),
       store,
     );
+
     if (store) {
-      await this.storeRepository.updateObj({ currentStepId: stepId }, storeId);
+      obj.dynamicFields['currentStepId'] = stepId;
+      await this.storeRepository.updateObj(obj.dynamicFields, storeId);
     }
 
-    const is_step_completed = this.checkStepCompleted(fields);
+    const is_step_completed = this.checkStepCompleted(obj.fields);
     const meta = this.getStoreMeta(workflow, store, stepId);
     meta['is_step_completed'] = is_step_completed;
     meta['ref_id'] = storeId;
-    return { fields, meta };
+    return { fields: obj.fields, meta };
   }
 
   getStoreMeta(workflow: Workflow, store: any, stepId: string) {
@@ -284,42 +289,84 @@ export class WorkflowService {
     return [];
   }
 
+  getMappedOptValue(options, keyName) {
+    let val = null;
+    if (options) {
+      options.forEach((option) => {
+        if (option['key'] == keyName) {
+          val = option['value'];
+        }
+      });
+    }
+    return val;
+  }
+  async setEqualField(fields: FieldInputData[], store: any) {
+    let updateStore = store;
+    fields.forEach(async (field) => {
+      if (this.getMappedOptValue(field.options, 'isCopyable') == 'true') {
+        if (store.get(field.keyName) == 'true') {
+          const copyableFrom = this.getMappedOptValue(
+            field.options,
+            'copyableFrom',
+          );
+          const copyableTo = this.getMappedOptValue(
+            field.options,
+            'copyableTo',
+          );
+          const copiableVal = store.get(copyableFrom) || '';
+          const updateObj = {};
+          updateObj[copyableTo] = copiableVal;
+          updateStore = await this.storeRepository.updateObj(
+            updateObj,
+            store.get('storeId'),
+          );
+        }
+      }
+    });
+    return updateStore;
+  }
   async getInputFields(fields: any[], store: any) {
     const inputFields = FieldInputData.fromFieldArray(fields);
+    const dynamicFields = {};
+    store = await this.setEqualField(inputFields, store);
     if (!store) {
       return inputFields;
     }
     for (const i in inputFields) {
       const inputField = inputFields[i];
       if (inputField.expression) {
-        inputField.inputValue = await this.calculateFieldExpression(
+        const calculatedValue = await this.calculateFieldExpression(
           inputField.expression,
           store,
         );
+        dynamicFields[inputField.keyName] = calculatedValue;
+        inputField.inputValue = calculatedValue;
       } else if (inputField.group.length == 0) {
         inputField.inputValue =
           store.get(inputField.keyName) || inputField.inputValue;
       } else {
+        const groupValue = {};
         inputField.group.forEach(async (field, index) => {
           if (field.expression) {
-            console.log('field = ', inputFields[i].group[index].keyName);
-            console.log('ex = ', inputField.expression);
             const val = await this.calculateFieldExpression(
               field.expression,
               store,
             );
-            console.log('val = ', val);
+            groupValue[field.keyName] = val;
             inputFields[i].group[index].inputValue = val;
           } else {
             if (store.get(inputField.keyName)) {
-              inputFields[i].group[index].inputValue =
+              groupValue[field.keyName] =
                 store.get(inputField.keyName)[field.keyName] || '';
+              inputFields[i].group[index].inputValue =
+                groupValue[field.keyName];
             }
           }
         });
+        dynamicFields[inputField.keyName] = groupValue;
       }
     }
-    return inputFields;
+    return { fields: inputFields, dynamicFields };
   }
 
   async calculateFieldExpression(
@@ -335,6 +382,9 @@ export class WorkflowService {
     }
     if (expression.operator == 'equal') {
       value = '';
+    }
+    if (!expression.variables) {
+      return value;
     }
     expression.variables.forEach(async (val: ExpressionVariable) => {
       if (val.type == 'constant') {
@@ -358,7 +408,7 @@ export class WorkflowService {
             const pdfBuffer = await this.fileService.generatePDF(
               generateAgreementCardPdfHtml(store),
             );
-            const pdfFileName = `pdf/${store.get('storeId')}.pdf`;
+            const pdfFileName = `pdf/${getAgreementName(store)}`;
             const pdfFileDto = new FileDto();
             pdfFileDto.keyName = 'agreement_pdf';
             pdfFileDto.isMultiple = false;

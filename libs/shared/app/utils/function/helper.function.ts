@@ -41,6 +41,28 @@ export function generateWorkflowUrl(
   return `agent/api/workflows/${workflowKey}/${stepId}/${storeId}`;
 }
 
+export function getAgreementName(store) {
+  const date_time = `${new Date().toISOString().split('T')[0]}`;
+  return `1K_Retailer_Agreement_${store
+    .get('store_name')
+    .replace(' ', '')}_${getInitials(
+    store.get('owner_name').replace(' ', ''),
+  )}_${date_time}_${
+    store.get('createdBy')
+      ? store.get('createdBy')['agentId'].toString()
+      : store.get('storeId')
+  }.pdf`;
+}
+
+export function getInitials(string) {
+  const names = string.split(' ');
+  let initials = names[0].substring(0, 1).toUpperCase();
+
+  if (names.length > 1) {
+    initials += names[names.length - 1].substring(0, 1).toUpperCase();
+  }
+  return initials;
+=======
 
 export function generateNextPageUrl(
   page: number,
@@ -68,16 +90,38 @@ export function generatePreviousPageUrl(
 }
 
 export function empty(e) {
+  if (typeof e === 'undefined') {
+    return true;
+  }
   switch (e) {
     case '':
     case null:
-    case typeof e == 'undefined':
       return true;
     default:
       return false;
   }
 }
 
+export function convertToString(str) {
+  if (empty(str)) {
+    return null;
+  }
+  console.log(typeof str);
+  console.log(str instanceof Array);
+  if (typeof str == 'object' && !(str instanceof Array)) {
+    let returnStr = '';
+    for (const key in str) {
+      if (Object.prototype.hasOwnProperty.call(str, key)) {
+        returnStr += Boolean(returnStr) ? ' , ' : '';
+        returnStr += str[key];
+      }
+    }
+    return returnStr;
+  } else {
+    return str.toString();
+  }
+}
+=======
 //Workflows/WorkflowController_getWorkflowSteps
 //Agents/AgentController_get
 

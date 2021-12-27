@@ -107,6 +107,16 @@ export class WorkflowController {
       storeId,
       stepId,
     );
+    if (workflowRequest.isFullValidationRequired) {
+      const absentFields = workflowGet.fields.filter(
+        (field) =>
+          !workflowRequest.fields.some(
+            (workflowRequestField) =>
+              workflowRequestField.keyName === field.keyName,
+          ),
+      );
+      await this.validationUtil.validateWorkFlowRequestFields(absentFields);
+    }
     const json = await this.jwtUtil.decode(auth);
     const store = await this.workflowService.post(
       WorkflowRequest.getStoreDto(

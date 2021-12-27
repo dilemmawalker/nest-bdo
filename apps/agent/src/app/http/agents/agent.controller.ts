@@ -1,26 +1,35 @@
 import {
+  ConsoleLogger,
   Controller,
   Get,
   Headers,
   HttpStatus,
   Inject,
   Param,
-  Query,
+
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { TransformInterceptor } from '@shared/app/interceptors/transform.interceptor';
 import { JWTUtil } from '@shared/app/utils/class/jwt.utils';
 import { ResponseUtils } from '@shared/app/utils/class/response.utils';
+
+import { Roles } from 'apps/admin/src/app/decorators/auth/roles.decorators';
+import { JwtAuthGuard } from 'apps/admin/src/app/guards/jwt-auth.guard';
+import { RolesGuard } from 'apps/admin/src/app/guards/roles.guard';
+
 import {
   generateNextPageUrl,
   generatePreviousPageUrl,
 } from '@shared/app/utils/function/helper.function';
+
 import { StoreResponse } from 'apps/admin/src/app/http/stores/responses/store.response';
+import { RoleConst } from 'apps/admin/src/constant/auth/roles.constant';
 import { AgentService } from 'libs/core/agent/src/agent.service';
 import { ClusterManagerService } from 'libs/core/clusterManager/src/cluster.manager.service';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
+import { MeetingResponse } from '../meetings/responses/meeting.response';
 
 @ApiTags('Agents')
 @Controller('agent')
@@ -85,5 +94,16 @@ export class AgentController {
       status,
       metaValue,
     );
+  }
+
+  @Get('meetings')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: [MeetingResponse],
+  })
+  async getMeetings(@Headers('Authorization') auth: string): Promise<any> {
+    const json = this.jwtUtil.decode(auth);
+    const meetings = await this.agentService.getMeetings(json.agentId);
+    return ResponseUtils.success(MeetingResponse.fromArray(meetings));
   }
 }

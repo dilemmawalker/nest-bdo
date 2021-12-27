@@ -1,5 +1,5 @@
+import { UserDto } from '@core/users/dtos/user.dto';
 import { ApiProperty } from '@nestjs/swagger';
-import { UserDto } from '../../../../../../../libs/core/users/src/dtos/user.dto';
 export class UpdateUserRequest {
   @ApiProperty()
   email: string;

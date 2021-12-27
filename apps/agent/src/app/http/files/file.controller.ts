@@ -58,6 +58,7 @@ export class FileController {
       file.buffer,
       FileUploadingUtils.getImageFilename(file.originalname),
       UploadImageRequest.getFileDto(uploadImageRequest),
+      uploadImageRequest.location,
     );
     return ResponseUtils.success(
       FileResponse.fromFile(fileObj),
@@ -86,6 +87,7 @@ export class FileController {
       file.buffer,
       FileUploadingUtils.getDocFilename(file.originalname),
       UploadImageRequest.getFileDto(uploadImageRequest),
+      uploadImageRequest.location,
     );
     return ResponseUtils.success(
       FileResponse.fromFile(fileObj),
@@ -134,6 +136,7 @@ export class FileController {
         file.buffer,
         FileUploadingUtils.getImageFilename(file.originalname),
         UploadImageRequest.getFileDto(uploadImageRequest, true),
+        uploadImageRequest.location,
       );
       fileObjs.push(fileObj);
     }
@@ -166,6 +169,7 @@ export class FileController {
         file.buffer,
         FileUploadingUtils.getDocFilename(file.originalname),
         UploadImageRequest.getFileDto(uploadImageRequest, true),
+        uploadImageRequest.location,
       );
       fileObjs.push(fileObj);
     }
