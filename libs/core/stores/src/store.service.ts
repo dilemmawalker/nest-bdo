@@ -36,6 +36,20 @@ export class StoreService {
     return { meetings, store };
   }
 
+  async getMeetingsByDate(storeId: string, date: string): Promise<any> {
+    const startDate = new Date(date);
+    const endDate = new Date(startDate.getTime() + 86400000);
+    const meetings = await this.storeRepository.getMeetingsByDate(
+      storeId,
+      startDate,
+      endDate,
+    );
+    if (!meetings) {
+      throw new NotFoundException();
+    }
+    return meetings;
+  }
+
   async getExportableStoreDataArray(workflowKey: string): Promise<any> {
     const stores =
       (await this.storeRepository.findStoreByWorkflowKey(workflowKey)) || [];

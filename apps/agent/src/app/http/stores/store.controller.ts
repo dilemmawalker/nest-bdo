@@ -17,4 +17,14 @@ export class StoreController {
     const { meetings, store } = await this.storeService.getMeetings(storeId);
     return ResponseUtils.success(MeetingResponse.fromArray(meetings, store));
   }
+
+  @UseInterceptors(TransformInterceptor)
+  @Get('/meetings/:storeId/:date')
+  async getMeetingsOfStoreByDate(
+    @Param('storeId') storeId: string,
+    @Param('date') date: string,
+  ): Promise<any> {
+    const meetings = await this.storeService.getMeetingsByDate(storeId, date);
+    return ResponseUtils.success(MeetingResponse.fromArray(meetings));
+  }
 }
