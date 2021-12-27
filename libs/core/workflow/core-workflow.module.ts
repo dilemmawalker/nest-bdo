@@ -20,6 +20,10 @@ import {
 import { ActivityService } from '../activity/activity.service';
 import { ActivityRepository } from '../activity/activity.repository';
 import { CoreFileModule } from '@file/file/core-file.module';
+import {
+  Meeting,
+  MeetingSchema,
+} from '@shared/app/schemas/meetings/meeting.schema';
 
 @Module({
   imports: [
@@ -35,6 +39,7 @@ import { CoreFileModule } from '@file/file/core-file.module';
     MongooseModule.forFeature([{ name: Agent.name, schema: AgentSchema }]),
     MongooseModule.forFeature([
       { name: Activity.name, schema: ActivitySchema },
+      { name: Meeting.name, schema: MeetingSchema },
     ]),
   ],
   providers: [
