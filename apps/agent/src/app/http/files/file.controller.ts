@@ -112,6 +112,7 @@ export class FileController {
     );
   }
 
+
   @Post('/upload/images')
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(
@@ -176,6 +177,17 @@ export class FileController {
       FileResponse.fromFileArray(fileObjs),
       'File uploaded successfully',
     );
+
+  @Post('/deletePermanent')
+  @UseInterceptors(TransformInterceptor)
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: BasicResponse,
+  })
+  public async deleteFilePermanent() {
+    await this.fileService.deleFilePermanent();
+    return ResponseUtils.success(BasicResponse.success());
+
   }
 
   // @Post('/multiple-upload')
