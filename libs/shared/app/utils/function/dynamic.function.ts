@@ -75,7 +75,7 @@ export function generateAgreementCardHtml(store: any) {
     digital_html = `<img src='${digital_signature}' style='max-width: 65px' />`;
   }
 
-  const company_stamp_img_url = `<img src='https://i.pinimg.com/originals/e1/9f/2a/e19f2a3cbe820468d7ba1a835134590c.jpg' style='max-width: 65px' />`;
+  const company_stamp_img_url = `<img src='https://nest-bd.s3.ap-south-1.amazonaws.com/img/b9a6ba7d93951e2e10b8fdcbb17467ed.jpeg' style='max-width: 65px' />`;
   const submitHtml = `
   <div>
     <div text-align='center' style='text-align: center; font-size: 18px;'>
@@ -709,7 +709,7 @@ export function generateAgreementCardPdfHtml(store: any): string {
     digital_html = `<img src='${digital_signature}' style='max-width: 65px' />`;
   }
 
-  const company_stamp_img_url = `<img src='https://i.pinimg.com/originals/e1/9f/2a/e19f2a3cbe820468d7ba1a835134590c.jpg' style='max-width: 65px' />`;
+  const company_stamp_img_url = `<img src='https://nest-bd.s3.ap-south-1.amazonaws.com/img/b9a6ba7d93951e2e10b8fdcbb17467ed.jpeg' style='max-width: 65px' />`;
   const submitHtml = `
 <style>
 html { -webkit-print-color-adjust: exact; }
