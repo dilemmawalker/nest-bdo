@@ -576,57 +576,58 @@ receive its full inventory refillment request. </td>
     <br>
     <hr style='page-break-after: always;'>
     
-    
-    <div text-align='left'><h3 style='font-size: 16px;'> Conditions:</h3>
-        <ul>
-            <left>
-                <li style='line-height: 24px;'> All inventory will be supplied by 1K Franchisor except Dairy, tobacco
-                    products, breads and eggs
-                </li>
-                <li style='line-height: 24px;'> Sales Amount should be deposited weekly at a specified date by 1K Franchisee
-                    Store without failure
-                </li>
-                <li style='line-height: 24px;'> Items will be billed on the prices set by 1K Franchisor Company</li>
-                <li style='line-height: 24px;'> Selling price will be set by 1K Franchisor Company in consultation with
-                    franchisee Store, but final decision will be taken by 1K Franchisor Company.
-                </li>
-                <li style='line-height: 24px;'> The Franchisor Company will give the difference between billing price(Billed
-                    by the Company &amp; Selling Price (Specified by the Franchisor Company) a credit note or Discount will
-                    be given to the Franchisee store against that difference on monthly basis
-                </li>
-                <li style='line-height: 24px;'> Infrastructure investment i.e. Racks, shelves, billing counter and façade
-                    will be installed after 1 month of smooth operations, However installation of POS machine, Printer will
-                    be done on the very first day after the completion of Stock Audit.
-                </li>
-                <li style='line-height: 24px;'> All Infrastructure &amp; System is owned by 1K Franchisor Company and can be
-                    taken back without notice.
-                </li>
-                <li style='line-height: 24px;'> Reimbursement of Rent should be given Post Month &amp; once investment will
-                    be done in full capacity as per square feet area, The Franchisee Store will complete his Intial
-                    Investment required with in a month from the date of Launch.
-                </li>
-                <li style='line-height: 24px;'> Three security Signed Cheques, Stamp &amp; Letter Head in the name of Store
-                    is required 10. The Company will Charge 2% Rate of Interest on the investment done by the Franchisor
-                    Store , if the store is unable to put investment required by him
-                </li>
-            </left>
-        </ul>
-        <br> <br>
-        <h3 style='font-size: 16px;'> Closer &amp; Full &amp; Final Settlement Terms: </h3>
-        <ul>
-            <li style='line-height: 24px;'> The Closer of any Franchaisee store is to be done on Cost + Margin Model (The
-                Company will discount all Invoices by taking a nominal margin, rest outstanding is need to be paid by the
-                Franchisee Store
-            </li>
-            <li style='line-height: 24px;'> In Case Franchaisee store wants to pay by returning material, The Franchisor
-                Company will take return the only items that were billed by the Franchisor to the franchisee on MRP value
-            </li>
-            <li style='line-height: 24px;'> In case the franchisee want to give material that was not billed by the
-                franchisee, GST bill is required for same (failing which GST will be paid by Franchisee store , value of
-                supply will be on the Current Purchase Cost of the market
-            </li>
-        </ul>
-        <br> <br>
+    <h3 style='font-size: 16px;'> Terms & Conditions:</h3> <ul>
+    <left>
+      <li style='line-height: 24px;'> 
+       All inventory has to be purchased from 1K. 1K will provide a list of items that are not provided by 1K, which the store can purchase from other suppliers. In case 1K fails to fulfill more than 75% items in an order, the store can purchase items not fulfilled by 1K from other vendors.	 </li>
+      <li style='line-height: 24px;'> 
+       Weekly Sales Amount should be deposited every week, failing which interest will be charged at 2.5% per month from the due date to actual payment date.	
+      </li>
+      <li style='line-height: 24px;'> 
+       Consumer prices will be set by 1K and the store will have to comply with 1K's pricing. However 1K will seek feedback from the store and other neighborhood stores on prevalent pricing from time to time as deemed fit by 1K.	 </li>
+      <li style='line-height: 24px;'> 
+      Products will be billed to the store at pre-decided prices. The difference between the billed price and selling price will be credited to the store as a credit note once that particular product is sold, along with the store commission.	
+      </li>
+      <li style='line-height: 24px;'> 
+      Infrastructure such as POS Hardware, Printer, Barcode Scanner, Billing Counter, Facade Board, and Racks are 1K's property and can be taken back without prior notice at 1K's discretion (based on retailer compliance and performance), unless such infrastructure is billed to the store against specified payment.	
+      </li>
+      <li style='line-height: 24px;'> 
+      Rent, electricity and internet expenses (as agreed upon) will be reimbursed by the 10th of the next month provided:
+i. Store completes investment as per inventory norms
+ii. Store consistently undertakes sales payments and complies with guidelines issued by 1K from time to time </li>
+      <li style='line-height: 24px;'> 
+      In case the store is unable to complete its required investment, 1K will charge 2.5% interest per month on the amount due	
+      </li>
+      <li style='line-height: 24px;'> 
+      Expiry/Excess Return: Only items billed by 1K can be returned, provided enough intimation is given in expiry/near expiry items. Items once delivered will not be returned if found damaged.	
+      </li>
+      <li style='line-height: 24px;'> 
+      Stores are required to keep a swiping machine provided by 1K at the store for consumers' ease. 1K will provide discount transaction charges on existing market rates to the store.	
+      </li>
+  </left></ul>
+  <br>
+  <br>
+<h3 style='font-size: 16px;'>  Closer &amp; Full &amp; Final Settlement Terms: </h3><ul>
+    <li style='line-height: 24px;'> 
+    The inventory remaining at a store will be valued at 15% less than the MRP value at the time of closure	</li>
+    <li style='line-height: 24px;'> 
+    In case the store wants to pay by returning inventory, 1K will accept return of only the items it billed to the store.	
+    </li>
+    <li style='line-height: 24px;'> 
+    In case the store wants to pay in the form of inventory that was not billed by 1K, GST bill is required for same (failing which, GST will be paid by the store and value of the inventory will be on the Purchase Cost prevailing in the market)	
+    </li>
+    <li style='line-height: 24px;'> 
+    30 days prior Notice will be required, if any store wants to discontinue their business from 1K	
+    </li>
+    <li style='line-height: 24px;'> 
+    Accounts settlement will be done in 30 days, once confimation is received on settlment from the store	
+    </li>
+    <li style='line-height: 24px;'> 
+    1K can initiate closure of any store without prior notice in case of the store's failure to comply with 1K terms, policies and performance criteria	
+    </li>
+  </ul>
+  <br>
+  <br>
         <div style='min-height: 150px;'>
             <div style=' text-align: center;'>
            
@@ -1256,39 +1257,55 @@ receive its full inventory refillment request. </td>
     <br>
     <hr style='page-break-after: always;'>
     <div text-align="left">
-     <h3 style='font-size: 16px;'> Conditions:</h3> <ul>
+     <h3 style='font-size: 16px;'> Terms & Conditions:</h3> <ul>
         <left>
-          <li style='line-height: 24px;'> All inventory will be supplied by 1K Franchisor except Dairy, tobacco products, breads and eggs </li>
-          <li style='line-height: 24px;'> Sales Amount should be deposited weekly at a specified date by 1K Franchisee Store without failure
+          <li style='line-height: 24px;'> 
+           All inventory has to be purchased from 1K. 1K will provide a list of items that are not provided by 1K, which the store can purchase from other suppliers. In case 1K fails to fulfill more than 75% items in an order, the store can purchase items not fulfilled by 1K from other vendors.	 </li>
+          <li style='line-height: 24px;'> 
+           Weekly Sales Amount should be deposited every week, failing which interest will be charged at 2.5% per month from the due date to actual payment date.	
           </li>
-          <li style='line-height: 24px;'> Items will be billed on the prices set by 1K Franchisor Company </li>
-          <li style='line-height: 24px;'> Selling price will be set by 1K Franchisor Company in consultation with franchisee Store, but final
-            decision will be taken by 1K Franchisor Company. </li>
-          <li style='line-height: 24px;'> The Franchisor Company will give the difference between billing price(Billed by the Company &amp; Selling
-            Price (Specified by the Franchisor Company) a credit note or Discount will be given to the Franchisee
-            store against that difference on monthly basis </li>
-          <li style='line-height: 24px;'> Infrastructure investment i.e. Racks, shelves, billing counter and façade will be installed after 1
-            month of smooth operations, However installation of POS machine, Printer will be done on the very first
-            day after the completion of Stock Audit. </li>
-          <li style='line-height: 24px;'> All Infrastructure &amp; System is owned by 1K Franchisor Company and can be taken back without notice.
+          <li style='line-height: 24px;'> 
+           Consumer prices will be set by 1K and the store will have to comply with 1K's pricing. However 1K will seek feedback from the store and other neighborhood stores on prevalent pricing from time to time as deemed fit by 1K.	 </li>
+          <li style='line-height: 24px;'> 
+          Products will be billed to the store at pre-decided prices. The difference between the billed price and selling price will be credited to the store as a credit note once that particular product is sold, along with the store commission.	
           </li>
-          <li style='line-height: 24px;'> Reimbursement of Rent should be given Post Month &amp; once investment will be done in full capacity as per
-            square feet area, The Franchisee Store will complete his Intial Investment required with in a month from
-            the date of Launch. </li>
-          <li style='line-height: 24px;'> Three security Signed Cheques, Stamp &amp; Letter Head in the name of Store is required 10. The Company
-            will Charge 2% Rate of Interest on the investment done by the Franchisor Store , if the store is unable
-            to put investment required by him </li>
+          <li style='line-height: 24px;'> 
+          Infrastructure such as POS Hardware, Printer, Barcode Scanner, Billing Counter, Facade Board, and Racks are 1K's property and can be taken back without prior notice at 1K's discretion (based on retailer compliance and performance), unless such infrastructure is billed to the store against specified payment.	
+          </li>
+          <li style='line-height: 24px;'> 
+          Rent, electricity and internet expenses (as agreed upon) will be reimbursed by the 10th of the next month provided:
+i. Store completes investment as per inventory norms
+ii. Store consistently undertakes sales payments and complies with guidelines issued by 1K from time to time </li>
+          <li style='line-height: 24px;'> 
+          In case the store is unable to complete its required investment, 1K will charge 2.5% interest per month on the amount due	
+          </li>
+          <li style='line-height: 24px;'> 
+          Expiry/Excess Return: Only items billed by 1K can be returned, provided enough intimation is given in expiry/near expiry items. Items once delivered will not be returned if found damaged.	
+          </li>
+          <li style='line-height: 24px;'> 
+          Stores are required to keep a swiping machine provided by 1K at the store for consumers' ease. 1K will provide discount transaction charges on existing market rates to the store.	
+          </li>
       </left></ul>
       <br>
       <br>
     <h3 style='font-size: 16px;'>  Closer &amp; Full &amp; Final Settlement Terms: </h3><ul>
-        <li style='line-height: 24px;'> The Closer of any Franchaisee store is to be done on Cost + Margin Model (The Company will discount all
-          Invoices by taking a nominal margin, rest outstanding is need to be paid by the Franchisee Store </li>
-        <li style='line-height: 24px;'> In Case Franchaisee store wants to pay by returning material, The Franchisor Company will take return the
-          only items that were billed by the Franchisor to the franchisee on MRP value </li>
-        <li style='line-height: 24px;'> In case the franchisee want to give material that was not billed by the franchisee, GST bill is required
-          for same (failing which GST will be paid by Franchisee store , value of supply will be on the Current
-          Purchase Cost of the market </li>
+        <li style='line-height: 24px;'> 
+        The inventory remaining at a store will be valued at 15% less than the MRP value at the time of closure	</li>
+        <li style='line-height: 24px;'> 
+        In case the store wants to pay by returning inventory, 1K will accept return of only the items it billed to the store.	
+        </li>
+        <li style='line-height: 24px;'> 
+        In case the store wants to pay in the form of inventory that was not billed by 1K, GST bill is required for same (failing which, GST will be paid by the store and value of the inventory will be on the Purchase Cost prevailing in the market)	
+        </li>
+        <li style='line-height: 24px;'> 
+        30 days prior Notice will be required, if any store wants to discontinue their business from 1K	
+        </li>
+        <li style='line-height: 24px;'> 
+        Accounts settlement will be done in 30 days, once confimation is received on settlment from the store	
+        </li>
+        <li style='line-height: 24px;'> 
+        1K can initiate closure of any store without prior notice in case of the store's failure to comply with 1K terms, policies and performance criteria	
+        </li>
       </ul>
       <br>
       <br>
