@@ -16,6 +16,7 @@ export class FileService {
     imageBuffer: Buffer,
     fileName: string,
     fileDto: FileDto,
+    location?: any,
   ) {
     console.log('upload file');
     const s3 = new S3();
@@ -46,6 +47,9 @@ export class FileService {
         fileUrlArray.push(fileDto.url);
         const storeObj = {};
         storeObj[fileDto.keyName] = fileUrlArray;
+        if (location != null) {
+          storeObj[fileDto.keyName + '_location'] = location;
+        }
         this.storeService.updateStore(storeObj, fileDto.refId);
       }
     }
