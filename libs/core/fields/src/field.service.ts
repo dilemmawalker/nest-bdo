@@ -9,6 +9,7 @@ import slugify from 'slugify';
 import { Field } from '@shared/app/schemas/fields/field.schema';
 import { FieldRepository } from './field.repository';
 import { FieldDto } from './dtos/field.dto';
+import { reservedKeywordsForField } from 'apps/admin/src/constant/fields/fields.constant';
 
 @Injectable()
 export class FieldService {
@@ -31,6 +32,11 @@ export class FieldService {
 
   async create(fieldDto: FieldDto): Promise<Field> {
     fieldDto.keyName = slugify(fieldDto.label, slugifyConfig);
+    fieldDto.keyName = reservedKeywordsForField.some(
+      (keywords) => keywords === fieldDto.keyName,
+    )
+      ? slugify(fieldDto.keyName + this.generateRandomLetter(), slugifyConfig)
+      : fieldDto.keyName;
     const field = await this.fieldRepository.findOne({
       keyName: fieldDto.keyName,
     });
@@ -74,5 +80,11 @@ export class FieldService {
   }
   async createField(fieldDto: FieldDto): Promise<Field> {
     return await this.fieldRepository.create(fieldDto);
+  }
+
+  private generateRandomLetter() {
+    const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+
+    return ' ' + alphabet[Math.floor(Math.random() * alphabet.length)];
   }
 }
