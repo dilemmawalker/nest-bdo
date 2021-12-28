@@ -40,8 +40,8 @@ export class MeetingResponse {
       storeId: storeObj.store_id,
     };
     entity.agent = {
-      agent_name: storeObj.get('agent_name') || '',
-      agent_id: storeObj.get('agent_id') || '',
+      agent_name: storeObj.get('createdBy')['user']['name'] || '',
+      agent_id: storeObj.get('createdBy')['agentId'] || '',
     };
     entity.location = meeting.location;
     entity.meetingId = meeting.meetingId;
