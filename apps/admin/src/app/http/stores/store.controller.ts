@@ -62,7 +62,7 @@ export class StoreController {
   @UseInterceptors(TransformInterceptor)
   @Get('/meetings/:storeId')
   async getMeetingsOfStore(@Param('storeId') storeId: string): Promise<any> {
-    const { meetings, store }  = await this.storeService.getMeetings(storeId);
+    const { meetings, store } = await this.storeService.getMeetings(storeId);
     return ResponseUtils.success(MeetingResponse.fromArray(meetings, store));
   }
 }
