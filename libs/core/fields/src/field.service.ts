@@ -37,7 +37,6 @@ export class FieldService {
     )
       ? slugify(fieldDto.keyName + this.generateRandomLetter(), slugifyConfig)
       : fieldDto.keyName;
-    console.log(fieldDto.keyName);
     const field = await this.fieldRepository.findOne({
       keyName: fieldDto.keyName,
     });
