@@ -330,7 +330,7 @@ export class WorkflowService {
     const dynamicFields = {};
     store = await this.setEqualField(inputFields, store);
     if (!store) {
-      return inputFields;
+      return { fields: inputFields, dynamicFields };
     }
     for (const i in inputFields) {
       const inputField = inputFields[i];

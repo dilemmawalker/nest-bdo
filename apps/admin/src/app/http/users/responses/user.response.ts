@@ -9,17 +9,25 @@ export class UserResponse {
   email: string;
 
   @ApiProperty()
-  password: string;
+  mobile: number;
 
   @ApiProperty()
   username: string;
+
+  @ApiProperty()
+  age: number;
+
+  @ApiProperty()
+  name: string;
 
   static fromUser(user: User) {
     const entity = new UserResponse();
     entity.userId = user.userId;
     entity.email = user.email;
-    entity.password = user.password;
+    entity.mobile = user.mobile;
     entity.username = user.username;
+    entity.age = user.age;
+    entity.name = user.name;
     return entity;
   }
 
