@@ -10,9 +10,6 @@ export class UserResponse {
   email: string;
 
   @ApiProperty()
-  password: string;
-
-  @ApiProperty()
   username: string;
 
   @ApiProperty()
@@ -22,7 +19,6 @@ export class UserResponse {
     const entity = new UserResponse();
     entity.userId = user.userId;
     entity.email = user.email;
-    entity.password = user.password;
     entity.username = user.username;
     entity.roles = user.roles;
     return entity;

@@ -38,15 +38,9 @@ export class CreateUserRequest {
   @IsNotEmpty()
   username: string;
 
-  @ApiProperty()
-  @IsNotEmpty()
-  @MinLength(6)
-  password: string;
-
   static getUserDto(createUserRequest: CreateUserRequest) {
     const userDto = new UserDto();
     userDto.email = createUserRequest.email;
-    userDto.password = createUserRequest.password;
     userDto.age = createUserRequest.age;
     userDto.name = createUserRequest.name;
     userDto.username = createUserRequest.username;

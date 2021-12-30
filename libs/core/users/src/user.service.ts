@@ -11,7 +11,7 @@ export class UserService {
   constructor(
     private readonly userRepository: UserRepository,
     private httpService: HttpService,
-  ) { }
+  ) {}
 
   async findOne(username: string): Promise<User> {
     const user = await this.userRepository.findOne({ username });
