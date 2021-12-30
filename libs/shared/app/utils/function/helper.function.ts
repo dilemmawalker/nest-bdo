@@ -62,6 +62,31 @@ export function getInitials(string) {
     initials += names[names.length - 1].substring(0, 1).toUpperCase();
   }
   return initials;
+=======
+
+export function generateNextPageUrl(
+  page: number,
+  limit: number,
+  status: string,
+  storeCount: number,
+): string {
+  const skip = page * limit;
+  if (page == null || page < 1 || skip >= storeCount) return '';
+  return `agent/api/agent/stores/${status}?page=${page + 1}&limit=${limit}`;
+}
+
+export function generatePreviousPageUrl(
+  page: number,
+  limit: number,
+  status: string,
+  storeCount: number,
+): string {
+  const skip = (page - 2) * limit;
+  const prevPage = Math.ceil(storeCount / limit);
+  if (page == null || page <= 1) return '';
+  if (skip >= storeCount)
+    return `agent/api/agent/stores/${status}?page=${prevPage}&limit=${limit}`;
+  return `agent/api/agent/stores/${status}?page=${page - 1}&limit=${limit}`;
 }
 
 export function empty(e) {
@@ -96,3 +121,7 @@ export function convertToString(str) {
     return str.toString();
   }
 }
+=======
+//Workflows/WorkflowController_getWorkflowSteps
+//Agents/AgentController_get
+

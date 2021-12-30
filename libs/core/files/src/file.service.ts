@@ -16,6 +16,7 @@ export class FileService {
     imageBuffer: Buffer,
     fileName: string,
     fileDto: FileDto,
+    location?: any,
   ) {
     console.log('upload file');
     const s3 = new S3();
@@ -46,6 +47,9 @@ export class FileService {
         fileUrlArray.push(fileDto.url);
         const storeObj = {};
         storeObj[fileDto.keyName] = fileUrlArray;
+        if (location != null) {
+          storeObj[fileDto.keyName + '_location'] = location;
+        }
         this.storeService.updateStore(storeObj, fileDto.refId);
       }
     }
@@ -83,6 +87,17 @@ export class FileService {
   public async markFileAsTemp(url: string): Promise<void> {
     const file = await this.fileRepository.updateFileAsTemporary(url);
     console.log(file);
+  }
+
+  public async deleFilePermanent(): Promise<any> {
+    const filesToDelete = await this.fileRepository.getAllTrueStatusFiles();
+    await this.fileRepository.deleteAllTrueStatusFiles(filesToDelete);
+    filesToDelete.foreach(async (file) => {
+      await this.deleteFile(file.keyName);
+      const storeObj = {};
+      storeObj[file.keyName] = '';
+      await this.storeService.updateStore(storeObj, file.refId);
+    });
   }
 
   public async deleteFile(key: string) {

@@ -20,4 +20,13 @@ export class FileRepository {
     }
     await file.update({ isTemp: true });
   }
+
+  async getAllTrueStatusFiles(): Promise<any> {
+    const file = await this.fileModel.find({ isTemp: true });
+    return file;
+  }
+
+  async deleteAllTrueStatusFiles(filesToDelete): Promise<any> {
+    await this.fileModel.findByIdAndDelete({ keyName: filesToDelete.keyName });
+  }
 }

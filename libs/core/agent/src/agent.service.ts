@@ -26,5 +26,16 @@ export class AgentService {
 
   async getMeetings(agentId: string): Promise<any> {
     return await this.agentRepository.getMeetings(agentId);
+=======
+  async storeCount(stores: any[], status: string): Promise<number> {
+    const entities = [];
+    stores.forEach((store) => {
+      if (status == 'any') {
+        entities.push(store);
+      } else if (store.status === status) {
+        entities.push(store);
+      }
+    });
+    return entities.length;
   }
 }

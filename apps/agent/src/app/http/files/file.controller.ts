@@ -58,6 +58,7 @@ export class FileController {
       file.buffer,
       FileUploadingUtils.getImageFilename(file.originalname),
       UploadImageRequest.getFileDto(uploadImageRequest),
+      uploadImageRequest.location,
     );
     return ResponseUtils.success(
       FileResponse.fromFile(fileObj),
@@ -86,6 +87,7 @@ export class FileController {
       file.buffer,
       FileUploadingUtils.getDocFilename(file.originalname),
       UploadImageRequest.getFileDto(uploadImageRequest),
+      uploadImageRequest.location,
     );
     return ResponseUtils.success(
       FileResponse.fromFile(fileObj),
@@ -110,6 +112,7 @@ export class FileController {
     );
   }
 
+
   @Post('/upload/images')
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(
@@ -133,6 +136,7 @@ export class FileController {
         file.buffer,
         FileUploadingUtils.getImageFilename(file.originalname),
         UploadImageRequest.getFileDto(uploadImageRequest, true),
+        uploadImageRequest.location,
       );
       fileObjs.push(fileObj);
     }
@@ -165,6 +169,7 @@ export class FileController {
         file.buffer,
         FileUploadingUtils.getDocFilename(file.originalname),
         UploadImageRequest.getFileDto(uploadImageRequest, true),
+        uploadImageRequest.location,
       );
       fileObjs.push(fileObj);
     }
@@ -172,6 +177,17 @@ export class FileController {
       FileResponse.fromFileArray(fileObjs),
       'File uploaded successfully',
     );
+
+  @Post('/deletePermanent')
+  @UseInterceptors(TransformInterceptor)
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: BasicResponse,
+  })
+  public async deleteFilePermanent() {
+    await this.fileService.deleFilePermanent();
+    return ResponseUtils.success(BasicResponse.success());
+
   }
 
   // @Post('/multiple-upload')

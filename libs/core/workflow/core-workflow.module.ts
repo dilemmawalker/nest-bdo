@@ -10,6 +10,7 @@ import {
 } from '@shared/app/schemas/workflows/workflow.schema';
 import { WorkflowRepository } from './workflow.repository';
 import { Agent, AgentSchema } from '@shared/app/schemas/users/agent.schema';
+
 import { CoreAgentModule } from '../agent/src/core-agent.module';
 import { CoreFieldModule } from '../fields/src/core-field.module';
 import { WorkflowService } from './workflow.service';
@@ -25,6 +26,12 @@ import {
   MeetingSchema,
 } from '@shared/app/schemas/meetings/meeting.schema';
 
+import {
+  UpdateWorkflow,
+  UpdateWorkflowSchema,
+} from '@shared/app/schemas/workflows/updateWorkflow.schema';
+
+
 @Module({
   imports: [
     CoreAgentModule,
@@ -38,6 +45,7 @@ import {
     MongooseModule.forFeature([{ name: Store.name, schema: StoreSchema }]),
     MongooseModule.forFeature([{ name: Agent.name, schema: AgentSchema }]),
     MongooseModule.forFeature([
+
       { name: Activity.name, schema: ActivitySchema },
       { name: Meeting.name, schema: MeetingSchema },
     ]),
@@ -48,6 +56,10 @@ import {
     StoreRepository,
     ActivityService,
     ActivityRepository,
+
+      { name: UpdateWorkflow.name, schema: UpdateWorkflowSchema },
+    ]),
+
   ],
   exports: [WorkflowService, WorkflowRepository],
 })

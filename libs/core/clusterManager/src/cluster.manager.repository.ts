@@ -96,5 +96,11 @@ export class ClusterManagerRepository {
         return agent.stores;
       })
       .sort((a, b) => b['createdAt'] - a['createdAt']);
+=======
+      });
+    const stores = agents.flatMap((agent) => {
+      return agent.stores;
+    });
+    return stores;
   }
 }

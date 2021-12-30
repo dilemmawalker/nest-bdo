@@ -12,7 +12,9 @@ import { StoreDto, StoreField } from 'libs/core/stores/dtos/store.dtos';
 import { WorkflowDto } from './dtos/workflow.dto';
 import { AssignFieldDto } from './dtos/assign-field.dto';
 import { StepDto } from './dtos/step.dto';
+
 import { FileDto } from '@file/file/dtos/file.dto';
+
 
 import {
   empty,
@@ -20,21 +22,36 @@ import {
   getAgreementName,
   getCurrentDate,
 } from '@shared/app/utils/function/helper.function';
+
+import { generateWorkflowUrl } from '@shared/app/utils/function/helper.function';
+
 import { Step } from '@shared/app/schemas/steps/steps.schema';
 import { AgentRepository } from '../agent/src/agent.repository';
 import { FieldRepository } from '../fields/src/field.repository';
 import { UpdatePositionDto } from './dtos/update-positions.dto';
 import { ActivityService } from '../activity/activity.service';
 import { ActivityDto } from '../activity/dtos/activity.dto';
+
 import {
   Expression,
   ExpressionVariable,
 } from '@shared/app/schemas/fields/expression.schema';
+
 import {
   generateAgreementCardHtml,
   generateAgreementCardPdfHtml,
+  generateAgreementPdfHtml,
 } from '@shared/app/utils/function/dynamic.function';
 import { FileService } from '@file/file/file.service';
+=======
+import { isContext } from 'vm';
+import { Validator } from '@shared/app/validators/main.validator';
+
+
+
+import { UpdateWorflowDto } from './dtos/updateWorkflow.dto';
+
+
 @Injectable()
 export class WorkflowService {
   constructor(
@@ -402,6 +419,22 @@ export class WorkflowService {
               pdfFileName,
               pdfFileDto,
             );
+          } else if (val.value == 'generateAgreementPdfHtml') {
+            value = generateAgreementPdfHtml(store);
+            const pdfBuffer = await this.fileService.generatePDF(
+              generateAgreementPdfHtml(store),
+            );
+            const pdfFileNamePdf = `pdf/${store.get('storeId')}.pdf`;
+            const pdfFileDto = new FileDto();
+            pdfFileDto.keyName = 'agreement_pdf';
+            pdfFileDto.isMultiple = false;
+            pdfFileDto.refId = store.get('storeId');
+            pdfFileDto.fileName = pdfFileNamePdf;
+            await this.fileService.uploadFile(
+              pdfBuffer,
+              pdfFileNamePdf,
+              pdfFileDto,
+            );
           }
         }
         if (expression.operator == 'equal') {
@@ -588,5 +621,8 @@ export class WorkflowService {
       }
     }
     return step.fields;
+  }
+  async updatePosition(updateWorkflowDto: UpdateWorflowDto): Promise<any> {
+    return await this.workflowRepository.updatePosition(updateWorkflowDto);
   }
 }
