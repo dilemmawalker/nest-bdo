@@ -54,7 +54,13 @@ export class UserService {
   async updateOtp(mobile: number, otp: string): Promise<User> {
     const user = await this.findOneByMobile(mobile);
     user.otp = otp;
-    if (process.env.SERVER_ENV != 'staging') {
+    if (mobile === parseInt(process.env.DEFAULT_NUMBER)) {
+      user.otp = process.env.DEFAULT_NUMBER_OTP;
+    }
+    if (
+      process.env.SERVER_ENV != 'staging' &&
+      mobile != parseInt(process.env.DEFAULT_NUMBER)
+    ) {
       await this.sendOtpSmsRequestToServer(mobile, otp);
     }
     return await this.update(user.username, user);

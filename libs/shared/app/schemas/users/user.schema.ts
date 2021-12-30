@@ -24,9 +24,6 @@ export class User extends BaseItemSchema {
   @Prop({ required: true })
   name: string;
 
-  @Prop({ required: true })
-  password: string;
-
   @Prop({ required: true, min: 1000000000, max: 9999999999 })
   mobile: number;
 

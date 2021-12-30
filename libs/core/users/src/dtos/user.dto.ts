@@ -7,7 +7,6 @@ export class UserDto {
   name: string;
   age: number;
   mobile: number;
-  password: string;
   username: string;
   otp: string;
 }

@@ -9,6 +9,7 @@ export class UserResponse {
   email: string;
 
   @ApiProperty()
+=======
   mobile: number;
 
   @ApiProperty()
@@ -24,6 +25,7 @@ export class UserResponse {
     const entity = new UserResponse();
     entity.userId = user.userId;
     entity.email = user.email;
+=======
     entity.mobile = user.mobile;
     entity.username = user.username;
     entity.age = user.age;
